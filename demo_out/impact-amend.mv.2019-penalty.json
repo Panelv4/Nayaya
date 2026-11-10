@@ -1,0 +1,4149 @@
+{
+  "amendment": "amend.mv.2019-penalty",
+  "title": "Motor Vehicles (Amendment) Act, 2019 — the penalty hike in s.185",
+  "kind": "real",
+  "enacted": true,
+  "commencement": "2019-09-01",
+  "summary": "The 2019 amendment raised the fine for a first offence under s.185 from Rs 2,000 to Rs 10,000 and for a second or subsequent offence from Rs 3,000 to Rs 15,000. The custodial ceilings were untouched: six months for a first offence, two years thereafter. Nothing in the offence itself changed, so this is a pure sentencing amendment and it tests whether the machinery can see a change that moves no verdict at all.",
+  "source": {
+    "citation": "Motor Vehicles (Amendment) Act, 2019 (Act 32 of 2019)",
+    "url": "https://www.indiacode.nic.in/handle/123456789/11691"
+  },
+  "before_label": "MV Act s.185 before the 2019 amendment",
+  "after_label": "MV Act s.185 after the 2019 amendment",
+  "expected_reading": "Decisions should not move at all: the offence and its threshold are identical before and after. Every case that is an offence stays an offence. What changes is the sentence attached to it, which is why the report separates decisions from sentences.",
+  "pack": "in.mv.drunken-driving",
+  "pack_review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "outcomes": [
+    "drunken_driving",
+    "not_offence"
+  ],
+  "comparison": {
+    "before": "in.mv.drunken-driving",
+    "after": "in.mv.drunken-driving",
+    "checked": 732,
+    "facts_added": [],
+    "facts_removed": [],
+    "domain_facts": 4,
+    "changed": 273,
+    "decisions_changed": 0,
+    "sentences_changed": 273,
+    "unchanged": 459,
+    "pct": 37.3,
+    "pct_decisions": 0.0,
+    "matrix": {
+      "drunken_driving": {
+        "drunken_driving": 273
+      },
+      "not_offence": {
+        "not_offence": 459
+      }
+    },
+    "moved": [
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 0,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 0,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 0,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 1,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 1,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 1,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 2,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 2,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 2,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 3,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 3,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 3,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 4,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 4,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 4,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 5,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 5,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 5,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 6,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 6,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 6,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 7,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 7,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 7,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 8,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 8,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 8,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 9,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 9,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 9,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 10,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 10,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 10,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 11,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 11,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 11,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 12,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 12,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 12,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 13,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 13,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 13,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 14,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 14,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 14,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 15,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 15,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 15,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 16,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 16,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 16,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 17,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 17,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 17,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 18,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 18,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 18,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 19,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 19,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 19,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 20,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 20,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 20,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 21,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 21,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 21,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 22,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 22,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 22,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 23,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 23,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 23,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 24,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 24,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 24,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 25,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 25,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 25,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 26,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 26,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 26,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 27,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 27,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 27,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 28,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 28,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 28,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 29,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 29,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 29,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 30,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 30,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 30,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-DRUG-LIMB",
+        "after_branch": "MV-DRUG-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 31,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 31,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 31,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 31,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 31,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 31,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 32,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 32,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 32,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 32,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 32,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 32,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 33,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 33,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 33,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 33,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 33,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 33,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 34,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 34,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 34,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 34,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 34,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 34,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 35,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 35,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 35,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 35,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 35,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 35,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 36,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 36,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 36,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 36,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 36,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 36,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 37,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 37,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 37,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 37,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 37,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 37,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 38,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 38,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 38,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 38,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 38,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 38,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 39,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 39,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 39,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 39,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 39,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 39,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 40,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 40,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 40,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 40,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 40,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 40,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 41,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 41,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 41,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 41,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 41,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 41,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 42,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 42,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 42,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 42,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 42,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 42,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 43,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 43,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 43,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 43,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 43,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 43,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 44,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 44,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 44,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 44,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 44,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 44,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 45,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 45,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 45,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 45,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 45,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 45,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 46,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 46,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 46,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 46,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 46,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 46,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 47,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 47,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 47,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 47,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 47,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 47,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 48,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 48,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 48,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 48,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 48,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 48,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 49,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 49,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 49,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 49,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 49,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 49,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 50,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 50,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 50,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 50,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 50,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 50,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 51,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 51,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 51,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 51,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 51,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 51,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 52,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 52,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 52,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 52,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 52,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 52,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 53,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 53,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 53,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 53,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 53,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 53,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 54,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 54,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 54,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 54,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 54,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 54,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 55,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 55,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 55,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 55,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 55,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 55,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 56,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 56,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 56,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 56,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 56,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 56,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 57,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 57,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 57,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 57,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 57,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 57,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 58,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 58,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 58,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 58,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 58,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 58,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 59,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 59,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 59,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 59,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 59,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 59,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 60,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 60,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 60,
+          "incapable_due_to_drug": true,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 60,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "none"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "after_sentence": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 60,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "within_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      },
+      {
+        "facts": {
+          "was_driving": true,
+          "blood_alcohol_mg": 60,
+          "incapable_due_to_drug": false,
+          "prior_conviction": "more_than_three_years"
+        },
+        "before": "drunken_driving",
+        "after": "drunken_driving",
+        "kind": "sentence",
+        "before_branch": "MV-ALCOHOL-LIMB",
+        "after_branch": "MV-ALCOHOL-LIMB",
+        "before_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "after_sentence": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]"
+      }
+    ],
+    "digest_before": "c65b55641b27dbf4",
+    "digest_after": "c65b55641b27dbf4"
+  },
+  "pack_before": {},
+  "coverage": {
+    "domain": 732,
+    "facts_added": [],
+    "facts_removed": []
+  },
+  "examples": []
+}

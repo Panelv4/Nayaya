@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>NYAYA-RAC — Citizen Case Reporting &amp; Decision-Support Portal</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <a class="nav-link" href="/login">Login</a>
+      <a class="btn primary" href="/login?tab=register">Create an account</a>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+
+  <div class="hero">
+    <div class="eyebrow"><svg class="ic"><use href="#i-seal"></use></svg> Citizen case reporting &middot; rules-as-code decision support</div>
+    <h1>State the facts once. Receive a transparent, rule-based response — and a record nobody can quietly change.</h1>
+    <p>NYAYA-RAC accepts a complainant's account in their own words, registers whatever proof they hold with a
+       SHA-256 fingerprint, resolves the cited provision against a versioned statutory knowledge base, and returns
+       the review level, urgency and severity band with the exact rules that produced them. Every step is written to
+       an audit trail.</p>
+    <div class="hero-actions">
+      <a class="btn primary" href="/login">Login to file a report <svg class="ic sm"><use href="#i-arrow-right"></use></svg></a>
+      <a class="btn secondary" href="/login?tab=register">Create an account</a>
+      <a class="btn ghost" style="color:#dbe7f2;border-color:rgba(255,255,255,.28)" href="/disclosed">Browse the public register <svg class="ic sm"><use href="#i-external"></use></svg></a>
+    </div>
+    <div class="hero-marks">
+      <div><svg class="ic sm"><use href="#i-lock"></use></svg> Private by default — disclosure needs manual approval</div>
+      <div><svg class="ic sm"><use href="#i-receipt"></use></svg> Hash-stamped evidence register</div>
+      <div><svg class="ic sm"><use href="#i-book"></use></svg> Versioned, human-verified statute base</div>
+    </div>
+  </div>
+
+  <div class="emergency">
+    <svg class="ic"><use href="#i-alert"></use></svg>
+    <div><b>In immediate danger? Do not wait for this portal.</b>
+      &nbsp;Dial <b>112</b> (emergency) &middot; <b>100</b> (police) &middot; <b>1091</b> (women&rsquo;s helpline)
+      &middot; <b>1098</b> (Childline). This portal does not lodge an FIR and is not a substitute for statutory
+      remedies.</div>
+  </div>
+
+  <div class="card">
+    <h2>How it works</h2>
+    <p class="desc">Four steps from your account to a transparent, auditable response.</p>
+    <div class="steps">
+      <div class="step-card"><div class="n">1</div><span class="sic"><svg class="ic ic-lift"><use href="#i-user"></use></svg></span><h3>Create an account &amp; login</h3>
+        <p>Register with your name and email, then log in. You may then complete <b>DigiLocker identity
+           verification</b> — a consent-scoped request that returns a hash-sealed identity artefact. It is optional:
+           unverified reports are accepted and marked as unverified.</p></div>
+      <div class="step-card"><div class="n">2</div><span class="sic"><svg class="ic ic-lift"><use href="#i-pen-sign"></use></svg></span><h3>Explain your case</h3>
+        <p>Write what happened in your own words, then confirm a few plain-language details (dates, type of case,
+           your situation). The engine response is generated from exactly what you provide — nothing is assumed.</p></div>
+      <div class="step-card"><div class="n">3</div><span class="sic"><svg class="ic ic-lift"><use href="#i-paperclip"></use></svg></span><h3>Attach your proof, if any</h3>
+        <p>Photos, screenshots, documents or audio. Every file is stored and registered with a SHA-256 hash so the
+           evidence set cannot be quietly altered later. No proof yet? You can confirm that explicitly.</p></div>
+      <div class="step-card"><div class="n">4</div><span class="sic"><svg class="ic ic-lift"><use href="#i-receipt"></use></svg></span><h3>Receive the response</h3>
+        <p>See the reference ID, review level (L0–L3), urgency, severity tier, which safeguards fired and what
+           happens next. All of it is deterministic, explained, and auditable. Was something wrong? Correct your
+           answers and re-evaluate, and tell us with one tap — <svg class="ic sm"><use href="#i-thumb-up"></use></svg> / <svg class="ic sm"><use href="#i-thumb-down"></use></svg> feeds the improvement dataset.</p></div>
+      <div class="step-card"><div class="n">5</div><span class="sic"><svg class="ic ic-lift"><use href="#i-lock"></use></svg></span><h3>Private until disclosed</h3>
+        <p>Your case is visible only to you and administrators. You can request disclosure; it becomes public in
+           the registry only after an administrator <b>manually approves</b> it — anonymized or full, never with
+           account identities.</p></div>
+    </div>
+  </div>
+
+  <div class="grid">
+    <div class="card">
+      <h2><svg class="ic"><use href="#i-speech"></use></svg> Narrative-first intake</h2>
+      <p class="desc">The old technical “Runtime variables (JSON)” section has been removed. Victims now simply
+      explain the case; the server derives the few internal values the engine needs from your plain-language
+      answers. No JSON, no legal jargon.</p>
+    </div>
+    <div class="card">
+      <h2><svg class="ic"><use href="#i-receipt"></use></svg> Evidence register &amp; fact mapping <span class="badge b-green">Live</span></h2>
+      <p class="desc">Attached proof is hash-stamped (SHA-256) and listed in the case record. Phase 3 adds
+      <b>evidence-to-fact mapping</b>: each file is linked to the case facts it supports or contradicts, with a
+      coverage score showing how well the account of events is evidenced.</p>
+    </div>
+    <div class="card">
+      <h2><svg class="ic"><use href="#i-lock"></use></svg> Strict admin-gated access <span class="badge b-red">Enforced</span></h2>
+      <p class="desc">No one can view another person's case. Cases stay private until the owner requests
+      disclosure and an administrator manually approves it (anonymized or full). Admin consoles, the technical
+      workbench, raw evaluation and the audit log are administrator-only.</p>
+    </div>
+    <div class="card">
+      <h2><svg class="ic"><use href="#i-book"></use></svg> Legal knowledge base <span class="badge b-blue">Phase 2</span></h2>
+      <p class="desc">A versioned statutory database (only human-<b>verified</b> versions feed evaluations),
+      precedent tracking, conflict detection, amendment-impact analysis and a full legal provenance graph —
+      every citation, revision and disclosure decision is an auditable edge.</p>
+    </div>
+    <div class="card">
+      <h2><svg class="ic sm"><use href="#i-thumb-up"></use></svg><svg class="ic sm"><use href="#i-thumb-down"></use></svg> Feedback &amp; re-evaluation <span class="badge b-amber">Live</span></h2>
+      <p class="desc">One-tap verdict feedback per case, bound to its revision; net-negative cases are
+      auto-flagged for admin review. Corrections create new revisions with mandatory reasons — history is
+      immutable — and every verdict is recorded in a log an administrator can export and audit.</p>
+    </div>
+    <div class="card">
+      <h2><svg class="ic"><use href="#i-idcard"></use></svg> DigiLocker verification <span class="badge b-blue">Calibrated model</span></h2>
+      <p class="desc">The full consent flow is implemented: scoped consent request with a PKCE challenge, a
+      simulated DigiLocker consent screen, single-use authorisation code, issuer allow-list, artefact validation
+      and a hash-sealed, expiring identity artefact that can be independently checked. The issuer response is
+      generated locally and watermarked <b>simulated</b>.</p>
+    </div>
+    <div class="card">
+      <h2><svg class="ic"><use href="#i-search"></use></svg> Transparent routing <span class="badge b-blue">Deterministic</span></h2>
+      <p class="desc">Rules-as-code decides the review level, urgency and severity tier — with the exact triggers
+      that fired, open questions for the judicial officer, and an immutable-style audit log entry per report.</p>
+    </div>
+  </div>
+
+  <div class="disclaimer">
+    <svg class="ic"><use href="#i-shield"></use></svg>
+    <div><b>Scope &amp; honesty notice.</b> NYAYA-RAC is a research prototype and decision-support tool. It is
+    <b>not</b> a judge, adjudicator or sentencing authority, and it never decides guilt, innocence, sentence,
+    compensation, bail or credibility. Its output is advisory and always requires human review at the computed
+    level. Accounts and files are stored locally on this demo server with demo-grade security &mdash; <b>do not
+    upload real sensitive case material here</b>. Statutory citations must be verified against an official corpus.
+    Filing a false report is an offence; optional DigiLocker identity verification records a verified or unverified
+    state with each report and helps deter duplicate and malicious filings.</div>
+  </div>
+
+</div>
+
+<div class="footer">
+  NYAYA-RAC v0.4.0 — citizen intake prototype · engine v0.2.0 (embedded demonstration rule base) · © {{YEAR}} ·
+  Roadmap Phases 1–3 landed: engine reliability &amp; validation · legal knowledge base (versioned statutes,
+  precedents, provenance, conflicts) · evidence-to-fact mapping — plus strict disclosure gating, revisions,
+  manual checks and the <svg class="ic sm"><use href="#i-thumb-up"></use></svg>/<svg class="ic sm"><use href="#i-thumb-down"></use></svg> feedback dataset.
+</div>
+
+<script>{{AUTH}}</script>
+</body>
+</html>

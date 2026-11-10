@@ -1,0 +1,378 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Submit Report — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link active" href="/submit"><svg class="ic sm"><use href="#i-pen-sign"></use></svg> Submit report</a>
+      <a class="nav-link" href="/cases"><svg class="ic sm"><use href="#i-folder"></use></svg> My cases</a>
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <span id="admin-nav"></span>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container narrow">
+
+  <!-- ================= FORM ================= -->
+  <div id="form-view">
+    <div class="page-head">
+      <div><h1>Submit a report</h1>
+      <p>Explain your case, attach your proof, and receive a transparent, rule-based response.</p></div>
+    </div>
+
+    <div class="banner red">
+      <span class="tag">Emergency?</span>
+      <div>If you are in immediate danger, dial <b>112</b> now. This portal does not lodge an FIR and is advisory
+      decision support only — never a substitute for the police or the courts.</div>
+    </div>
+
+    <!-- 1. narrative -->
+    <div class="card">
+      <h2><span class="step">1</span> Explain your case — what happened?</h2>
+      <p class="desc">Write in your own words, in any language you are comfortable in. The response is generated
+      from what you describe here and the details you confirm below. Include when and where it happened, who was
+      involved, and what was done.</p>
+      <div class="field">
+        <label for="narrative">Your account of the incident <span style="color:#b91c1c">*</span></label>
+        <textarea id="narrative" maxlength="8000" style="min-height:180px"
+          placeholder="For example: On the evening of 2 November, near the bus stand in Gwalior, a man I know from my neighbourhood grabbed my phone from my hand and pushed me when I tried to take it back. He has been sending threatening messages since then. I told my family and we went to the local police station but no complaint was written…"
+          oninput="countChars()"></textarea>
+        <div class="counter" id="char-count">0 / 8000 characters (minimum 30)</div>
+      </div>
+    </div>
+
+    <!-- 2. key details -->
+    <div class="card">
+      <h2><span class="step">2</span> Key details</h2>
+      <p class="desc">Plain-language questions. Your answers drive how the report is classified, how urgently it is
+      reviewed and which safeguards fire. Anything you cannot or do not wish to answer is recorded honestly as
+      “unknown” — never assumed.</p>
+      <div class="form-grid">
+        <div class="field"><label for="incident_date">When did it happen? <span style="color:#b91c1c">*</span></label>
+          <input type="date" id="incident_date" max="">
+          <p class="hint">Strictly validated: real calendar date, not in the future.</p></div>
+        <div class="field"><label for="incident_end_date">Did it continue until a later date? <span class="badge b-gray">optional</span></label>
+          <input type="date" id="incident_end_date" max=""></div>
+        <div class="field full"><label for="location">Where did it happen? <span class="badge b-gray">optional</span></label>
+          <input type="text" id="location" maxlength="200" placeholder="e.g. Near Phool Bagh, Gwalior, Madhya Pradesh"></div>
+        <div class="field"><label for="domain">Type of case <span style="color:#b91c1c">*</span></label>
+          <select id="domain">
+            <option value="CRIMINAL">Criminal (crime against me)</option>
+            <option value="CIVIL">Civil (property, money, contracts)</option>
+            <option value="FAMILY">Family (marriage, custody, maintenance)</option>
+            <option value="OTHER">Other / not sure</option>
+          </select></div>
+        <div class="field"><label for="victim_under18">Are you under 18? <span style="color:#b91c1c">*</span></label>
+          <select id="victim_under18">
+            <option value="">Please select…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="prefer_not">Prefer not to say</option>
+          </select>
+          <p class="hint">“Prefer not to say” triggers protective handling, as the rules require.</p></div>
+        <div class="field"><label for="woman_or_girl">Are you a woman or girl? <span style="color:#b91c1c">*</span></label>
+          <select id="woman_or_girl">
+            <option value="">Please select…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="prefer_not">Prefer not to say</option>
+          </select></div>
+        <div class="field"><label for="sexual_offence">Does this involve a sexual offence? <span style="color:#b91c1c">*</span></label>
+          <select id="sexual_offence">
+            <option value="">Please select…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="unsure">Not sure / prefer not to say</option>
+          </select></div>
+        <div class="field"><label for="liberty_threat">Any threat to life, detention, abduction or trafficking? <span style="color:#b91c1c">*</span></label>
+          <select id="liberty_threat">
+            <option value="">Please select…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+          </select></div>
+        <div class="field"><label for="accused_in_custody">Has anyone been arrested / is the accused in police custody? <span style="color:#b91c1c">*</span></label>
+          <select id="accused_in_custody">
+            <option value="">Please select…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="dont_know">Don’t know</option>
+          </select></div>
+        <div class="field"><label for="accused_under18">Is the accused under 18? <span class="badge b-gray">optional</span></label>
+          <select id="accused_under18">
+            <option value="">Don’t know / no answer</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="dont_know">Not sure</option>
+          </select></div>
+        <div class="field"><label for="has_lawyer">Do you have a lawyer or legal aid? <span style="color:#b91c1c">*</span></label>
+          <select id="has_lawyer">
+            <option value="">Please select…</option>
+            <option value="yes">Yes</option>
+            <option value="no">No</option>
+            <option value="not_yet">Not yet</option>
+          </select>
+          <p class="hint">Free legal aid is a right (Art. 39A). “No / not yet” flags the report for legal-aid follow-up.</p></div>
+        <div class="field"><label for="provision">Legal section, if you know it <span class="badge b-gray">optional</span></label>
+          <input type="text" id="provision" maxlength="80" placeholder="e.g. s.3 / s.354">
+          <p class="hint">Unverified sections are marked “NOT VERIFIED IN CORPUS” and flagged for checking.</p></div>
+        <div class="field"><label for="statute">Which law? <span class="badge b-gray">optional</span></label>
+          <input type="text" id="statute" maxlength="80" placeholder="e.g. BNS, IPC, POCSO Act"></div>
+      </div>
+      <hr class="hr">
+      <div class="lbl">Does any of this apply to you or the other party? <span class="badge b-gray">optional — tick all that apply</span></div>
+      <div class="grid tight" style="grid-template-columns:repeat(auto-fit,minmax(210px,1fr))">
+        <label class="check"><input type="checkbox" id="disability"><span>Disability</span></label>
+        <label class="check"><input type="checkbox" id="mental_illness"><span>Mental illness</span></label>
+        <label class="check"><input type="checkbox" id="sc_st_atrocities"><span>SC/ST atrocities angle</span></label>
+        <label class="check"><input type="checkbox" id="transgender"><span>Transgender person involved</span></label>
+        <label class="check"><input type="checkbox" id="senior_citizen"><span>Senior citizen involved</span></label>
+      </div>
+    </div>
+
+    <!-- 3. evidence -->
+    <div class="card">
+      <h2><span class="step">3</span> Attach your proof <span class="badge b-green" id="ev-badge">0 files</span></h2>
+      <p class="desc">Photos, screenshots, medical documents, audio, chat exports — anything you have. Each file is
+      stored and registered with a SHA-256 hash so the evidence set is tamper-evident. Maximum
+      <b>5 files, 5 MB each</b>. <b>If you have proof, you must attach it.</b></p>
+      <div class="dropzone" id="dropzone" onclick="$('file-input').click()">
+        <svg class="ic"><use href="#i-upload"></use></svg> &nbsp; Click to choose files, or drag &amp; drop them here
+        <input type="file" id="file-input" multiple class="hidden">
+      </div>
+      <div id="file-list"></div>
+      <label class="check" style="margin-top:12px">
+        <input type="checkbox" id="no_evidence_ack">
+        <span><b>I have no evidence to attach at this time.</b> (Required if you are not attaching any files.
+        You can note this honestly — the report is still recorded, and the registry is informed.)</span>
+      </label>
+    </div>
+
+    <!-- 4. digilocker + declaration -->
+    <div class="card">
+      <h2><span class="step">4</span> Identity verification &amp; declaration</h2>
+      <div id="dl-panel" style="margin-bottom:14px"></div>
+      <label class="check">
+        <input type="checkbox" id="declaration">
+        <span><b>Declaration <span style="color:#b91c1c">*</span>:</b> The information I have provided is true to
+        the best of my knowledge. I understand that filing a false report is an offence and may attract legal
+        action. I understand the response is advisory decision support and requires review by authorised officers.
+        My identity verification state (verified or unverified) will be recorded with this report.</span>
+      </label>
+      <div class="err" id="submit-err"></div>
+      <div class="btn-row" style="margin-top:14px">
+        <button class="btn primary" id="btn-submit" style="flex:1;padding:13px" onclick="submitReport()">Submit report &amp; generate response &nbsp;<svg class="ic sm"><use href="#i-arrow-right"></use></svg></button>
+        <a class="btn secondary" href="/dashboard">Cancel</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= RESPONSE ================= -->
+  <div id="response-view" class="hidden"></div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.4.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+const MAX_FILES=5, MAX_BYTES=5*1024*1024;
+let files=[]; // {name,type,size,data_b64,description}
+
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
+function fmtSize(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':(n/1024).toFixed(0)+' KB';}
+
+// dates: max = today
+(function(){const t=new Date().toISOString().slice(0,10);$('incident_date').max=t;$('incident_end_date').max=t;$('incident_date').value=t;})();
+
+function countChars(){
+  const n=$('narrative').value.trim().length;
+  $('char-count').textContent=n+' / 8000 characters (minimum 30)';
+  $('char-count').style.color = n>=30 ? 'var(--muted)' : '#b91c1c';
+}
+
+// ---------- evidence ----------
+const dz=$('dropzone'), fi=$('file-input');
+dz.addEventListener('dragover',e=>{e.preventDefault();dz.classList.add('over');});
+dz.addEventListener('dragleave',()=>dz.classList.remove('over'));
+dz.addEventListener('drop',e=>{e.preventDefault();dz.classList.remove('over');addFiles(e.dataTransfer.files);});
+fi.addEventListener('change',()=>{addFiles(fi.files);fi.value='';});
+function addFiles(list){
+  for(const f of list){
+    if(files.length>=MAX_FILES){toast('Maximum '+MAX_FILES+' evidence files.');break;}
+    if(f.size>MAX_BYTES){toast('“'+f.name+'” exceeds the 5 MB limit and was skipped.',4500);continue;}
+    if(f.size===0){toast('“'+f.name+'” is empty and was skipped.');continue;}
+    const r=new FileReader();
+    r.onload=()=>{files.push({name:f.name,type:f.type||'application/octet-stream',size:f.size,data_b64:String(r.result).split(',',2)[1],description:''});renderFiles();};
+    r.readAsDataURL(f);
+  }
+}
+function renderFiles(){
+  $('ev-badge').textContent=files.length+' file'+(files.length===1?'':'s');
+  $('file-list').innerHTML=files.map((f,i)=>`
+    <div class="file-item">
+      <span class="fic"><svg class="ic"><use href="#i-paperclip"></use></svg></span>
+      <div class="fmeta">
+        <div class="fname">${esc(f.name)}</div>
+        <div class="fsub">${esc(f.type)} · ${fmtSize(f.size)} · will be hash-registered (SHA-256)</div>
+        <input type="text" maxlength="500" placeholder="What does this file show? (optional description)" value="${esc(f.description)}" oninput="files[${i}].description=this.value">
+      </div>
+      <button class="rm" onclick="removeFile(${i})" title="Remove"><svg class="ic sm"><use href="#i-x"></use></svg> remove</button>
+    </div>`).join('');
+  if(files.length) $('no_evidence_ack').checked=false;
+}
+function removeFile(i){files.splice(i,1);renderFiles();}
+
+// ---------- page guard + identity verification panel ----------
+(async()=>{
+  let me; try{ me=await requireAuth(); }catch(e){ return; }
+  if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+  DLPanel.load('dl-panel',{compact:true});
+})();
+
+// ---------- submit ----------
+function fail(msg){const e=$('submit-err');e.textContent=msg;e.style.display='block';e.scrollIntoView({behavior:'smooth',block:'center'});}
+async function submitReport(){
+  $('submit-err').style.display='none';
+  const narrative=$('narrative').value.trim();
+  if(narrative.length<30) return fail('Please describe what happened in at least 30 characters.');
+  if(!$('incident_date').value) return fail('Please provide the incident date.');
+  for(const k of ['domain','victim_under18','woman_or_girl','sexual_offence','accused_in_custody','liberty_threat','has_lawyer'])
+    if(!$(k).value) return fail('Please answer all required questions in “Key details”.');
+  if(files.length===0 && !$('no_evidence_ack').checked)
+    return fail('Please attach the proof you have, or tick “I have no evidence to attach at this time”.');
+  if(!$('declaration').checked) return fail('Please accept the declaration before submitting.');
+
+  const payload={
+    narrative, incident_date:$('incident_date').value, incident_end_date:$('incident_end_date').value||'',
+    location:$('location').value.trim(), domain:$('domain').value,
+    victim_under18:$('victim_under18').value, woman_or_girl:$('woman_or_girl').value,
+    sexual_offence:$('sexual_offence').value, accused_in_custody:$('accused_in_custody').value,
+    liberty_threat:$('liberty_threat').value, accused_under18:$('accused_under18').value,
+    has_lawyer:$('has_lawyer').value, provision:$('provision').value.trim(), statute:$('statute').value.trim(),
+    disability:$('disability').checked, mental_illness:$('mental_illness').checked,
+    sc_st_atrocities:$('sc_st_atrocities').checked, transgender:$('transgender').checked,
+    senior_citizen:$('senior_citizen').checked,
+    evidence:files, no_evidence_ack:$('no_evidence_ack').checked, declaration:$('declaration').checked
+  };
+  const btn=$('btn-submit'); btn.disabled=true; btn.textContent='Generating response…';
+  try{
+    const r=await authFetch('/api/report',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)});
+    const j=await r.json().catch(()=>({}));
+    if(r.status===401){ goLogin(); return; }
+    if(!r.ok) throw new Error(j.error||'Submission failed ('+r.status+')');
+    renderResponse(j.summary);
+  }catch(e){ fail(e.message); btn.disabled=false; btn.textContent='Submit report & generate response  <svg class="ic sm"><use href="#i-arrow-right"></use></svg>'; }
+}
+
+function renderResponse(s){
+  LAST_REPORT_ID=s.report_id;
+  $('form-view').classList.add('hidden');
+  const urg=s.urgency==='HIGH'?'urg-HIGH':'urg-NORMAL';
+  $('response-view').innerHTML=`
+    <div class="ref-box">
+      <p class="lbl">Report recorded · reference ID</p>
+      <div class="ref">${esc(s.ref)}</div>
+      <p>Keep this reference ID. It identifies your case record and its audit-trail entry. Filed
+      ${esc(new Date(s.created_at).toLocaleString())}.</p>
+    </div>
+
+    <div class="banner green"><span class="tag">Response</span>
+      <div>Your report has been evaluated by the rules-as-code engine. It is routed for
+      <b>${esc(s.level_name)} (${esc(s.level)})</b> — escalated to <b>${esc(s.escalate_to.replaceAll('_',' ').toLowerCase())}</b>.
+      This is advisory decision support, not a judgment, and not an FIR.</div></div>
+
+    <div class="summary-grid">
+      <div class="summary-item"><p class="lbl">Review level</p><div class="val"><span class="level ${esc(s.level.toLowerCase())}">${esc(s.level)}</span> <span class="small">${esc(s.level_name)}</span></div></div>
+      <div class="summary-item"><p class="lbl">Urgency</p><div class="val"><span class="badge ${urg}">${esc(s.urgency)}</span><div class="small" style="margin-top:4px">${esc(s.urgency_reason)}</div></div></div>
+      <div class="summary-item"><p class="lbl">Severity tier (routing only)</p><div class="val">${esc(s.severity)}<div class="small" style="margin-top:4px">Not a prediction of outcome.</div></div></div>
+      <div class="summary-item"><p class="lbl">Engine confidence</p><div class="val">${esc(s.confidence)}<div class="small" style="margin-top:4px">Second reviewer required: ${s.second_reviewer_required?'YES':'no'}</div></div></div>
+    </div>
+
+    <div class="card"><h2>What happens next</h2>
+      <ul class="q-list">${s.next_steps.map(x=>'<li>'+esc(x)+'</li>').join('')}</ul></div>
+
+    <div class="card"><h2>Safeguard triggers that fired <span class="badge b-gray">${s.triggers_fired.length}</span></h2>
+      ${s.triggers_fired.length? s.triggers_fired.map(t=>`<div class="kv"><span class="pill">${esc(t.id)} · ${esc(t.level)}</span> <b>${esc(t.reason)}</b><div class="small">Based on: <span class="mono">${esc(t.evidence_ref||'—')}</span></div></div>`).join('<hr class="hr" style="margin:10px 0">')
+      : '<p class="small">No additional safeguard triggers fired; the baseline review level applies.</p>'}</div>
+
+    ${s.open_questions.length?`<div class="card"><h2>Open questions for the reviewing officer</h2><ul class="q-list">${s.open_questions.map(q=>'<li>'+esc(q)+'</li>').join('')}</ul></div>`:''}
+
+    ${s.constitutional_flags.length?`<div class="card"><h2>Constitutional safeguards noted</h2>${s.constitutional_flags.map(f=>`<div class="kv"><span class="pill">Art. ${esc(f.article)}</span> ${esc(f.concern)}</div>`).join('')}</div>`:''}
+
+    <div class="card"><h2>Evidence register</h2>
+      ${s.evidence.length? `<div class="table-wrap"><table><thead><tr><th>File</th><th>Size</th><th>SHA-256 (tamper-evident seal)</th></tr></thead><tbody>
+        ${s.evidence.map(e=>`<tr><td><b>${esc(e.filename)}</b></td><td>${fmtSize(e.size)}</td><td class="mono">${esc(e.sha256)}</td></tr>`).join('')}
+      </tbody></table></div>`
+      : '<p class="small">You confirmed that no evidence is available to attach at this time. The registry has been informed. You may submit supporting proof with a follow-up once available.</p>'}
+      <div class="kv" style="margin-top:10px"><b>DigiLocker verification:</b> <span class="badge b-amber">NOT LINKED — pending implementation</span>
+      <span class="small">Your identity is not yet verified; this report is flagged accordingly.</span></div></div>
+
+    <div class="card"><h2>Notes for the registry</h2>
+      <ul class="q-list">${s.intake_notes.map(n=>'<li>'+esc(n)+'</li>').join('')}</ul>
+      ${s.kb_resolution?`<div class="kv" style="margin-top:8px"><b>Citation resolution:</b> <span class="badge ${s.kb_resolution==='VERIFIED'?'b-green':'b-amber'}">${esc(String(s.kb_resolution).replaceAll('_',' '))}</span></div>`:''}</div>
+
+    <div class="card"><h2>Was this response right? <span class="badge b-gray">recorded in an audited log</span></h2>
+      <p class="desc">Your verdict is stored against this revision. Cases with net-negative feedback are
+      automatically flagged for admin review, and all votes are exportable as a labeled record for audit.
+      The deterministic engine itself never self-modifies.</p>
+      <div class="btn-row">
+        <button class="btn primary" id="fb-up" onclick="sendFeedback(1)"><svg class="ic sm"><use href="#i-thumb-up"></use></svg> Yes, this response is correct / helpful</button>
+        <button class="btn secondary" id="fb-down" onclick="sendFeedback(-1)"><svg class="ic sm"><use href="#i-thumb-down"></use></svg> No, something is wrong</button>
+        <span class="small" id="fb-msg"></span>
+      </div></div>
+
+    <div class="disclaimer"><b>${esc('Disclaimer:')}</b> ${esc(s.disclaimer)} Guilt, sentence, compensation, bail
+    and credibility are never decided here. All facts are your assertions and are treated as untrusted inputs
+    until reviewed.</div>
+
+    <div class="btn-row" style="margin-top:16px">
+      <a class="btn primary" href="/case?id=${encodeURIComponent(s.report_id)}">View full case record <svg class="ic sm"><use href="#i-arrow-right"></use></svg></a>
+      <a class="btn secondary" href="/cases">My cases</a>
+      <a class="btn secondary" href="/dashboard">Dashboard</a>
+      <button class="btn secondary" onclick="location.reload()">Submit another report</button>
+    </div>`;
+  window.scrollTo({top:0,behavior:'smooth'});
+}
+
+let LAST_REPORT_ID=null;
+async function sendFeedback(vote){
+  if(!LAST_REPORT_ID) return;
+  let comment='';
+  if(vote===-1) comment=prompt('What is wrong with this response? (optional — admins review flagged cases):')||'';
+  try{
+    const r=await authFetch('/api/feedback',{method:'POST',headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({report_id:LAST_REPORT_ID,vote,comment})});
+    const j=await r.json();
+    if(!r.ok) throw new Error(j.error||'Feedback failed.');
+    $('fb-msg').innerHTML='Recorded — thanks. <svg class="ic sm"><use href="#i-thumb-up"></use></svg> '+j.up+' · <svg class="ic sm"><use href="#i-thumb-down"></use></svg> '+j.down+(j.flagged?' <span class="badge b-red"><svg class="ic"><use href="#i-flag"></use></svg> flagged for admin review</span>':'');
+    $('fb-up').disabled=$('fb-down').disabled=true;
+  }catch(e){ $('fb-msg').textContent=e.message; }
+}
+</script>
+</body>
+</html>

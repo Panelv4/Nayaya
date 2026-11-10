@@ -1,0 +1,219 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Legal Knowledge Base — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <span id="admin-nav"></span>
+      <a class="nav-link active" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-head">
+    <div><h1>Legal knowledge base</h1>
+    <p>Phase 2 infrastructure: versioned statutory database · precedent tracking · conflict detection · legal provenance graph.</p></div>
+    <span class="badge b-amber" id="kb-mode">—</span>
+  </div>
+
+  <div class="banner amber"><span class="tag">Verification</span>
+    <div>Statutory versions ship and are added <b>UNVERIFIED</b>: they never influence an evaluation until an
+    administrator marks them verified after checking the official corpus. Only <b>verified</b> versions covering
+    the incident date feed punishment data into severity routing, and every use is recorded in the provenance graph.</div></div>
+
+  <div id="body"><div class="empty">Loading knowledge base…</div></div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.4.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
+function toast(msg,ms=3800){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
+let K=null, IS_ADMIN=false;
+
+(async()=>{
+  let me; try{ me=await requireAuth(); }catch(e){ return; }
+  IS_ADMIN=me.is_admin;
+  if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/workbench"><svg class="ic sm"><use href="#i-cog"></use></svg> Workbench</a>';
+  $('kb-mode').textContent=me.is_admin?'ADMIN — EDIT ENABLED':'READ ONLY';
+  $('kb-mode').className='badge '+(me.is_admin?'b-red':'b-gray');
+  await load();
+})();
+async function load(){
+  try{
+    const r=await authFetch('/api/kb');
+    if(!r.ok) throw new Error('Failed to load KB.');
+    K=await r.json(); render();
+  }catch(e){ $('body').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; }
+}
+async function post(url,body){
+  const r=await authFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error||('Failed ('+r.status+')'));
+  return j;
+}
+async function addVersion(){
+  try{
+    const j=await post('/api/admin/statutes',{
+      statute:$('st-statute').value.trim(), provision:$('st-provision').value.trim(),
+      version_label:$('st-version').value.trim(), effective_from:$('st-from').value,
+      effective_to:$('st-to').value||null, title:$('st-title').value.trim(), body:$('st-body').value.trim(),
+      pun_death:$('st-death').checked, pun_life:$('st-life').checked,
+      pun_min_years:$('st-min').value===''?null:parseFloat($('st-min').value),
+      pun_max_years:$('st-max').value===''?null:parseFloat($('st-max').value),
+      source_ref:$('st-source').value.trim(), note:$('st-note').value.trim()});
+    toast('Version added (UNVERIFIED). '+(j.reminder||'')); load();
+  }catch(e){ toast(e.message); }
+}
+async function verifyVersion(id){
+  if(!confirm('Mark this statutory version VERIFIED? Only do this after checking the official corpus — verified versions feed live evaluations.')) return;
+  try{ await post('/api/admin/statutes/verify',{id}); toast('Version marked verified.'); load(); }catch(e){ toast(e.message); }
+}
+async function addPrecedent(){
+  try{
+    await post('/api/admin/precedents',{
+      citation:$('pc-citation').value.trim(), court:$('pc-court').value.trim(),
+      decided_on:$('pc-date').value||null, statute:$('pc-statute').value.trim(),
+      provision:$('pc-provision').value.trim(), headnote:$('pc-headnote').value.trim(),
+      holding_tag:$('pc-tag').value});
+    toast('Precedent added.'); load();
+  }catch(e){ toast(e.message); }
+}
+async function setPrecedent(id,status){
+  const ob=status==='OVERRULED'?(prompt('Overruled by (citation):')||null):null;
+  try{ await post('/api/admin/precedents/status',{id,status,overruled_by:ob}); toast('Precedent status updated.'); load(); }catch(e){ toast(e.message); }
+}
+async function browseProvenance(){
+  const type=$('pv-type').value, id=$('pv-id').value.trim();
+  if(!id){ toast('Enter a subject id (e.g. a case reference like NYR-XXXX).'); return; }
+  try{
+    const r=await authFetch('/api/provenance?type='+encodeURIComponent(type)+'&id='+encodeURIComponent(id));
+    const j=await r.json();
+    $('pv-out').innerHTML=`<p class="kv"><b>${j.edges.length}</b> edge(s) around ${esc(type)}:${esc(id)} (depth ≤ 2)</p>
+      ${j.edges.length?`<div class="table-wrap"><table><thead><tr><th>When</th><th>Subject</th><th>Predicate</th><th>Object</th><th>Meta</th></tr></thead><tbody>
+      ${j.edges.map(e=>`<tr><td class="small">${fmtDate(e.at)}</td><td class="mono small">${esc(e.subject.type)}:${esc(e.subject.id)}</td>
+        <td><span class="pill">${esc(e.predicate)}</span></td><td class="mono small">${esc(e.object.type)}:${esc(e.object.id)}</td>
+        <td class="small mono">${esc(JSON.stringify(e.meta))}</td></tr>`).join('')}</tbody></table></div>`:''}`;
+  }catch(e){ $('pv-out').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; }
+}
+
+function render(){
+  $('body').innerHTML=`
+  ${K.conflicts.length?`<div class="card"><h2><svg class="ic"><use href="#i-alert"></use></svg> Detected conflicts <span class="badge b-amber">${K.conflicts.length}</span></h2>
+    <div class="table-wrap"><table><thead><tr><th>Kind</th><th>Statute</th><th>Provision</th><th>Detail</th></tr></thead><tbody>
+    ${K.conflicts.map(c=>`<tr><td><span class="badge b-amber">${esc(c.kind.replaceAll('_',' '))}</span></td>
+      <td>${esc(c.statute)}</td><td>${esc(c.provision)}</td><td class="small">${esc(c.detail)}</td></tr>`).join('')}
+    </tbody></table></div></div>`:''}
+
+  <div class="card"><h2><svg class="ic"><use href="#i-doc"></use></svg> Versioned statutory database <span class="badge b-gray">${K.statutes.length} versions</span></h2>
+    <div class="table-wrap"><table><thead><tr>
+      <th>Statute</th><th>Provision</th><th>Version</th><th>In force</th><th>Punishment</th><th>Status</th>${IS_ADMIN?'<th>Actions</th>':''}
+    </tr></thead><tbody>
+    ${K.statutes.map(s=>`<tr>
+      <td><b>${esc(s.statute)}</b></td><td>${esc(s.provision)}</td><td>${esc(s.version_label)}<div class="small">${esc(s.title||'')}</div></td>
+      <td class="small">${esc(s.effective_from)} <svg class="ic sm"><use href="#i-arrow-right"></use></svg> ${esc(s.effective_to||'open')}</td>
+      <td class="small mono">${s.pun_death?'death ':''}${s.pun_life?'life ':''}${s.pun_min_years!=null?'min '+s.pun_min_years+'y ':''}${s.pun_max_years!=null?'max '+s.pun_max_years+'y':''}${(!s.pun_death&&!s.pun_life&&s.pun_min_years==null&&s.pun_max_years==null)?'—':''}</td>
+      <td><span class="badge ${s.verified?'b-green':'b-amber'}">${s.verified?'VERIFIED':'UNVERIFIED'}</span>${s.verified?`<div class="small">${esc(s.verified_by||'')}</div>`:''}</td>
+      ${IS_ADMIN?`<td>${s.verified?'':`<button class="btn small secondary" onclick="verifyVersion(${s.id})">Mark verified</button>`}</td>`:''}
+    </tr>`).join('')}
+    </tbody></table></div>
+    ${IS_ADMIN?`
+    <details style="margin-top:12px"><summary>＋ Add statutory version (an open previous version of the same provision is closed automatically — amendment)</summary>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="field"><label>Statute</label><input type="text" id="st-statute" placeholder="e.g. BNS"></div>
+        <div class="field"><label>Provision</label><input type="text" id="st-provision" placeholder="e.g. s.103"></div>
+        <div class="field"><label>Version label</label><input type="text" id="st-version" placeholder="e.g. BNS-2023"></div>
+        <div class="field"><label>Source reference</label><input type="text" id="st-source" placeholder="official gazette / corpus link"></div>
+        <div class="field"><label>Effective from</label><input type="date" id="st-from"></div>
+        <div class="field"><label>Effective to (blank = open)</label><input type="date" id="st-to"></div>
+        <div class="field full"><label>Title</label><input type="text" id="st-title" placeholder="provision title"></div>
+        <div class="field full"><label>Text (as verified against corpus)</label><textarea id="st-body" style="min-height:70px"></textarea></div>
+        <div class="field"><label>Min years</label><input type="number" id="st-min" min="0" step="0.5"></div>
+        <div class="field"><label>Max years</label><input type="number" id="st-max" min="0" step="0.5"></div>
+        <div class="field full">
+          <label class="check"><input type="checkbox" id="st-death"><span>Death prescribed</span></label>
+          <label class="check"><input type="checkbox" id="st-life"><span>Life imprisonment prescribed</span></label>
+        </div>
+        <div class="field full"><label>Note</label><input type="text" id="st-note" placeholder="e.g. ILLUSTRATIVE SEED — verify before use"></div>
+      </div>
+      <div class="btn-row"><button class="btn primary small" onclick="addVersion()">Add version (unverified)</button></div>
+    </details>`:''}
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-scales"></use></svg> Precedent tracking <span class="badge b-gray">${K.precedents.length}</span></h2>
+    ${K.precedents.length?`<div class="table-wrap"><table><thead><tr>
+      <th>Citation</th><th>Court</th><th>Decided</th><th>Provision</th><th>Holding</th><th>Status</th>${IS_ADMIN?'<th>Actions</th>':''}
+    </tr></thead><tbody>
+    ${K.precedents.map(p=>`<tr>
+      <td><b>${esc(p.citation)}</b><div class="small">${esc(p.headnote||'')}</div></td>
+      <td>${esc(p.court||'—')}</td><td>${esc(p.decided_on||'—')}</td>
+      <td>${esc(p.statute||'')} ${esc(p.provision||'')}</td>
+      <td><span class="badge b-gray">${esc(p.holding_tag.replaceAll('_',' '))}</span></td>
+      <td><span class="badge ${p.status==='GOOD_LAW'?'b-green':'b-red'}">${esc(p.status.replaceAll('_',' '))}</span>${p.overruled_by?`<div class="small">by ${esc(p.overruled_by)}</div>`:''}</td>
+      ${IS_ADMIN?`<td><div class="btn-row" style="gap:6px">
+        ${p.status!=='OVERRULED'?`<button class="btn small secondary" onclick="setPrecedent(${p.id},'OVERRULED')">Mark overruled</button>`:''}
+        ${p.status!=='GOOD_LAW'?`<button class="btn small secondary" onclick="setPrecedent(${p.id},'GOOD_LAW')">Restore good law</button>`:''}
+      </div></td>`:''}
+    </tr>`).join('')}</tbody></table></div>`:'<div class="empty">No precedents tracked yet.</div>'}
+    ${IS_ADMIN?`
+    <details style="margin-top:12px"><summary>＋ Add precedent</summary>
+      <div class="form-grid" style="margin-top:10px">
+        <div class="field"><label>Citation</label><input type="text" id="pc-citation" placeholder="e.g. (2024) 5 SCC 1"></div>
+        <div class="field"><label>Court</label><input type="text" id="pc-court" placeholder="e.g. Supreme Court of India"></div>
+        <div class="field"><label>Decided on</label><input type="date" id="pc-date"></div>
+        <div class="field"><label>Holding tag</label><select id="pc-tag">
+          <option value="PROCEDURAL">PROCEDURAL</option><option value="SUPPORTS_STRICT">SUPPORTS_STRICT</option>
+          <option value="SUPPORTS_LENIENT">SUPPORTS_LENIENT</option></select></div>
+        <div class="field"><label>Statute</label><input type="text" id="pc-statute" placeholder="e.g. BNS"></div>
+        <div class="field"><label>Provision</label><input type="text" id="pc-provision" placeholder="e.g. s.103"></div>
+        <div class="field full"><label>Headnote</label><input type="text" id="pc-headnote" placeholder="one-line holding"></div>
+      </div>
+      <div class="btn-row"><button class="btn primary small" onclick="addPrecedent()">Add precedent</button></div>
+    </details>`:''}
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-graph"></use></svg> Provenance graph browser</h2>
+    <p class="desc">Every evaluation, citation, revision, disclosure decision, manual check, evidence registration
+    and feedback vote is an edge in the legal provenance graph.</p>
+    <div class="row">
+      <div class="col" style="flex:0 0 200px"><div class="field"><label>Subject type</label>
+        <select id="pv-type"><option>REPORT</option><option>REVISION</option><option>STATUTE_VERSION</option>
+        <option>PRECEDENT</option><option>EVIDENCE</option><option>FEEDBACK</option><option>PROVISION</option></select></div></div>
+      <div class="col"><div class="field"><label>Subject id</label>
+        <input type="text" id="pv-id" placeholder="e.g. NYR-XXXXXXXXXX or a statute version id"></div></div>
+      <div class="col" style="flex:0 0 auto;align-self:flex-end"><button class="btn secondary" onclick="browseProvenance()">Browse edges</button></div>
+    </div>
+    <div id="pv-out"></div>
+  </div>`;
+}
+</script>
+</body>
+</html>

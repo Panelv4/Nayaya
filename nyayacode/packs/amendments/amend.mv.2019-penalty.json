@@ -1,0 +1,47 @@
+{
+  "id": "amend.mv.2019-penalty",
+  "title": "Motor Vehicles (Amendment) Act, 2019 — the penalty hike in s.185",
+  "pack": "in.mv.drunken-driving",
+  "kind": "real",
+  "enacted": true,
+  "commencement": "2019-09-01",
+  "source": {
+    "citation": "Motor Vehicles (Amendment) Act, 2019 (Act 32 of 2019)",
+    "url": "https://www.indiacode.nic.in/handle/123456789/11691"
+  },
+  "summary": "The 2019 amendment raised the fine for a first offence under s.185 from Rs 2,000 to Rs 10,000 and for a second or subsequent offence from Rs 3,000 to Rs 15,000. The custodial ceilings were untouched: six months for a first offence, two years thereafter. Nothing in the offence itself changed, so this is a pure sentencing amendment and it tests whether the machinery can see a change that moves no verdict at all.",
+  "before_label": "MV Act s.185 before the 2019 amendment",
+  "after_label": "MV Act s.185 after the 2019 amendment",
+  "before": {
+    "parameters": {
+      "first_offence_fine_rupees": 2000,
+      "subsequent_fine_rupees": 3000
+    },
+    "punishment_rules": [
+      {
+        "when": { "and": [
+          { "==": [{ "var": "offence_kind", "type": "str", "default": "" }, "drunken_driving"] },
+          { "!=": [{ "var": "prior_conviction", "type": "enum", "default": "none" }, "none"] },
+          { "==": [{ "var": "param.repeat_window_years", "type": "int", "default": 0 }, 0] }
+        ] },
+        "text": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019]",
+        "citations": ["mv-1988#s185"]
+      },
+      {
+        "when": { "and": [
+          { "==": [{ "var": "offence_kind", "type": "str", "default": "" }, "drunken_driving"] },
+          { "==": [{ "var": "prior_conviction", "type": "enum", "default": "none" }, "within_three_years"] }
+        ] },
+        "text": "Second offence within three years: imprisonment up to 24 months, or fine of Rs 3,000, or both [s.185, pre-2019, three-year window reading]",
+        "citations": ["mv-1988#s185"]
+      },
+      {
+        "when": { "==": [{ "var": "offence_kind", "type": "str", "default": "" }, "drunken_driving"] },
+        "text": "First offence: imprisonment up to 6 months, or fine of Rs 2,000, or both [s.185, pre-2019]",
+        "citations": ["mv-1988#s185"]
+      }
+    ]
+  },
+  "after": {},
+  "expected_reading": "Decisions should not move at all: the offence and its threshold are identical before and after. Every case that is an offence stays an offence. What changes is the sentence attached to it, which is why the report separates decisions from sentences."
+}

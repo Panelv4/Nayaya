@@ -1,0 +1,20 @@
+{
+  "id": "amend.bns.exc4-abolished",
+  "title": "Repealing Exception 4 (sudden fight) — a hypothetical amendment",
+  "pack": "in.bns.homicide",
+  "kind": "hypothetical",
+  "enacted": false,
+  "commencement": null,
+  "source": {
+    "citation": "Hypothetical. Written to demonstrate a before/after comparison on a real provision, not to propose a change.",
+    "url": null
+  },
+  "summary": "Exception 4 removes murder liability where death is caused in a sudden fight, in the heat of passion, without premeditation and without undue advantage. This hypothetical amendment repeals the exception and leaves everything else untouched. It is the cleanest possible demonstration: one statutory sentence disappears, and the tool reports exactly which cases change side.",
+  "before_label": "Exception 4 in force",
+  "after_label": "Exception 4 repealed",
+  "before": {},
+  "after": {
+    "remove_branches": ["D-EXC4-SUDDEN-FIGHT"]
+  },
+  "expected_reading": "Cases that relied on Exception 4 — sudden fight, no undue advantage, and a mental element that would otherwise be murder — become murder instead of culpable homicide not amounting to murder. Nothing else should move."
+}

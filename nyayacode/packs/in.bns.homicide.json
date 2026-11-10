@@ -1,0 +1,1154 @@
+{
+  "id": "in.bns.homicide",
+  "title": "Culpable homicide, murder and the five exceptions — BNS 2023 ss.100-105",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of the Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023) as published on India Code. Structure checked against every illustration in ss.100 and 101 (see tests/test_homicide_illustrations.py). NOT yet read by a lawyer: the pack says so everywhere it is used."
+  },
+  "scope": {
+    "in_scope": [
+      "s.100 culpable homicide",
+      "s.101 murder",
+      "s.101 Exceptions 1-5",
+      "s.102 transferred malice",
+      "s.103 punishment for murder",
+      "s.104 murder by life-convict",
+      "s.105 culpable homicide not amounting to murder"
+    ],
+    "out_of_scope": [
+      "s.106 death by negligence",
+      "s.107 abetment of suicide",
+      "s.108 attempt to murder",
+      "s.299-304 IPC (repealed 1 July 2024)",
+      "sentencing discretion (rarest-of-rare doctrine)",
+      "private defence under ss.34-44 beyond the Exception 2 excess case"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023)",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, ss.299-304",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor provisions. BNS ss.100/101 are materially the same test as IPC ss.299/300; s.103(2) is new."
+    },
+    {
+      "id": "commentary-103",
+      "citation": "Secondary commentaries on BNS s.103(2)",
+      "url": "https://vidhijudicial.com/bns:-s103-105.html",
+      "kind": "secondary",
+      "note": "Used only as evidence that the text of s.103(2) is reproduced inconsistently. Not authority."
+    }
+  ],
+  "citations": [
+    "bns-2023#s100",
+    "bns-2023#s101",
+    "bns-2023#s102",
+    "bns-2023#s103",
+    "bns-2023#s104",
+    "bns-2023#s105"
+  ],
+  "facts": [
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The act caused the death of a human being (s.100)"
+    },
+    {
+      "name": "mens_rea",
+      "type": "enum",
+      "label": "Mental element established by the evidence",
+      "values": [
+        "none",
+        "intention_death",
+        "intention_injury_known_likely_death",
+        "intention_injury_sufficient",
+        "knowledge_imminently_dangerous_no_excuse",
+        "intention_injury_likely_death",
+        "knowledge_likely_death"
+      ],
+      "value_labels": {
+        "none": "no intention or knowledge of death",
+        "intention_death": "intention of causing death [s.101(a)]",
+        "intention_injury_known_likely_death": "intention of injury the offender KNOWS is likely to cause this person's death [s.101(b)]",
+        "intention_injury_sufficient": "intention of injury sufficient in the ordinary course of nature to cause death [s.101(c)]",
+        "knowledge_imminently_dangerous_no_excuse": "knowledge the act is so imminently dangerous that it must in all probability cause death, without excuse [s.101(d)]",
+        "intention_injury_likely_death": "intention of injury LIKELY to cause death, but no knowledge as to this person and not 'sufficient' [s.100 limb 2 only]",
+        "knowledge_likely_death": "knowledge the act is likely to cause death, but not 'imminently dangerous' [s.100 limb 3 only]"
+      }
+    },
+    {
+      "name": "exception_state",
+      "type": "enum",
+      "label": "Which exception to s.101 is made out on the facts",
+      "values": [
+        "none",
+        "grave_sudden_provocation",
+        "private_defence_excess",
+        "public_servant_good_faith",
+        "sudden_fight",
+        "consent"
+      ],
+      "value_labels": {
+        "none": "no exception",
+        "grave_sudden_provocation": "Exception 1 — grave and sudden provocation",
+        "private_defence_excess": "Exception 2 — good-faith excess of private defence",
+        "public_servant_good_faith": "Exception 3 — public servant exceeding lawful powers in good faith",
+        "sudden_fight": "Exception 4 — sudden fight, heat of passion, no premeditation",
+        "consent": "Exception 5 — consent of a person above eighteen"
+      }
+    },
+    {
+      "name": "provocation_excluded",
+      "type": "bool",
+      "label": "Provocation was sought or voluntarily provoked, or given by a lawful act / public servant / private defence (proviso to Exception 1)"
+    },
+    {
+      "name": "undue_advantage_cruel",
+      "type": "bool",
+      "label": "Offender took undue advantage or acted in a cruel or unusual manner (Exceptions 1 and 4)"
+    },
+    {
+      "name": "victim_consent_adult",
+      "type": "bool",
+      "label": "The deceased was above eighteen and consented to death or took the risk of death (Exception 5)"
+    },
+    {
+      "name": "victim_other_than_intended",
+      "type": "bool",
+      "label": "Death was caused to a person other than the one the offender intended or knew to be at risk (s.102)"
+    },
+    {
+      "name": "group_five_or_more",
+      "type": "bool",
+      "label": "Murder committed by a group of five or more acting in concert (s.103(2))"
+    },
+    {
+      "name": "discriminatory_ground",
+      "type": "bool",
+      "label": "The group acted on the ground of race, caste, community, sex, place of birth, language, personal belief or similar ground (s.103(2))"
+    },
+    {
+      "name": "offender_under_life_sentence",
+      "type": "bool",
+      "label": "Offender was already under sentence of imprisonment for life (s.104)"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-murder-limbs",
+      "term": "murder limbs",
+      "definition": "The four mental elements in s.101(a)-(d) that raise culpable homicide to murder. Everything in s.100 that does not fall in one of them is culpable homicide not amounting to murder.",
+      "citations": [
+        "bns-2023#s101"
+      ]
+    },
+    {
+      "id": "T-exception",
+      "term": "exception to s.101",
+      "definition": "A case in which culpable homicide would otherwise be murder but is not. An exception reduces the offence to s.105; it does not make the act lawful.",
+      "citations": [
+        "bns-2023#s101",
+        "bns-2023#s105"
+      ]
+    }
+  ],
+  "parameters": {
+    "knowledge_particularised": true,
+    "provocation_requires_non_lawful_source": true,
+    "sudden_fight_requires_mutual_combat": true
+  },
+  "branches": [
+    {
+      "id": "B-NO-DEATH",
+      "provision": "s.100",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          {
+            "var": "death_caused",
+            "type": "bool",
+            "default": true
+          },
+          false
+        ]
+      },
+      "text": "Whoever causes death by doing an act ... commits the offence of culpable homicide.",
+      "notes": "No death means s.100 is not engaged at all. Hurt, attempt and abetment are different provisions and outside this pack."
+    },
+    {
+      "id": "B-NO-MENS-REA",
+      "provision": "s.100",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              "none"
+            ]
+          }
+        ]
+      },
+      "text": "... with the intention of causing death, or with the intention of causing such bodily injury as is likely to cause death, or with the knowledge that he is likely by such act to cause death.",
+      "notes": "Death caused without any of the three mental elements is not culpable homicide. Negligence is s.106, which this pack does not encode."
+    },
+    {
+      "id": "B-100-CULPABLE-ONLY",
+      "provision": "s.105",
+      "verdict": "offence",
+      "offence": "culpable_homicide",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_injury_likely_death",
+                "knowledge_likely_death"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever commits culpable homicide not amounting to murder ... [s.105]",
+      "notes": "The mental element reaches s.100 but not any limb of s.101, so the offence is culpable homicide, not murder."
+    },
+    {
+      "id": "M-101a",
+      "provision": "s.101(a)",
+      "verdict": "offence",
+      "offence": "murder",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              "intention_death"
+            ]
+          }
+        ]
+      },
+      "text": "if the act by which the death is caused is done with the intention of causing death"
+    },
+    {
+      "id": "M-101b",
+      "provision": "s.101(b)",
+      "verdict": "offence",
+      "offence": "murder",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              "intention_injury_known_likely_death"
+            ]
+          }
+        ]
+      },
+      "text": "if the act ... is done with the intention of causing such bodily injury as the offender knows to be likely to cause the death of the person to whom the harm is caused"
+    },
+    {
+      "id": "M-101c",
+      "provision": "s.101(c)",
+      "verdict": "offence",
+      "offence": "murder",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              "intention_injury_sufficient"
+            ]
+          }
+        ]
+      },
+      "text": "if the act ... is done with the intention of causing bodily injury to any person and the bodily injury intended to be inflicted is sufficient in the ordinary course of nature to cause death"
+    },
+    {
+      "id": "M-101d",
+      "provision": "s.101(d)",
+      "verdict": "offence",
+      "offence": "murder",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              "knowledge_imminently_dangerous_no_excuse"
+            ]
+          }
+        ]
+      },
+      "text": "if the person committing the act ... knows that it is so imminently dangerous that it must in all probability cause death ... and commits such act without any excuse for incurring the risk of causing death"
+    }
+  ],
+  "defeaters": [
+    {
+      "id": "D-EXC1-PROVOCATION",
+      "provision": "s.101 Exception 1",
+      "verdict": "offence",
+      "offence": "culpable_homicide",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_death",
+                "intention_injury_known_likely_death",
+                "intention_injury_sufficient",
+                "knowledge_imminently_dangerous_no_excuse"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "exception_state",
+                "type": "enum",
+                "default": "none"
+              },
+              "grave_sudden_provocation"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "provocation_excluded",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "undue_advantage_cruel",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "M-101a",
+        "M-101b",
+        "M-101c",
+        "M-101d"
+      ],
+      "text": "Culpable homicide is not murder if the offender, whilst deprived of the power of self-control by grave and sudden provocation, causes the death of the person who gave the provocation ... Provided that the provocation is not (a) sought or voluntarily provoked by the offender ... (b) given by anything done in obedience to the law, or by a public servant in the lawful exercise of the powers of such public servant; (c) given by anything done in the lawful exercise of the right of private defence.",
+      "notes": "Two independent limits: the source of the provocation (the proviso) and the manner of the killing (no undue advantage, no cruelty)."
+    },
+    {
+      "id": "D-EXC2-PRIVATE-DEFENCE",
+      "provision": "s.101 Exception 2",
+      "verdict": "offence",
+      "offence": "culpable_homicide",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_death",
+                "intention_injury_known_likely_death",
+                "intention_injury_sufficient",
+                "knowledge_imminently_dangerous_no_excuse"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "exception_state",
+                "type": "enum",
+                "default": "none"
+              },
+              "private_defence_excess"
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "M-101a",
+        "M-101b",
+        "M-101c",
+        "M-101d"
+      ],
+      "text": "Culpable homicide is not murder if the offender, in the exercise in good faith of the right of private defence of person or property, exceeds the power given to him by law and causes the death ... without premeditation, and without any intention of doing more harm than is necessary for the purpose of such defence."
+    },
+    {
+      "id": "D-EXC3-PUBLIC-SERVANT",
+      "provision": "s.101 Exception 3",
+      "verdict": "offence",
+      "offence": "culpable_homicide",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_death",
+                "intention_injury_known_likely_death",
+                "intention_injury_sufficient",
+                "knowledge_imminently_dangerous_no_excuse"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "exception_state",
+                "type": "enum",
+                "default": "none"
+              },
+              "public_servant_good_faith"
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "M-101a",
+        "M-101b",
+        "M-101c",
+        "M-101d"
+      ],
+      "text": "Culpable homicide is not murder if the offender, being a public servant or aiding a public servant acting for the advancement of public justice, exceeds the powers given to him by law, and causes death by doing an act which he, in good faith, believes to be lawful and necessary for the due discharge of his duty ... and without ill-will towards the person whose death is caused."
+    },
+    {
+      "id": "D-EXC4-SUDDEN-FIGHT",
+      "provision": "s.101 Exception 4",
+      "verdict": "offence",
+      "offence": "culpable_homicide",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_death",
+                "intention_injury_known_likely_death",
+                "intention_injury_sufficient",
+                "knowledge_imminently_dangerous_no_excuse"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "exception_state",
+                "type": "enum",
+                "default": "none"
+              },
+              "sudden_fight"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "undue_advantage_cruel",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "M-101a",
+        "M-101b",
+        "M-101c",
+        "M-101d"
+      ],
+      "text": "Culpable homicide is not murder if it is committed without premeditation in a sudden fight in the heat of passion upon a sudden quarrel and without the offender's having taken undue advantage or acted in a cruel or unusual manner."
+    },
+    {
+      "id": "D-EXC5-CONSENT",
+      "provision": "s.101 Exception 5",
+      "verdict": "offence",
+      "offence": "culpable_homicide",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_death",
+                "intention_injury_known_likely_death",
+                "intention_injury_sufficient",
+                "knowledge_imminently_dangerous_no_excuse"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "exception_state",
+                "type": "enum",
+                "default": "none"
+              },
+              "consent"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "victim_consent_adult",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "M-101a",
+        "M-101b",
+        "M-101c",
+        "M-101d"
+      ],
+      "text": "Culpable homicide is not murder when the person whose death is caused, being above the age of eighteen years, suffers death or takes the risk of death with his own consent."
+    }
+  ],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under ss.100-105",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence",
+      "provision": null
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "offence_kind",
+                "type": "str",
+                "default": ""
+              },
+              "murder"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "offender_under_life_sentence",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "text": "Death, or imprisonment for life which shall mean the remainder of that person's natural life [s.104]",
+      "citations": [
+        "bns-2023#s104"
+      ]
+    },
+    {
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "offence_kind",
+                "type": "str",
+                "default": ""
+              },
+              "murder"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "group_five_or_more",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "discriminatory_ground",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "text": "Death or imprisonment for life, and fine; each member of a group of five or more acting in concert on a discriminatory ground [s.103(2)]",
+      "citations": [
+        "bns-2023#s103"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "murder"
+        ]
+      },
+      "text": "Death or imprisonment for life, and fine [s.103(1)]",
+      "citations": [
+        "bns-2023#s103"
+      ]
+    },
+    {
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "offence_kind",
+                "type": "str",
+                "default": ""
+              },
+              "culpable_homicide"
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "mens_rea",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "intention_death",
+                "intention_injury_known_likely_death",
+                "intention_injury_sufficient",
+                "knowledge_imminently_dangerous_no_excuse",
+                "intention_injury_likely_death"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Imprisonment for life, or imprisonment up to 10 years with a minimum of 5 years, and fine [s.105 first paragraph]",
+      "citations": [
+        "bns-2023#s105"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "culpable_homicide"
+        ]
+      },
+      "text": "Imprisonment up to 10 years, and fine [s.105 second paragraph]",
+      "citations": [
+        "bns-2023#s105"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-101b-PARTICULARISED",
+      "provision": "s.101(b)",
+      "status": "unresolved",
+      "question": "Does s.101(b) require knowledge directed at the particular victim, or is it satisfied by knowledge that injury of that kind is likely to cause death in general?",
+      "why_it_matters": "The answer moves a class of cases between murder (s.103) and culpable homicide not amounting to murder (s.105) — between a possible death sentence and a maximum of ten years.",
+      "position_a": "Particularised: s.101(b) requires the offender to know the injury is likely to cause the death of the person to whom the harm is caused. Generic knowledge stops at s.100.",
+      "position_b": "Generic: knowledge that injuries of the kind inflicted are likely to kill is enough, because most such offenders cannot particularise.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s101",
+        "bns-2023#s100"
+      ],
+      "variants": [
+        {
+          "id": "particularised",
+          "label": "read s.101(b) as particularised (current encoding)",
+          "patch": {}
+        },
+        {
+          "id": "generic",
+          "label": "read s.101(b) as satisfied by generic knowledge",
+          "patch": {
+            "edit_branches": {
+              "B-100-CULPABLE-ONLY": {
+                "when": {
+                  "in": [
+                    {
+                      "var": "mens_rea",
+                      "type": "enum",
+                      "default": "none"
+                    },
+                    [
+                      "knowledge_likely_death"
+                    ]
+                  ]
+                }
+              }
+            },
+            "add_branches": [
+              {
+                "id": "M-101b-GENERIC",
+                "provision": "s.101(b) [generic reading]",
+                "verdict": "offence",
+                "offence": "murder",
+                "when": {
+                  "and": [
+                    {
+                      "==": [
+                        {
+                          "var": "death_caused",
+                          "type": "bool",
+                          "default": true
+                        },
+                        true
+                      ]
+                    },
+                    {
+                      "==": [
+                        {
+                          "var": "mens_rea",
+                          "type": "enum",
+                          "default": "none"
+                        },
+                        "intention_injury_likely_death"
+                      ]
+                    }
+                  ]
+                },
+                "text": "if the act ... is done with the intention of causing such bodily injury as the offender knows to be likely to cause death [generic reading]"
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMB-103-2-MINIMUM",
+      "provision": "s.103(2)",
+      "status": "unresolved",
+      "question": "Does s.103(2) carry a statutory floor of seven years for members of a group of five or more?",
+      "why_it_matters": "Secondary sources reproduce the sub-section in two different forms. On the floor reading, a member who did not strike the blow faces a minimum of seven years; on the other reading the court may impose death, life, or (on some reproductions) any term, with no floor in the sub-section itself.",
+      "position_a": "No floor: each member is liable to death or life imprisonment, and to fine.",
+      "position_b": "Floor of seven years: '... or imprisonment for a term which shall not be less than seven years, and shall also be liable to fine'.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s103",
+        "commentary-103"
+      ],
+      "variants": [
+        {
+          "id": "no-floor",
+          "label": "text without a floor (current encoding)",
+          "patch": {}
+        },
+        {
+          "id": "seven-year-floor",
+          "label": "text with a seven-year floor",
+          "patch": {
+            "prepend_punishment_rules": [
+              {
+                "when": {
+                  "and": [
+                    {
+                      "==": [
+                        {
+                          "var": "offence_kind",
+                          "type": "str",
+                          "default": ""
+                        },
+                        "murder"
+                      ]
+                    },
+                    {
+                      "==": [
+                        {
+                          "var": "group_five_or_more",
+                          "type": "bool",
+                          "default": false
+                        },
+                        true
+                      ]
+                    },
+                    {
+                      "==": [
+                        {
+                          "var": "discriminatory_ground",
+                          "type": "bool",
+                          "default": false
+                        },
+                        true
+                      ]
+                    }
+                  ]
+                },
+                "text": "Death or imprisonment for life, or imprisonment of not less than 7 years, and fine [s.103(2), floor reading]",
+                "citations": [
+                  "bns-2023#s103"
+                ]
+              }
+            ]
+          }
+        }
+      ]
+    },
+    {
+      "id": "AMB-101d-EXCUSE",
+      "provision": "s.101(d)",
+      "status": "unresolved",
+      "question": "What counts as 'any excuse for incurring the risk of causing death' in s.101(d)?",
+      "why_it_matters": "The phrase is undefined. Read narrowly, only a lawful justification is an excuse; read broadly, any conduct that a reasonable person might have undertaken excludes the limb.",
+      "position_a": "Narrow: an excuse must be a recognised justification or excuse in law.",
+      "position_b": "Broad: a socially useful or non-culpable purpose is an excuse.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s101"
+      ],
+      "variants": [
+        {
+          "id": "narrow",
+          "label": "narrow reading (current encoding treats the limb as available whenever knowledge is proved)",
+          "patch": {}
+        }
+      ]
+    },
+    {
+      "id": "AMB-EXC4-MUTUALITY",
+      "provision": "s.101 Exception 4",
+      "status": "unresolved",
+      "question": "Does Exception 4 require a fight in the sense of mutual combat, or is a sudden one-sided attack enough?",
+      "why_it_matters": "A one-sided killing cannot be a 'sudden fight' on the strict reading, so Exception 4 is unavailable and the offence stays murder.",
+      "position_a": "Mutual combat required (current encoding: the facts must establish a fight).",
+      "position_b": "Sudden quarrel suffices even if the response is one-sided.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s101"
+      ],
+      "variants": [
+        {
+          "id": "mutual",
+          "label": "mutual combat required (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-100-a",
+      "cites": "s.100 illustration (a)",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "knowledge_likely_death",
+        "exception_state": "none"
+      },
+      "expect": {
+        "offence_kind": "culpable_homicide"
+      },
+      "text": "A lays sticks and turf over a pit with the intention of causing death, or with the knowledge that death is likely to be thereby caused. Z treads on it, falls in and is killed."
+    },
+    {
+      "id": "ILL-100-b",
+      "cites": "s.100 illustration (b)",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "none",
+        "victim_other_than_intended": true
+      },
+      "expect": {
+        "offence_kind": "murder"
+      },
+      "text": "A knows Z to be behind a bush. B does not. A induces B to fire at the bush. B fires and kills Z. B may be guilty of no offence; A has committed culpable homicide."
+    },
+    {
+      "id": "ILL-100-c",
+      "cites": "s.100 illustration (c)",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "none",
+        "exception_state": "none",
+        "victim_other_than_intended": true
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A, by shooting at a fowl with intent to kill and steal it, kills B who is behind a bush, A not knowing B was there. A is not guilty of culpable homicide."
+    },
+    {
+      "id": "ILL-101-c",
+      "cites": "s.101 illustration to limb (c)",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_injury_sufficient",
+        "exception_state": "none"
+      },
+      "expect": {
+        "offence_kind": "murder"
+      },
+      "text": "A intentionally gives Z a sword-cut or club-wound sufficient to cause the death of a man in the ordinary course of nature. Z dies. Here A is guilty of murder, although he may not have intended to cause Z's death."
+    },
+    {
+      "id": "ILL-101-EXC1-WRONG-VICTIM",
+      "cites": "s.101 Exception 1 illustration",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "grave_sudden_provocation",
+        "provocation_excluded": false,
+        "undue_advantage_cruel": false,
+        "victim_other_than_intended": true
+      },
+      "expect": {
+        "offence_kind": "culpable_homicide"
+      },
+      "text": "Y gives grave and sudden provocation to A. A fires a pistol at Y, neither intending nor knowing himself likely to kill Z, who is near but out of sight. A kills Z. A has not committed murder, but merely culpable homicide."
+    },
+    {
+      "id": "ILL-101-EXC1-PROVOKED-AS-EXCUSE",
+      "cites": "s.101 Exception 1 proviso (a) illustration",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "grave_sudden_provocation",
+        "provocation_excluded": true,
+        "undue_advantage_cruel": false
+      },
+      "expect": {
+        "offence_kind": "murder"
+      },
+      "text": "A, under the influence of passion excited by a provocation given by Z, intentionally kills Y, Z's child. This is murder, since the provocation was not given by the child."
+    },
+    {
+      "id": "ILL-101-EXC2-HORSEWHIP",
+      "cites": "s.101 Exception 2 illustration",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "private_defence_excess"
+      },
+      "expect": {
+        "offence_kind": "culpable_homicide"
+      },
+      "text": "Z attempts to horsewhip A. A draws a pistol. Z persists. A, believing in good faith that he can by no other means prevent himself from being horsewhipped, shoots Z dead. A has not committed murder, but only culpable homicide."
+    },
+    {
+      "id": "ILL-101-EXC4-SUDDEN-FIGHT",
+      "cites": "s.101 Exception 4",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "sudden_fight",
+        "undue_advantage_cruel": false
+      },
+      "expect": {
+        "offence_kind": "culpable_homicide"
+      },
+      "text": "A kills Z in a sudden fight upon a sudden quarrel without premeditation and without taking undue advantage."
+    },
+    {
+      "id": "NEG-DISEASED-VICTIM",
+      "cites": "s.101 limb (b) illustration",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_injury_known_likely_death",
+        "exception_state": "none"
+      },
+      "expect": {
+        "offence_kind": "murder"
+      },
+      "text": "A, knowing Z labours under a disease that makes a blow likely to cause death, strikes him intending bodily injury. Z dies. A is guilty of murder although the blow might not have sufficed for a person in sound health."
+    }
+  ]
+}

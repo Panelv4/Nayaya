@@ -1,0 +1,177 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Rules-as-code analysis — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head><body>
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Rules-as-code</span>
+  <span class="spacer"></span>
+  <a href="/dashboard">Dashboard</a><span class="dot">&middot;</span>
+  <a href="/kb">Statutory database</a><span class="dot">&middot;</span>
+  <span>Open analysis</span>
+</div></div>
+
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Rules-as-code engine</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Statutory database</a>
+      <a class="nav-link active" href="/engine"><svg class="ic sm"><use href="#i-cog"></use></svg> Engine analysis</a>
+      <span id="admin-nav"></span>
+    </div>
+  </div>
+</nav>
+
+<div id="app">
+  <div class="page-head">
+    <div>
+      <h1><svg class="ic"><use href="#i-scales"></use></svg> Rules-as-code analysis</h1>
+      <p class="sub">Encoded law, examined exhaustively. Every number here comes from deciding
+      every case in a declared fact space, not from a sample.</p>
+    </div>
+    <span class="badge b-amber" id="status-badge">LOADING</span>
+  </div>
+
+<div class="banner amber" id="honesty">
+    <svg class="ic"><use href="#i-alert"></use></svg>
+    <div class="b-body"><b>What this is, and what it is not.</b>
+    The statutes here are encoded by hand from the text on India Code. The packs are
+    <b>not yet reviewed by a lawyer</b> — each one says so in its own status line. A
+    passing analysis means the encoding is internally consistent and reproduces the
+    illustrations printed in the statute. It does not mean the encoded law is right.
+    One carefully verified provision is worth more than fifty seeded ones.</div>
+  </div>
+
+  <section class="card">
+    <h2><svg class="ic sm"><use href="#i-database"></use></svg> Encoded provisions</h2>
+    <div id="packs" class="small">Loading packs…</div>
+  </section>
+
+  <section class="card">
+    <h2><svg class="ic sm"><use href="#i-search"></use></svg> Ambiguity and gap analysis
+      <small id="analysis-pack-label"></small></h2>
+    <div class="row" id="analysis-out"><div class="small">Loading analysis…</div></div>
+  </section>
+
+  <section class="card">
+    <h2><svg class="ic sm"><use href="#i-refresh"></use></svg> Amendment impact — before and after</h2>
+    <p class="small" style="margin-top:0">Pick an amendment. The engine re-decides the entire
+    case space under both versions and reports every case that moves, reduced to the facts
+    that decide it.</p>
+    <div class="tabs" id="amendment-picker" style="margin-top:10px"></div>
+    <div id="impact-out" class="small" style="margin-top:14px"></div>
+  </section>
+
+  <footer class="small" style="margin-top:26px;color:var(--muted)">
+    Command line equivalents: <span class="mono">python3 -m nyayacode analyze --pack …</span> and
+    <span class="mono">python3 -m nyayacode impact --amendment …</span>. The library is
+    <span class="mono">nyayacode/</span>; the portal is one application on top of it.
+  </footer>
+</div>
+
+<script>{{AUTH}}</script>
+<script>
+const $ = id => document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+async function boot(){
+  let data;
+  try{ data = await (await fetch('/api/engine/overview')).json(); }
+  catch(e){ $('status-badge').textContent='UNAVAILABLE'; return; }
+  if(!data.ok){ $('status-badge').textContent='ERROR'; return; }
+  $('status-badge').className='badge b-green';
+  $('status-badge').textContent='ANALYSIS READY';
+
+  $('packs').innerHTML = '<table class="tbl"><thead><tr><th>Pack</th><th>Title</th>'+
+    '<th class="num">Facts</th><th class="num">Case space</th><th>Review</th></tr></thead><tbody>'+
+    data.packs.map(p=>`<tr><td class="mono">${esc(p.id)}</td><td>${esc(p.title)}</td>
+      <td class="num">${p.facts}</td><td class="num">${p.domain.toLocaleString()}</td>
+      <td>${p.reviewed?'<span class="badge b-green">reviewed</span>'
+           :'<span class="badge b-amber">unreviewed</span>'}</td></tr>`).join('')+
+    '</tbody></table>';
+
+  // ---- ambiguity + gap table
+  const rows = data.analyses.map(a=>{
+    const gaps = a.gaps.count, over = a.overlaps.count, dead = a.unreachable.count;
+    const amb = a.ambiguities.ambiguities.map(x=>{
+      const m = x.max_moved, s = x.max_sentence_moved;
+      const val = (m===null||m===undefined) ? '<span class="small">one reading recorded</span>'
+        : `${m.toLocaleString()} decisions${s?`, ${s.toLocaleString()} sentences`:''}`;
+      return `<div class="kv"><b class="mono">${esc(x.ambiguity)}</b> · ${esc(x.provision||'')}
+        <div class="small">${esc(x.question||'')}</div>
+        <div class="small">Readings differ on: ${val}</div></div>`;
+    }).join('');
+    return `<tr><td class="mono">${esc(a.pack)}</td>
+      <td class="num">${gaps}</td><td class="num">${over}</td><td class="num">${dead}</td>
+      <td>${amb||'<span class="small">none recorded</span>'}</td></tr>`;
+  }).join('');
+  $('analysis-out').innerHTML = `<table class="tbl" style="width:100%">
+    <thead><tr><th>Pack</th><th class="num">Cases with no provision</th>
+    <th class="num">Undeclared contentions</th><th class="num">Unreachable</th>
+    <th>Recorded ambiguities, and what they change</th></tr></thead><tbody>${rows}</tbody></table>`;
+
+  // ---- amendment picker
+  $('amendment-picker').innerHTML = data.amendments.map(a=>
+    `<button class="tab" data-am="${esc(a.id)}" onclick="showImpact('${esc(a.id)}',this)">
+      ${esc(a.title.split('—')[0].trim())}
+      <span class="badge ${a.kind==='real'?'b-green':(a.kind==='interpretive'?'b-blue':'b-gray')}"
+        style="margin-left:6px">${esc(a.kind)}</span></button>`).join('');
+}
+
+async function showImpact(id, btn){
+  document.querySelectorAll('#amendment-picker .tab').forEach(b=>b.classList.remove('active'));
+  if(btn) btn.classList.add('active');
+  $('impact-out').innerHTML='<div class="small">Re-deciding the case space…</div>';
+  const r = await (await fetch('/api/engine/impact?amendment='+encodeURIComponent(id))).json();
+  if(!r.ok){ $('impact-out').innerHTML='<div class="small">'+esc(r.error||'failed')+'</div>'; return; }
+  const c=r.comparison;
+  const ex=(r.examples||[]).map(e=>{
+    const facts=Object.entries(e.facts).map(([k,v])=>`<span class="mono">${esc(k)}=${esc(v)}</span>`).join(', ')||'<i>nothing else needed</i>';
+    return `<tr><td>${facts}</td><td>${esc(e.before)}</td><td>${esc(e.after)}</td>
+      <td class="mono small">${esc(e.before_branch)} → ${esc(e.after_branch)}</td>
+      <td class="num">${e.share.toLocaleString()}</td></tr>`;}).join('');
+  const cols=r.outcomes;
+  const matrix=(()=>{ let h='<table class="tbl"><thead><tr><th>before \\ after</th>'+
+      cols.map(c=>`<th class="num">${esc(c)}</th>`).join('')+'</tr></thead><tbody>';
+    for(const b of Object.keys(c.matrix)){ const row=c.matrix[b];
+      h+=`<tr><td class="mono">${esc(b)}</td>`+cols.map(col=>
+        `<td class="num">${row[col]?row[col].toLocaleString():''}</td>`).join('')+'</tr>'; }
+    return h+'</tbody></table>'; })();
+
+  $('impact-out').innerHTML = `
+    <div class="banner ${r.kind==='real'?'green':'blue'}" style="margin-bottom:12px">
+      <svg class="ic"><use href="#i-${r.kind==='real'?'seal':'flag'}"></use></svg>
+      <div class="b-body"><b>${esc(r.title)}</b>${esc(r.summary)}</div></div>
+    <div class="dl-steps" style="margin:10px 0">
+      <div class="dl-step done"><span class="sd">1</span>Decide ${c.checked.toLocaleString()} cases before</div>
+      <span class="bar"></span>
+      <div class="dl-step done"><span class="sd">2</span>Apply the amendment</div>
+      <span class="bar"></span>
+      <div class="dl-step active"><span class="sd">3</span>${c.decisions_changed.toLocaleString()} decisions move</div>
+    </div>
+    <div class="row">
+      <div class="col"><div class="kv"><b>Decisions changed</b></div>
+        <div style="font-size:26px;font-weight:700;color:var(--navy)">${c.decisions_changed.toLocaleString()}</div>
+        <div class="small">${c.pct_decisions}% of ${c.checked.toLocaleString()} cases</div></div>
+      <div class="col"><div class="kv"><b>Sentences changed</b></div>
+        <div style="font-size:26px;font-weight:700;color:var(--navy)">${c.sentences_changed.toLocaleString()}</div>
+        <div class="small">offence unchanged, penalty moved</div></div>
+      <div class="col"><div class="kv"><b>Unaffected</b></div>
+        <div style="font-size:26px;font-weight:700;color:var(--green)">${c.unchanged.toLocaleString()}</div>
+        <div class="small">same outcome before and after</div></div>
+    </div>
+    <h4 style="margin:16px 0 6px">Case flow</h4>${matrix}
+    ${ex?`<h4 style="margin:16px 0 6px">Minimal cases that change</h4>
+      <table class="tbl"><thead><tr><th>Case (all other facts neutral)</th><th>Before</th>
+      <th>After</th><th>Provision</th><th class="num">Cases</th></tr></thead>
+      <tbody>${ex}</tbody></table>`:''}
+    <p class="small" style="margin-top:12px">${esc(r.expected_reading||'')}</p>
+    <div class="small mono" style="color:var(--muted)">digest ${esc(c.digest_before)} → ${esc(c.digest_after)}</div>`;
+}
+boot();
+</script>
+</body></html>

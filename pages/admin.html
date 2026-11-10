@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Admin Console — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <a class="nav-link active" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a>
+      <a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>
+      <a class="nav-link" href="/workbench"><svg class="ic sm"><use href="#i-cog"></use></svg> Workbench</a>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-head">
+    <div><h1>Admin console</h1>
+    <p>Strict access control: disclosure approvals, manual checks, re-evaluation, feedback review and amendment impact.</p></div>
+    <span class="badge b-red">ADMIN ONLY</span>
+  </div>
+  <div id="body"><div class="empty">Loading…</div></div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.4.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
+function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
+let D=null;
+
+(async()=>{
+  try{ await requireAdmin(); }catch(e){ return; }
+  await load();
+})();
+async function load(){
+  try{
+    const r=await authFetch('/api/admin/overview');
+    if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'Failed');}
+    D=await r.json(); render();
+  }catch(e){ $('body').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; }
+}
+async function post(url,body){
+  const r=await authFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error||('Failed ('+r.status+')'));
+  return j;
+}
+function openCase(id){ go('/case?id='+encodeURIComponent(id)); }
+async function quickDisclosure(id,action,mode){
+  const note=action==='APPROVE'||action==='DISCLOSE'?(prompt('Disclosure note (optional):')||''):'';
+  try{ await post('/api/admin/disclosure',{report_id:id,action,mode:mode||'ANONYMIZED',note}); toast(action+' recorded.'); load(); }
+  catch(e){ toast(e.message); }
+}
+async function quickCheck(id,status){
+  const note=prompt('Manual-check note for '+status+':')||'';
+  try{ await post('/api/admin/manual-check',{report_id:id,status,note}); toast('Manual check saved.'); load(); }
+  catch(e){ toast(e.message); }
+}
+async function runImpact(){
+  const statute=$('imp-statute').value.trim(), provision=$('imp-provision').value.trim();
+  if(!provision){ toast('Provision is required (statute optional).'); return; }
+  $('imp-out').innerHTML='<div class="empty">Running dry-run re-evaluations…</div>';
+  try{
+    const j=await post('/api/admin/amendment-impact',{statute,provision});
+    window._impacts=j.impacts;
+    $('imp-out').innerHTML=`<p class="kv"><b>${j.cases_examined}</b> case(s) cite this provision · <b>${j.changed}</b> would change under the current statutory database.</p>
+      ${j.impacts.length?`<div class="table-wrap"><table><thead><tr><th>Case</th><th>Incident</th><th>Current</th><th>Re-evaluated</th><th>Changed</th><th>Apply</th></tr></thead><tbody>
+      ${j.impacts.map(i=>`<tr>
+        <td><b class="mono">${esc(i.ref)}</b></td><td>${esc(i.incident_date)}</td>
+        <td>${esc(i.current.level)} / ${esc(i.current.severity)} <span class="small">(${esc(i.current.kb_resolution||'—')})</span></td>
+        <td>${esc(i.reevaluated.level)} / ${esc(i.reevaluated.severity)} <span class="small">(${esc(i.reevaluated.kb_resolution||'—')})</span></td>
+        <td>${i.changed?'<span class="badge b-amber">YES</span>':'<span class="badge b-gray">no</span>'}</td>
+        <td><button class="btn small secondary" onclick="applyImpact('${esc(i.report_id)}')">Apply as SYSTEM revision</button></td></tr>`).join('')}
+      </tbody></table></div>`:'<p class="small">No cases cite this provision.</p>'}`;
+  }catch(e){ $('imp-out').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; }
+}
+async function applyImpact(reportId){
+  if(!confirm('Create a SYSTEM revision re-evaluating this case against the current statutory database?')) return;
+  try{
+    const j=await post('/api/admin/amendment-impact',{statute:$('imp-statute').value.trim(),provision:$('imp-provision').value.trim(),apply_report_id:reportId});
+    toast('Applied — revision '+(j.applied?j.applied.rev_no:'?')+' recorded.'); load();
+  }catch(e){ toast(e.message); }
+}
+async function exportDataset(){
+  try{
+    const r=await authFetch('/api/admin/feedback?export=jsonl');
+    const text=await r.text();
+    const blob=new Blob([text],{type:'application/x-ndjson'});
+    const a=document.createElement('a'); a.href=URL.createObjectURL(blob);
+    a.download='nyaya-rac-feedback-dataset.jsonl'; a.click();
+    toast('Verdict log exported (JSONL).');
+  }catch(e){ toast('Export failed.'); }
+}
+
+function render(){
+  const s=D.stats, q=D.queues, f=D.feedback;
+  $('body').innerHTML=`
+  <div class="grid tight" style="grid-template-columns:repeat(auto-fit,minmax(215px,1fr));margin-bottom:18px">
+    <div class="tile"><span class="tile-ic"><svg class="ic"><use href="#i-receipt"></use></svg></span>
+      <div><div class="v">${s.reports}</div><div class="k">Reports filed</div><div class="small">${s.revisions} revisions</div></div></div>
+    <div class="tile"><span class="tile-ic"><svg class="ic"><use href="#i-users"></use></svg></span>
+      <div><div class="v">${s.users}</div><div class="k">Accounts</div><div class="small">${s.admins} registry admin</div></div></div>
+    <div class="tile"><span class="tile-ic good"><svg class="ic"><use href="#i-idcard"></use></svg></span>
+      <div><div class="v">${s.identities_verified}</div><div class="k">Verified identities</div>
+      <div class="small">${s.reports_unverified_identity} reports unverified · ${s.identity_failures} failed attempts</div></div></div>
+    <div class="tile"><span class="tile-ic ${q.disclosure_pending.length?'warn':''}"><svg class="ic"><use href="#i-megaphone"></use></svg></span>
+      <div><div class="v">${s.disclosed}</div><div class="k">Disclosed cases</div><div class="small">${q.disclosure_pending.length} awaiting approval</div></div></div>
+    <div class="tile"><span class="tile-ic ${q.manual_check.length?'warn':''}"><svg class="ic"><use href="#i-shield"></use></svg></span>
+      <div><div class="v">${q.manual_check.length}</div><div class="k">Manual checks due</div><div class="small">unchecked or flagged for correction</div></div></div>
+    <div class="tile"><span class="tile-ic ${s.flagged?'bad':'good'}"><svg class="ic"><use href="#i-thumb-down"></use></svg></span>
+      <div><div class="v">${s.flagged}</div><div class="k">Flagged verdicts</div>
+      <div class="small">${s.feedback_up} up · ${s.feedback_down} down</div></div></div>
+    <div class="tile"><span class="tile-ic"><svg class="ic"><use href="#i-book"></use></svg></span>
+      <div><div class="v">${s.statute_versions}</div><div class="k">Statute versions</div>
+      <div class="small">${s.statutes_verified} verified · ${s.precedents} precedents</div></div></div>
+  </div>
+
+  ${D.conflicts.length?`<div class="banner amber"><span class="tag">KB conflicts</span><div>
+    ${D.conflicts.map(c=>'<b>'+esc(c.kind.replaceAll('_',' '))+'</b> — '+esc(c.statute)+' '+esc(c.provision)+': '+esc(c.detail)).join('<br>')}
+    <br><a href="/kb">Open the knowledge base <svg class="ic sm"><use href="#i-arrow-right"></use></svg></a></div></div>`:''}
+
+  <div class="card"><h2><svg class="ic"><use href="#i-megaphone"></use></svg> Disclosure approval queue <span class="badge b-blue">${q.disclosure_pending.length} pending</span></h2>
+    <p class="desc">No case is visible to anyone else until you manually approve disclosure here (ANONYMIZED hides
+    narrative/answers/identifying evidence details; FULL shows the complete record without account identities).</p>
+    ${q.disclosure_pending.length?`<div class="table-wrap"><table><thead><tr><th>Case</th><th>Requested</th><th>Level</th><th>Owner's note</th><th>Decide</th></tr></thead><tbody>
+      ${q.disclosure_pending.map(p=>`<tr>
+        <td><b class="mono" style="cursor:pointer" onclick="openCase('${esc(p.id)}')">${esc(p.ref)}</b><div class="small">${esc(p.domain)}</div></td>
+        <td>${fmtDate(p.created_at)}</td><td><span class="level ${esc(p.review_level.toLowerCase())}" style="font-size:11px">${esc(p.review_level)}</span></td>
+        <td class="small">${esc(p.disclosure_request_note||'—')}</td>
+        <td><div class="btn-row" style="gap:6px">
+          <button class="btn small primary" onclick="quickDisclosure('${esc(p.id)}','APPROVE','ANONYMIZED')">Approve (anonymized)</button>
+          <button class="btn small secondary" onclick="quickDisclosure('${esc(p.id)}','APPROVE','FULL')">Approve (full)</button>
+          <button class="btn small secondary" onclick="quickDisclosure('${esc(p.id)}','REJECT')">Reject</button>
+        </div></td></tr>`).join('')}
+    </tbody></table></div>`:'<div class="empty">No pending disclosure requests.</div>'}
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-shield"></use></svg> Manual check &amp; re-evaluation queue <span class="badge b-gray">${q.manual_check.length}</span></h2>
+    <p class="desc">Cases whose human verification is outstanding (UNCHECKED / NEEDS_CORRECTION), feedback-flagged
+    first. Open a case to run the manual check, correct mistakes and re-evaluate (immutable revision history).</p>
+    ${q.manual_check.length?`<div class="table-wrap"><table><thead><tr><th>Case</th><th>Filed</th><th>Level</th><th>Urgency</th><th>Check status</th><th>Identity</th><th>Flagged</th><th>Actions</th></tr></thead><tbody>
+      ${q.manual_check.map(m=>`<tr>
+        <td><b class="mono" style="cursor:pointer" onclick="openCase('${esc(m.id)}')">${esc(m.ref)}</b><div class="small">${esc(m.domain)}</div></td>
+        <td>${fmtDate(m.created_at)}</td>
+        <td><span class="level ${esc(m.review_level.toLowerCase())}" style="font-size:11px">${esc(m.review_level)}</span></td>
+        <td>${esc(m.urgency)}</td>
+        <td><span class="badge ${m.manual_check_status==='VERIFIED'?'b-green':'b-gray'}">${esc(m.manual_check_status.replaceAll('_',' '))}</span></td>
+        <td>${m.digilocker_status==='LINKED'
+            ? '<span class="badge b-green"><svg class="ic"><use href="#i-shield"></use></svg> VERIFIED</span>'
+            : '<span class="badge b-amber"><svg class="ic"><use href="#i-alert"></use></svg> UNVERIFIED</span>'}</td>
+        <td>${m.feedback_flagged?'<span class="badge b-red"><svg class="ic"><use href="#i-flag"></use></svg></span>':'—'}</td>
+        <td><div class="btn-row" style="gap:6px">
+          <button class="btn small secondary" onclick="openCase('${esc(m.id)}')">Open &amp; check</button>
+          <button class="btn small secondary" onclick="quickCheck('${esc(m.id)}','VERIFIED')">Mark verified</button>
+          <button class="btn small secondary" onclick="quickCheck('${esc(m.id)}','NEEDS_CORRECTION')">Needs correction</button>
+        </div></td></tr>`).join('')}
+    </tbody></table></div>`:'<div class="empty">Queue is clear.</div>'}
+  </div>
+
+  <div class="card"><h2><svg class="ic sm"><use href="#i-thumb-up"></use></svg><svg class="ic sm"><use href="#i-thumb-down"></use></svg> Verdict feedback — the audit log</h2>
+    <p class="desc">One vote per user per case (bound to the revision at vote time). Net-negative cases
+    (<svg class="ic sm"><use href="#i-thumb-down"></use></svg>−<svg class="ic sm"><use href="#i-thumb-up"></use></svg> ≥ 2) are auto-flagged for review. The engine never self-modifies — the labeled dataset below is the
+    feed for tuning future rule-base and routing iterations.</p>
+    <div class="grid tight">
+      <div class="kv"><b>Total votes:</b> ${f.total} (<svg class="ic sm"><use href="#i-thumb-up"></use></svg> ${f.up} · <svg class="ic sm"><use href="#i-thumb-down"></use></svg> ${f.down})</div>
+      <div class="kv"><b>By level:</b> ${Object.entries(f.by_level).map(([k,v])=>k+': '+v.up+'<svg class="ic sm"><use href="#i-thumb-up"></use></svg>/'+v.down+'<svg class="ic sm"><use href="#i-thumb-down"></use></svg>').join(' · ')||'—'}</div>
+      <div class="kv"><b>By domain:</b> ${Object.entries(f.by_domain).map(([k,v])=>k+': '+v.up+'<svg class="ic sm"><use href="#i-thumb-up"></use></svg>/'+v.down+'<svg class="ic sm"><use href="#i-thumb-down"></use></svg>').join(' · ')||'—'}</div>
+      <div class="kv"><b>By trigger:</b> ${Object.entries(f.by_trigger).map(([k,v])=>k+': '+v.up+'<svg class="ic sm"><use href="#i-thumb-up"></use></svg>/'+v.down+'<svg class="ic sm"><use href="#i-thumb-down"></use></svg>').join(' · ')||'—'}</div>
+    </div>
+    ${q.flagged.length?`<div class="banner red" style="margin-top:10px"><span class="tag">Flagged</span><div>
+      ${q.flagged.map(x=>'<b class="mono" style="cursor:pointer" onclick="openCase(\''+esc(x.id)+'\')">'+esc(x.ref)+'</b> (<svg class="ic sm"><use href="#i-thumb-up"></use></svg>'+x.feedback_up+'/<svg class="ic sm"><use href="#i-thumb-down"></use></svg>'+x.feedback_down+')').join(' · ')}</div></div>`:''}
+    <div class="btn-row" style="margin-top:10px"><button class="btn secondary small" onclick="exportDataset()"><svg class="ic"><use href="#i-download"></use></svg> Export verdict log (JSONL)</button></div>
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-scales"></use></svg> Amendment impact analysis</h2>
+    <p class="desc">Dry-run re-evaluates every case citing a provision against the <b>current</b> statutory
+    database (no audit rows written). Apply creates a SYSTEM revision on the affected case.</p>
+    <div class="row">
+      <div class="col"><div class="field"><label>Statute (optional)</label><input type="text" id="imp-statute" placeholder="e.g. DEMO Act"></div></div>
+      <div class="col"><div class="field"><label>Provision</label><input type="text" id="imp-provision" placeholder="e.g. s.1"></div></div>
+      <div class="col" style="flex:0 0 auto;align-self:flex-end"><button class="btn primary" onclick="runImpact()">Run analysis</button></div>
+    </div>
+    <div id="imp-out"></div>
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-folder"></use></svg> All cases <span class="badge b-gray">${D.cases.length}</span></h2>
+    <div class="table-wrap"><table><thead><tr>
+      <th>Case</th><th>Owner</th><th>Filed</th><th>Type</th><th>Level</th><th>Urgency</th><th>Sev</th>
+      <th>Rev</th><th>Identity</th><th>Disclosure</th><th>Manual check</th><th>Feedback</th></tr></thead><tbody>
+      ${D.cases.map(c=>`<tr class="clickable" onclick="openCase('${esc(c.id)}')">
+        <td><b class="mono">${esc(c.ref)}</b></td><td class="small">${esc(c.email)}</td>
+        <td>${fmtDate(c.created_at)}</td><td>${esc(c.domain)}</td>
+        <td><span class="level ${esc(c.review_level.toLowerCase())}" style="font-size:11px">${esc(c.review_level)}</span></td>
+        <td>${esc(c.urgency)}</td><td>${esc(c.severity_tier)}</td><td>${c.current_rev_no}</td>
+        <td>${c.digilocker_status==='LINKED'
+            ? '<span class="badge b-green"><svg class="ic"><use href="#i-shield"></use></svg> VERIFIED</span>'
+            : '<span class="badge b-amber"><svg class="ic"><use href="#i-alert"></use></svg> UNVERIFIED</span>'}</td>
+        <td><span class="badge ${c.disclosure_status==='DISCLOSED'?'b-green':(c.disclosure_status==='PENDING'?'b-blue':'b-gray')}">${esc(c.disclosure_status)}</span></td>
+        <td><span class="badge ${c.manual_check_status==='VERIFIED'?'b-green':'b-gray'}">${esc(c.manual_check_status.replaceAll('_',' '))}</span></td>
+        <td><svg class="ic sm"><use href="#i-thumb-up"></use></svg>${c.feedback_up} <svg class="ic sm"><use href="#i-thumb-down"></use></svg>${c.feedback_down}${c.feedback_flagged?' <span class="badge b-red"><svg class="ic"><use href="#i-flag"></use></svg></span>':''}</td></tr>`).join('')}
+    </tbody></table></div>
+  </div>`;
+}
+</script>
+</body>
+</html>
