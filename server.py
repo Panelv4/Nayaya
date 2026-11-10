@@ -1,4 +1,4 @@
-"""NYAYA-RAC v0.4.0 — citizen reporting portal + decision-support server.
+"""NYAYA-RAC v0.5.0 — citizen reporting portal + decision-support server.
 
 Pure Python standard library.
 
@@ -917,6 +917,40 @@ def case_access(user: dict, row) -> str | None:
     return None
 
 
+def evidence_download(user: dict, evidence_id: int) -> tuple[str, str, bytes]:
+    """Return (filename, content_type, bytes) for one evidence file.
+
+    Bytes are served ONLY to the case owner and admins — never to disclosed
+    viewers (even FULL mode shows metadata, not file bytes). The stored path
+    must resolve inside EVIDENCE_DIR and the SHA-256 must match the register;
+    a tampered or moved file is refused rather than served.
+    """
+    with db() as c:
+        ev = c.execute("SELECT * FROM evidence WHERE id=?", (evidence_id,)).fetchone()
+        if not ev:
+            raise NotFound("Evidence not found.")
+        report = c.execute("SELECT * FROM reports WHERE id=?", (ev["report_id"],)).fetchone()
+    if not report:
+        raise NotFound("Evidence not found.")
+    if not (user.get("role") == "ADMIN" or report["user_id"] == user["id"]):
+        raise NotFound("Evidence not found.")
+    base = os.path.abspath(EVIDENCE_DIR)
+    full = os.path.abspath(os.path.join(ROOT, ev["stored_path"]))
+    if full != base and not full.startswith(base + os.sep):
+        raise NotFound("Evidence not found.")
+    try:
+        with open(full, "rb") as fh:
+            blob = fh.read()
+    except OSError:
+        raise NotFound("Evidence not found.")
+    if hashlib.sha256(blob).hexdigest() != ev["sha256"]:
+        raise ValueError("Evidence file failed its integrity check and was not served.")
+    ctype = (ev["content_type"] or "application/octet-stream").split(";")[0].strip()
+    if "/" not in ctype or len(ctype) > 100:
+        ctype = "application/octet-stream"
+    return ev["filename"], ctype, blob
+
+
 def build_case_payload(user: dict, report_id: str) -> dict:
     with db() as c:
         row = c.execute("SELECT * FROM reports WHERE id=?", (report_id,)).fetchone()
@@ -1313,6 +1347,7 @@ RATE_LOCKOUT = 900         # how long a tripped key stays locked
 # bad guesses, which is a denial of service, not a defence.
 RATE_MAX_ACCOUNT = 5
 RATE_MAX_ADDRESS = 30
+RATE_MAX_REGISTER = 10  # registrations per address per window (spam guard)
 
 
 def _rate_key(kind: str, who: str) -> str:
@@ -1344,7 +1379,7 @@ def rate_reset(kind: str, who: str) -> None:
 
 # ---------------------------------------------------------------- HTTP handler
 
-APP_VERSION = "0.4.0"
+APP_VERSION = "0.5.0"
 
 # Content-Security-Policy: the portal inlines all CSS/JS (no external resources
 # are loaded — verified: no http(s) src/href in pages/ or assets/), so a tight
@@ -1397,17 +1432,28 @@ class Handler(BaseHTTPRequestHandler):
     def _text(self, status: int, text: str, ctype="text/plain; charset=utf-8"):
         self._send_bytes(status, text.encode(), ctype)
 
+    # Shared assets are static: read once, reuse for every page view.
+    # Restart the server to pick up edits to style.css / auth.js / icons.svg.
+    _asset_cache: dict | None = None
+
+    @classmethod
+    def _assets(cls) -> dict:
+        if cls._asset_cache is None:
+            with open(os.path.join(ASSETS, "style.css"), encoding="utf-8") as f:
+                css = f.read()
+            with open(os.path.join(ASSETS, "auth.js"), encoding="utf-8") as f:
+                auth_js = f.read()
+            with open(os.path.join(ASSETS, "icons.svg"), encoding="utf-8") as f:
+                sprite = f.read()
+            auth_js = auth_js.replace("{{SPRITE}}", sprite.replace("`", "\\`").replace("\\", "\\\\"))
+            cls._asset_cache = {"css": css, "auth": auth_js}
+        return cls._asset_cache
+
     def _page(self, filename: str, status: int = 200):
         with open(os.path.join(PAGES, filename), encoding="utf-8") as f:
             text = f.read()
-        with open(os.path.join(ASSETS, "style.css"), encoding="utf-8") as f:
-            css = f.read()
-        with open(os.path.join(ASSETS, "auth.js"), encoding="utf-8") as f:
-            auth_js = f.read()
-        with open(os.path.join(ASSETS, "icons.svg"), encoding="utf-8") as f:
-            sprite = f.read()
-        auth_js = auth_js.replace("{{SPRITE}}", sprite.replace("`", "\\`").replace("\\", "\\\\"))
-        text = (text.replace("{{STYLE}}", css).replace("{{AUTH}}", auth_js)
+        assets = self._assets()
+        text = (text.replace("{{STYLE}}", assets["css"]).replace("{{AUTH}}", assets["auth"])
                     .replace("{{YEAR}}", str(today().year)))
         self._send_bytes(status, text.encode(), "text/html; charset=utf-8")
 
@@ -1561,6 +1607,17 @@ class Handler(BaseHTTPRequestHandler):
                 user = self._require_user()
                 if user:
                     self._json(200, build_case_payload(user, (qs.get("id") or [""])[0]))
+            elif path == "/api/evidence":
+                user = self._require_user()
+                if user:
+                    try:
+                        eid = int((qs.get("id") or ["0"])[0])
+                    except ValueError:
+                        raise ValueError("evidence id must be a number.")
+                    fname, ctype, blob = evidence_download(user, eid)
+                    safe = fname.replace('"', "").replace("\r", "").replace("\n", "")
+                    self._send_bytes(200, blob, ctype, [
+                        ("Content-Disposition", f'attachment; filename="{safe}"')])
             elif path == "/api/disclosed":
                 # Public registry: approved disclosures only, safe for visitors.
                 self._json(200, disclosed_list(self._user() or {"role": "GUEST", "name": "guest", "id": ""}))
@@ -1772,8 +1829,20 @@ class Handler(BaseHTTPRequestHandler):
     # ---- endpoints ----
 
     def _api_register(self):
+        who = self._client()
+        wait = rate_check("register", who, RATE_MAX_REGISTER)
+        if wait:
+            self._json(429, {"error": f"Too many registrations. Try again in {wait} seconds.",
+                             "retry_after": wait})
+            return
         body = self._read_json()
-        user = create_user(str(body.get("name", "")), str(body.get("email", "")), str(body.get("password", "")))
+        try:
+            user = create_user(str(body.get("name", "")), str(body.get("email", "")),
+                               str(body.get("password", "")))
+        except ValueError:
+            rate_fail("register", who)
+            raise
+        rate_fail("register", who)  # count successful registrations too (spam guard)
         token = create_session(user["id"])
         self._json(200, {"ok": True, "name": user["name"], "token": token, "role": user["role"]},
                    self._session_cookie_headers(token))
@@ -1969,11 +2038,21 @@ class Handler(BaseHTTPRequestHandler):
         self._json(200, {"audit": ENGINE.audit_recent(200)})
 
 
+def purge_expired_sessions() -> int:
+    """Delete expired session rows. Called on startup so the table cannot
+    grow forever with dead tokens."""
+    with db() as c:
+        cur = c.execute("DELETE FROM sessions WHERE expires_at <= ?",
+                        (now_dt().isoformat(),))
+        return int(cur.rowcount)
+
+
 def init_all() -> None:
     os.makedirs(EVIDENCE_DIR, exist_ok=True)
     init_db()
     legal_kb.init_kb()
     dl_mod.init_dl()
+    purge_expired_sessions()
     ensure_admin()
 
 
@@ -2001,10 +2080,41 @@ def main():
     if HOST not in ("127.0.0.1", "localhost", "::1"):
         print("[warn] Reachable beyond this machine. No TLS, no audit of who connects.",
               flush=True)
-    ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
+    try:
+        ThreadingHTTPServer((HOST, PORT), Handler).serve_forever()
+    except KeyboardInterrupt:
+        print("\nShutting down.", flush=True)
+
+
+USAGE = """NYAYA-RAC v{ver} — citizen reporting portal + decision-support server
+
+Usage:
+  python3 server.py                          start the portal (http://localhost:8000)
+  python3 server.py --make-admin EMAIL       promote an existing account to ADMIN
+  python3 server.py --rotate-admin-password [EMAIL]
+                                             generate a new admin password (revokes sessions)
+  python3 server.py --version                print the version and exit
+  python3 server.py --help                   show this help and exit
+
+Environment:
+  NYAYA_HOST / NYAYA_PORT                    bind address (default 127.0.0.1:8000)
+  NYAYA_DB / NYAYA_AUDIT_DB / NYAYA_EVIDENCE_DIR
+                                             data paths (defaults: ./nyaya-rac*.sqlite3, ./evidence)
+  NYAYA_ADMIN_EMAIL / NYAYA_ADMIN_PASSWORD   bootstrap admin (password must be 12+ chars)
+  NYAYA_ALLOW_PUBLIC_BIND=1                  required to bind beyond loopback (no TLS!)
+  NYAYA_PREVIEW=1                            sandbox/preview mode: bind 0.0.0.0
+
+Health: GET /health (no auth). Docs: docs/PORTAL.md, docs/API.md.
+"""
 
 
 if __name__ == "__main__":
+    if len(sys.argv) >= 2 and sys.argv[1] in ("--help", "-h"):
+        print(USAGE.format(ver=APP_VERSION))
+        sys.exit(0)
+    if len(sys.argv) >= 2 and sys.argv[1] == "--version":
+        print(f"NYAYA-RAC {APP_VERSION}")
+        sys.exit(0)
     if len(sys.argv) >= 2 and sys.argv[1] == "--rotate-admin-password":
         init_all()
         target = sys.argv[2] if len(sys.argv) >= 3 else None
@@ -2017,4 +2127,7 @@ if __name__ == "__main__":
         ok = promote_admin(sys.argv[2])
         print("Promoted" if ok else "No such user:", sys.argv[2])
         sys.exit(0 if ok else 1)
+    if len(sys.argv) >= 2 and sys.argv[1].startswith("--"):
+        print(f"Unknown option: {sys.argv[1]}\n\n" + USAGE.format(ver=APP_VERSION))
+        sys.exit(2)
     main()

@@ -1,4 +1,4 @@
-"""End-to-end HTTP smoke test for NYAYA-RAC v0.4.0.
+"""End-to-end HTTP smoke test for NYAYA-RAC v0.5.0.
 
 Run against a live portal:  python3 smoke.py [base_url]
 Writes real rows (clearly marked demo accounts), so it is safe to re-run: all
@@ -96,7 +96,7 @@ for page in ("/", "/login", "/dashboard", "/submit", "/cases", "/case", "/disclo
     s, html = call("GET", page, raw=True)
     check(f"GET {page} → 200", s == 200, str(s))
 s, html = call("GET", "/", raw=True)
-check("footer shows v0.4.0", "v0.4.0" in html)
+check("footer shows v0.5.0", "v0.5.0" in html)
 s, html = call("GET", "/disclosed", raw=True)
 check("disclosed page renders registry", "Disclosed" in html)
 
@@ -204,6 +204,17 @@ check("stranger cannot revise → 403", s == 403, f"{s} {b}")
 print("\n7. Evidence → fact mapping + coverage")
 s, b = call("GET", f"/api/report?id={rid}", token=owner_tok)
 ev_id = b["evidence"][0]["id"]
+# Evidence bytes: owner + admin only, never disclosed viewers.
+s, raw = call("GET", f"/api/evidence?id={ev_id}", token=owner_tok, raw=True)
+check("owner can download evidence bytes", s == 200 and raw == "smoke-bytes", f"{s} {raw[:40]}")
+s, b = call("GET", f"/api/evidence?id={ev_id}", token=admin_tok)
+check("admin can download evidence bytes", s == 200, f"{s}")
+s, b = call("GET", f"/api/evidence?id={ev_id}", token=stranger_tok)
+check("ANONYMIZED viewer cannot download evidence → 404", s == 404, f"{s} {b}")
+s, b = call("GET", "/api/evidence?id=999999999", token=owner_tok)
+check("unknown evidence id → 404", s == 404, f"{s} {b}")
+s, b = call("GET", f"/api/evidence?id={ev_id}")
+check("anonymous evidence download → 401", s == 401, f"{s} {b}")
 s, b = call("POST", "/api/evidence-map", {"report_id": rid, "evidence_id": ev_id, "fact_key": "liberty_threat",
                                           "relation": "SUPPORTS", "note": "photo of the blocked door"}, owner_tok)
 check("map evidence SUPPORTS a fact", s == 200 and "coverage" in b, f"{s} {b}")

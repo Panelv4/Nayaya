@@ -78,7 +78,7 @@
   </div>
 </div>
 
-<div id="toast"></div>
+<div id="toast" role="status" aria-live="polite"></div>
 
 <script>{{AUTH}}</script>
 <script>
@@ -121,7 +121,7 @@ if(params.get('tab')==='register') showTab('register');
 bootstrapSession().then(s=>{ if(s) go(nextUrl()); });
 </script>
 <div class="footer"><div class="frow">
-  <span>NYAYA-RAC v0.4.0 &middot; advisory decision-support prototype &middot; &copy; {{YEAR}}</span>
+  <span>NYAYA-RAC v0.5.0 &middot; advisory decision-support prototype &middot; &copy; {{YEAR}}</span>
   <span><a href="/disclosed">Public register</a> &middot; <a href="/">Home</a></span>
 </div></div>
 </body>

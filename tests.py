@@ -1,4 +1,4 @@
-"""Automated tests for NYAYA-RAC v0.4.0 (Phases 1-3 + admin gating).
+"""Automated tests for NYAYA-RAC v0.5.0 (Phases 1-3 + admin gating).
 
 Run: python3 tests.py
 
@@ -1312,6 +1312,62 @@ class SessionContinuityTests(unittest.TestCase):
         # SameSite=None without Secure is silently rejected by browsers.
         self.assertNotIn('return "SameSite=None"', src)
 
+
+class EvidenceDownloadTests(PortalFixture):
+    """Evidence bytes are owner/admin-only; disclosed viewers never get them."""
+
+    def _evidence_id(self):
+        rep = self.new_report()
+        return portal.build_case_payload(self.owner, rep["report_id"])["evidence"][0]["id"]
+
+    def test_owner_can_download_bytes(self):
+        eid = self._evidence_id()
+        fname, ctype, blob = portal.evidence_download(self.owner, eid)
+        self.assertEqual(fname, "photo.png")
+        self.assertEqual(blob, b"fake-png-bytes")
+
+    def test_admin_can_download_bytes(self):
+        eid = self._evidence_id()
+        _fname, _ctype, blob = portal.evidence_download(self.admin, eid)
+        self.assertEqual(blob, b"fake-png-bytes")
+
+    def test_stranger_gets_404(self):
+        eid = self._evidence_id()
+        with self.assertRaises(portal.NotFound):
+            portal.evidence_download(self.other, eid)
+
+    def test_unknown_id_gets_404(self):
+        with self.assertRaises(portal.NotFound):
+            portal.evidence_download(self.owner, 999999999)
+
+    def test_disclosed_viewer_never_gets_bytes(self):
+        rep = self.new_report()
+        rid = rep["report_id"]
+        eid = portal.build_case_payload(self.owner, rid)["evidence"][0]["id"]
+        portal.request_disclosure(self.owner, rid)
+        portal.admin_disclosure(self.admin, rid, "APPROVE", "FULL")
+        # The stranger now has FULL access to the case payload...
+        self.assertEqual(portal.build_case_payload(self.other, rid)["access"], "FULL")
+        # ...but evidence bytes stay owner/admin-only.
+        with self.assertRaises(portal.NotFound):
+            portal.evidence_download(self.other, eid)
+
+
+class SessionPurgeTests(PortalFixture):
+    def test_expired_sessions_are_purged(self):
+        import datetime as dt
+        user = make_user("Purge User", f"purge{uuid.uuid4().hex[:6]}@nyaya.test")
+        live = portal.create_session(user["id"])
+        # Insert an expired session directly.
+        with portal.db() as c:
+            c.execute("INSERT INTO sessions VALUES(?,?,?,?)",
+                      ("expired-token", user["id"], "2020-01-01T00:00:00+00:00",
+                       "2020-01-02T00:00:00+00:00"))
+        purged = portal.purge_expired_sessions()
+        self.assertGreaterEqual(purged, 1)
+        # Live session survives; expired one is gone.
+        self.assertIsNotNone(portal.session_user(live))
+        self.assertIsNone(portal.session_user("expired-token"))
 
 
 if __name__ == "__main__":

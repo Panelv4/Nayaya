@@ -1,4 +1,4 @@
-# NYAYA-RAC v0.4.0 — Citizen Case Reporting & Decision-Support Portal
+# NYAYA-RAC v0.5.0 — Citizen Case Reporting & Decision-Support Portal
 
 Rules-as-Code judicial decision-support engine (`embedded-demo-0.2.0`) wrapped in a
 **victim-facing reporting portal** with a strict, human-approved disclosure model,
@@ -47,8 +47,8 @@ Two honest caveats, both of which the tool prints on every output:
 ```bash
 python3 server.py                      # then open http://localhost:8000
 python3 server.py --make-admin you@example.com   # promote an existing account
-python3 tests.py                       # 119 automated tests (throwaway databases)
-python3 smoke.py                       # 145 HTTP checks against a running server
+python3 tests.py                       # 125 automated tests (throwaway databases)
+python3 smoke.py                       # 150 HTTP checks against a running server
 curl http://localhost:8000/health      # liveness probe (no auth needed)
 ```
 
@@ -249,6 +249,7 @@ time"*.
 | `GET /api/me` | session | profile, role, `is_admin`, DigiLocker stub |
 | `GET /api/reports` | session | own cases + disclosure/manual-check/revision/feedback columns |
 | `GET /api/report?id=` | owner / admin / disclosed | full payload (redacted when ANONYMIZED) |
+| `GET /api/evidence?id=` | owner / admin | download evidence bytes (SHA-256 verified; never for disclosed viewers) |
 | `GET /api/disclosed` | anyone | public registry of approved cases |
 | `POST /api/report` | session | intake (declaration + evidence *or* no-evidence ack) |
 | `POST /api/revise` | owner / admin | re-evaluate with reason, immutable revision |
@@ -269,6 +270,8 @@ time"*.
 
 Errors: `AccessDenied → 403`, `NotFound → 404` (also used to hide foreign private
 cases), `ValueError/TypeError → 400`.
+
+Full endpoint reference: [`API.md`](API.md).
 
 ---
 
@@ -413,7 +416,8 @@ changed to make that less dangerous, and one thing is still your job.
 | **Administrator credential** | There is no password in the source. On first run a random one is generated and written to `.nyaya-admin-credentials` with mode `600` (owner-only). `NYAYA_ADMIN_PASSWORD` overrides it; a weak or well-known value is refused at startup. |
 | **Rotation** | `python3 server.py --rotate-admin-password` generates a new secret, writes it to the same file and revokes every existing session for that account. Run it after cloning or if a secret may have leaked. |
 | **Network exposure** | Binds `127.0.0.1` by default. Binding elsewhere requires `NYAYA_HOST` *and* `NYAYA_ALLOW_PUBLIC_BIND=1`, and prints a warning: there is no TLS and no record of who connects. |
-| **Brute force** | Login is rate limited per account (5 failures / 15 min → 15 min lockout) and per address (30 failures). Two thresholds on purpose: keying only on the address would let one attacker lock out every user on a shared network. |
+| **Brute force** | Login is rate limited per account (5 failures / 15 min → 15 min lockout) and per address (30 failures). Two thresholds on purpose: keying only on the address would let one attacker lock out every user on a shared network. Registration is rate limited per address (10 / 15 min) as a spam guard. |
+| **Evidence bytes** | Downloadable only by the case owner and admins (`GET /api/evidence`); disclosed viewers see metadata, never bytes. Paths are confined to `evidence/` and SHA-256 is re-verified on every download. |
 | **Still your job** | Anyone who can read the database can read the cases. Full-disk encryption, and deleting the database when you are done, are outside what the code can do. |
 
 Smoke tests read the generated credential file rather than hardcoding a password,
@@ -430,16 +434,16 @@ so no test in this repository contains a working login.
 | `legal_kb.py` | Phase 2: statutory DB, precedents, conflicts, resolution, provenance graph |
 | `digilocker.py` | Identity verification: calibrated consent/artefact flow, validation, sealing, revocation |
 | `db.py` | Shared SQLite plumbing, paths, reentrant locks, lightweight migrations |
-| `server.py` | v0.4.0 portal: intake, revisions, disclosure, manual check, feedback, evidence map, admin, HTTP handler, `/health`, security headers |
+| `server.py` | v0.5.0 portal: intake, revisions, disclosure, manual check, feedback, evidence map, admin, HTTP handler, `/health`, security headers |
 | `pages/*.html` | home, login, dashboard, submit, cases, case, workbench, **admin**, **kb**, **disclosed** |
 | `assets/icons.svg` | 50-icon stroke sprite (no emoji), injected inline per page |
 | `assets/auth.js`, `assets/style.css` | five-channel session relay + fetch helpers + DigiLocker panel renderer, government-portal design system |
 | `nyayacode/` | **the library**: pack format, evaluator, gap/contention/ambiguity analysis, amendment impact, CLI. See `nyayacode/README.md` |
 | `nyayacode/packs/` | encoded statutes (`in.bns.homicide`, `in.mv.drunken-driving`) and amendments |
 | `pages/engine.html` | reads `/api/engine/overview` and `/api/engine/impact` and renders the analysis |
-| `tests.py` | 119 tests: engine, Phase-1 validation, KB, access control, disclosure, revisions, feedback, evidence mapping, admin, amendment impact, DigiLocker flow |
+| `tests.py` | 125 tests: engine, Phase-1 validation, KB, access control, disclosure, revisions, feedback, evidence mapping, admin, amendment impact, DigiLocker flow |
 | `tests/test_nyayacode.py` | 43 tests: evaluator, analyser, amendments, and negative tests that break a pack on purpose |
-| `smoke.py` | 145 end-to-end HTTP checks against a running server (`python3 smoke.py`); creates throwaway `@smoke.test` accounts |
+| `smoke.py` | 150 end-to-end HTTP checks against a running server (`python3 smoke.py`); creates throwaway `@smoke.test` accounts |
 
 ### Known limits (deliberate)
 

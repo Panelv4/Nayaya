@@ -181,7 +181,7 @@ nyayacode/            the library: pack format, evaluator, analyser, amendments,
 server.py + pages/    a citizen case-reporting prototype built on the library
   (see docs/PORTAL.md — one application, not the argument)
 tests/                library tests, incl. negative tests that break a pack on purpose
-tests.py, smoke.py    portal tests (119) and end-to-end HTTP checks (145)
+tests.py, smoke.py    portal tests (125) and end-to-end HTTP checks (150)
 demo_out/             generated analysis and impact reports (nothing hand-written)
 seed.py               builds a demo database from obviously fictional accounts
 ```
@@ -199,7 +199,7 @@ run rather than shipping one.
 ```bash
 python3 -m nyayacode check            # every pack reproduces its statute
 python3 tests/test_nyayacode.py       # 43 library tests
-python3 tests.py                      # 119 portal tests
+python3 tests.py                      # 125 portal tests
 python3 seed.py && python3 server.py  # then: python3 smoke.py
 ```
 

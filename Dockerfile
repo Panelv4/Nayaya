@@ -1,4 +1,4 @@
-# NYAYA-RAC v0.4.0 — citizen reporting portal + rules-as-code library.
+# NYAYA-RAC v0.5.0 — citizen reporting portal + rules-as-code library.
 # Standard library only; the image is a bare Python interpreter plus this tree.
 #
 #   docker build -t nyaya-rac .
