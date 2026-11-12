@@ -439,10 +439,10 @@ so no test in this repository contains a working login.
 | `assets/icons.svg` | 50-icon stroke sprite (no emoji), injected inline per page |
 | `assets/auth.js`, `assets/style.css` | five-channel session relay + fetch helpers + DigiLocker panel renderer, government-portal design system |
 | `nyayacode/` | **the library**: pack format, evaluator, gap/contention/ambiguity analysis, amendment impact, CLI. See `nyayacode/README.md` |
-| `nyayacode/packs/` | encoded statutes (`in.bns.homicide`, `in.mv.drunken-driving`) and amendments |
+| `nyayacode/packs/` | encoded statutes (`in.bns.homicide`, `in.bns.negligence`, `in.mv.drunken-driving`) and amendments |
 | `pages/engine.html` | reads `/api/engine/overview` and `/api/engine/impact` and renders the analysis |
 | `tests.py` | 125 tests: engine, Phase-1 validation, KB, access control, disclosure, revisions, feedback, evidence mapping, admin, amendment impact, DigiLocker flow |
-| `tests/test_nyayacode.py` | 43 tests: evaluator, analyser, amendments, and negative tests that break a pack on purpose |
+| `tests/test_nyayacode.py` | 52 tests: evaluator, analyser, amendments, statute encodings (homicide, negligence, MV), and negative tests that break a pack on purpose |
 | `smoke.py` | 150 end-to-end HTTP checks against a running server (`python3 smoke.py`); creates throwaway `@smoke.test` accounts |
 
 ### Known limits (deliberate)

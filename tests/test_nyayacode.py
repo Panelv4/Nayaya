@@ -4,7 +4,7 @@ Three kinds of test, deliberately kept apart:
 
 * **library tests** — the evaluator, the analyser, the amendment machinery;
 * **statute tests** — does the encoding reproduce the illustrations and the
-  structure of BNS ss.100-105 and MV Act s.185?
+  structure of BNS ss.100-105, BNS s.106 and MV Act s.185?
 * **negative tests** — can the tool be caught being wrong? A tool that reports
   "no problems" on a deliberately broken pack is worse than no tool.
 
@@ -24,6 +24,7 @@ from nyayacode import eval as ev                                   # noqa: E402
 
 HOMICIDE = "in.bns.homicide"
 MV = "in.mv.drunken-driving"
+NEGLIGENCE = "in.bns.negligence"
 
 
 # --------------------------------------------------------------------- library
@@ -66,8 +67,8 @@ class EvaluatorTests(unittest.TestCase):
 
 
 class PackLoadingTests(unittest.TestCase):
-    def test_both_shipped_packs_load_and_are_total(self):
-        self.assertEqual(len(packmod.available()), 2)
+    def test_all_shipped_packs_load_and_are_total(self):
+        self.assertEqual(len(packmod.available()), 3)
         for pid in packmod.available():
             p = packmod.load(pid)
             self.assertGreater(analyze._domain_size(p), 0)
@@ -213,6 +214,66 @@ class MVEncodingTests(unittest.TestCase):
         self.assertEqual(g["count"], 0, "below-threshold driving must be decided, not missing")
 
 
+class NegligenceEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(NEGLIGENCE)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_no_death_is_never_a_negligence_offence(self):
+        # The analyser caught this bug in an earlier draft of the homicide
+        # pack: limbs did not test death_caused at all.
+        for culp in ("rash_negligent", "knowledge_possibility_death", "intention_death"):
+            for drv in ("not_driving", "ordinary_driving", "dangerous_or_racing"):
+                d = self.p.decide({"death_caused": False, "culpability": culp,
+                                   "driving_context": drv})
+                self.assertIsNone(d.get("offence"), f"{culp}/{drv} without death")
+
+    def test_intention_is_not_s106(self):
+        # 'not amounting to culpable homicide' excludes intention and
+        # knowledge of likely death: those are ss.100-105, not s.106.
+        for culp in ("intention_death", "knowledge_likely_death"):
+            d = self.p.decide({"death_caused": True, "culpability": culp,
+                               "driving_context": "not_driving"})
+            self.assertIsNone(d.get("offence"), culp)
+            self.assertEqual(d["branch"], "N-CULPABLE-HOMICIDE", culp)
+
+    def test_dangerous_driving_is_106_2_not_106_1(self):
+        d = self.p.decide({"death_caused": True, "culpability": "rash_negligent",
+                           "driving_context": "dangerous_or_racing"})
+        self.assertEqual(d.get("offence"), "causing_death_by_dangerous_driving")
+        self.assertEqual(d["branch"], "N-106-2")
+
+    def test_ordinary_negligent_driving_is_106_1(self):
+        d = self.p.decide({"death_caused": True, "culpability": "rash_negligent",
+                           "driving_context": "ordinary_driving"})
+        self.assertEqual(d.get("offence"), "causing_death_by_negligence")
+        self.assertEqual(d["branch"], "N-106-1")
+
+    def test_pure_accident_is_not_an_offence(self):
+        d = self.p.decide({"death_caused": True, "culpability": "none",
+                           "driving_context": "not_driving"})
+        self.assertIsNone(d.get("offence"))
+        self.assertEqual(d["branch"], "N-NO-FAULT")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+    def test_possibility_knowledge_boundary_moves_cases(self):
+        # The recorded ambiguity is real: flipping the parameter moves the
+        # possibility-knowledge cases out of s.106.
+        sens = analyze.find_ambiguity_sensitivity(self.p)
+        amb = [a for a in sens["ambiguities"] if a["ambiguity"] == "AMB-106-KNOWLEDGE-BOUNDARY"][0]
+        self.assertEqual(amb["max_moved"], 3)
+        self.assertEqual(amb["max_sentence_moved"], 0)
+
+
 # ------------------------------------------------------------------- amendments
 
 class AmendmentTests(unittest.TestCase):
@@ -224,10 +285,18 @@ class AmendmentTests(unittest.TestCase):
         return analyze.compare(before, after)
 
     def test_all_shipped_amendments_apply_cleanly(self):
-        self.assertEqual(len(packmod.amendments()), 3)
+        self.assertEqual(len(packmod.amendments()), 4)
         for aid in packmod.amendments():
             c = self._cmp(aid)
             self.assertGreater(c["checked"], 0, aid)
+
+    def test_the_106_penalty_amendment_moves_no_decision_but_sentences(self):
+        c = self._cmp("amend.bns.106-penalty")
+        self.assertEqual(c["decisions_changed"], 0,
+                         "raising a maximum cannot change whether conduct is an offence")
+        self.assertEqual(c["sentences_changed"], 4)
+        for m in c["moved"]:
+            self.assertEqual(m["kind"], "sentence")
 
     def test_repealing_exception_4_moves_exactly_those_cases(self):
         c = self._cmp("amend.bns.exc4-abolished")

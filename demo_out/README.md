@@ -4,9 +4,11 @@ Every file here is generated — nothing is hand-written. Regenerate with:
 
 ```bash
 python3 -m nyayacode analyze --pack in.bns.homicide --out demo_out
+python3 -m nyayacode analyze --pack in.bns.negligence --out demo_out
 python3 -m nyayacode analyze --pack in.mv.drunken-driving --out demo_out
 python3 -m nyayacode impact  --amendment amend.bns.exc4-abolished --out demo_out
 python3 -m nyayacode impact  --amendment amend.bns.101b-generic-knowledge --out demo_out
+python3 -m nyayacode impact  --amendment amend.bns.106-penalty --out demo_out
 python3 -m nyayacode impact  --amendment amend.mv.2019-penalty --out demo_out
 ```
 

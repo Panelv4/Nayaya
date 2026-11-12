@@ -152,6 +152,7 @@ witness.
 | Pack | Provisions | Case space | Review status |
 |---|---|---|---|
 | `in.bns.homicide` | BNS 2023 ss.100-105 and Exceptions 1-5 | 10,752 | **unreviewed** |
+| `in.bns.negligence` | BNS 2023 s.106 (negligence and dangerous driving) | 30 | **unreviewed** |
 | `in.mv.drunken-driving` | MV Act 1988 s.185, pre and post 2019 | 732 | **unreviewed** |
 
 The second pack exists to show the machinery is not specific to a penal code:
@@ -159,13 +160,20 @@ s.185 has a numeric threshold instead of a mental element, two limbs that are
 alternatives rather than a hierarchy, and an amendment that moves no verdict at
 all. The analyser, the amendment format and the report are unchanged.
 
+The third pack (`in.bns.negligence`) exists to show the boundary between two
+packs: s.106 applies only to a rash or negligent act "not amounting to
+culpable homicide", so its encoding must say where that line falls. Its
+recorded ambiguity — does knowledge of the *possibility* of death amount to
+culpable homicide, or is it still rashness? — moves 3 of its 30 cases.
+
 ### Review status is the honest part
 
-`encoded_unreviewed` means exactly that. Both packs reproduce every illustration
-printed in the statute and the analyser finds no gaps or undeclared contentions in
-them. **That is not the same as being right.** A lawyer reading ss.100-105 against
-the India Code text is the only thing that moves a pack to `reviewed`, and no
-amount of passing tests substitutes for it.
+`encoded_unreviewed` means exactly that. All three packs reproduce every
+illustration printed in the statute and the analyser finds no gaps or
+undeclared contentions in them. **That is not the same as being right.** A
+lawyer reading the provisions against the India Code text is the only thing
+that moves a pack to `reviewed`, and no amount of passing tests substitutes
+for it.
 
 ---
 

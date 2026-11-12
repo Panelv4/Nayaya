@@ -176,8 +176,8 @@ Not legal advice. An analysis of an encoding.
 
 ```
 nyayacode/            the library: pack format, evaluator, analyser, amendments, CLI
-  packs/              encoded statutes (BNS ss.100-105; MV Act s.185)
-  packs/amendments/   one real, one interpretive, one hypothetical amendment
+  packs/              encoded statutes (BNS ss.100-105; BNS s.106; MV Act s.185)
+  packs/amendments/   two real, one interpretive, one hypothetical amendment
 server.py + pages/    a citizen case-reporting prototype built on the library
   (see docs/PORTAL.md — one application, not the argument)
 tests/                library tests, incl. negative tests that break a pack on purpose
@@ -198,7 +198,7 @@ run rather than shipping one.
 
 ```bash
 python3 -m nyayacode check            # every pack reproduces its statute
-python3 tests/test_nyayacode.py       # 43 library tests
+python3 tests/test_nyayacode.py       # 52 library tests
 python3 tests.py                      # 125 portal tests
 python3 seed.py && python3 server.py  # then: python3 smoke.py
 ```
