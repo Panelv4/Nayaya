@@ -153,6 +153,8 @@ witness.
 |---|---|---|---|
 | `in.bns.homicide` | BNS 2023 ss.100-105 and Exceptions 1-5 | 10,752 | **unreviewed** |
 | `in.bns.negligence` | BNS 2023 s.106 (negligence and dangerous driving) | 30 | **unreviewed** |
+| `in.bns.abetment-suicide` | BNS 2023 s.107 (abetment of suicide) | 20 | **unreviewed** |
+| `in.bns.attempt-murder` | BNS 2023 s.108 (attempt to murder) | 8 | **unreviewed** |
 | `in.mv.drunken-driving` | MV Act 1988 s.185, pre and post 2019 | 732 | **unreviewed** |
 
 The second pack exists to show the machinery is not specific to a penal code:

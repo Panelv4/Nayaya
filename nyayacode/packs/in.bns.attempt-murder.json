@@ -1,0 +1,247 @@
+{
+  "id": "in.bns.attempt-murder",
+  "title": "Attempt to murder — BNS 2023 s.108",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.108. The offence is an attempt that fails: if the act kills, it is murder or culpable homicide (separate pack in.bns.homicide), not an attempt. The encoding therefore tests death first and only then asks whether hurt was caused, which is what separates the ten-year tariff from life."
+  },
+  "scope": {
+    "in_scope": [
+      "s.108 attempt to murder (up to ten years)",
+      "s.108 attempt to murder with hurt caused (life)"
+    ],
+    "out_of_scope": [
+      "ss.100-105 culpable homicide and murder (separate pack in.bns.homicide)",
+      "s.106 causing death by negligence (separate pack in.bns.negligence)",
+      "s.107 abetment of suicide (separate pack in.bns.abetment-suicide)",
+      "s.109 attempt to commit culpable homicide",
+      "sentencing discretion within the maxima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.108",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, s.307 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of s.108. The maxima are materially the same (ten years; life if hurt is caused)."
+    }
+  ],
+  "citations": ["bns-2023#s108"],
+  "facts": [
+    {
+      "name": "attempt_act",
+      "type": "bool",
+      "label": "The accused did an act amounting to an attempt to commit murder (beyond mere preparation)"
+    },
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The act caused a death"
+    },
+    {
+      "name": "hurt_caused",
+      "type": "bool",
+      "label": "Hurt was caused to any person by the act"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-attempt",
+      "term": "attempt",
+      "definition": "An act done towards the commission of murder, beyond mere preparation. The encoding treats 'amounting to an attempt' as a single fact; where preparation ends is fact-specific and is recorded as an ambiguity.",
+      "citations": ["bns-2023#s108"]
+    },
+    {
+      "id": "T-hurt",
+      "term": "hurt",
+      "definition": "Bodily pain, disease or infirmity (BNS s.114(1)). Hurt to any person by the act raises the tariff from ten years to life.",
+      "citations": ["bns-2023#s108"]
+    }
+  ],
+  "parameters": {
+    "max_years_attempt": 10
+  },
+  "branches": [
+    {
+      "id": "N-NO-ATTEMPT",
+      "provision": "s.108",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "attempt_act", "type": "bool", "default": false },
+          false
+        ]
+      },
+      "text": "Whoever attempts to commit murder ...",
+      "notes": "No act amounting to an attempt means s.108 is not engaged. Mere preparation is not an attempt."
+    },
+    {
+      "id": "N-DEATH",
+      "provision": "s.108",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "Whoever attempts to commit murder ...",
+      "notes": "If the act kills, the offence is murder or culpable homicide (ss.100-105), not an attempt. An attempt that succeeds is not an attempt."
+    },
+    {
+      "id": "N-108-HURT",
+      "provision": "s.108",
+      "verdict": "offence",
+      "offence": "attempt_murder_hurt",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "and if hurt is caused to any person by such act, with imprisonment for life, or with fine, or with both.",
+      "notes": "Hurt to any person by the act raises the tariff to life."
+    },
+    {
+      "id": "N-108",
+      "provision": "s.108",
+      "verdict": "offence",
+      "offence": "attempt_murder",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "Whoever attempts to commit murder shall be punished with imprisonment for a term which may extend to ten years, or with fine, or with both.",
+      "notes": "The basic attempt: no death, no hurt."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.108",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.108",
+      "provision": "bns-2023#s108"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_murder_hurt"
+        ]
+      },
+      "text": "Imprisonment for life, or fine, or both [s.108, hurt caused]",
+      "citations": ["bns-2023#s108"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_murder"
+        ]
+      },
+      "text": "Imprisonment up to ten years, or fine, or both [s.108]",
+      "citations": ["bns-2023#s108"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-108-ATTEMPT-LINE",
+      "provision": "s.108",
+      "status": "unresolved",
+      "question": "Where does preparation end and an attempt begin?",
+      "why_it_matters": "The line between preparation (not an offence) and attempt (s.108) is fact-specific and the section does not draw it. The pack records only one reading — that 'amounting to an attempt' is a single fact to be proved — so the analyser reports n/a rather than a number.",
+      "position_a": "An attempt is any act directly towards murder, however close to completion.",
+      "position_b": "An attempt requires an act that would have caused death but for an external factor.",
+      "resolution": null,
+      "citations": ["bns-2023#s108"],
+      "variants": [
+        {
+          "id": "directly-towards",
+          "label": "directly towards murder (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-108-1",
+      "cites": "s.108, text",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": false
+      },
+      "expect": {
+        "offence_kind": "attempt_murder"
+      },
+      "text": "An attempt to murder without death or hurt: up to ten years."
+    },
+    {
+      "id": "ILL-108-HURT",
+      "cites": "s.108, 'if hurt is caused'",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": true
+      },
+      "expect": {
+        "offence_kind": "attempt_murder_hurt"
+      },
+      "text": "An attempt that causes hurt: imprisonment for life."
+    },
+    {
+      "id": "ILL-108-DEATH",
+      "cites": "s.108, 'attempts to commit murder'",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": true,
+        "hurt_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "An act that kills is murder (ss.100-105), not an attempt."
+    },
+    {
+      "id": "ILL-108-NO-ATTEMPT",
+      "cites": "s.108, 'attempts'",
+      "facts": {
+        "attempt_act": false,
+        "death_caused": false,
+        "hurt_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "No act amounting to an attempt is not s.108."
+    }
+  ]
+}

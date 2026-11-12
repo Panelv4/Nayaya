@@ -16,8 +16,8 @@
     ],
     "out_of_scope": [
       "ss.100-105 culpable homicide and murder (separate pack in.bns.homicide)",
-      "s.107 abetment of suicide",
-      "s.108 attempt to murder",
+      "s.107 abetment of suicide (separate pack in.bns.abetment-suicide)",
+      "s.108 attempt to murder (separate pack in.bns.attempt-murder)",
       "MV Act s.184 dangerous driving (no death)",
       "sentencing discretion within the maxima"
     ]
@@ -38,7 +38,9 @@
       "note": "Predecessor of s.106(1). The maximum rose from two years (IPC) to five years (BNS); s.106(2) has no IPC equivalent."
     }
   ],
-  "citations": ["bns-2023#s106"],
+  "citations": [
+    "bns-2023#s106"
+  ],
   "facts": [
     {
       "name": "death_caused",
@@ -85,13 +87,17 @@
       "id": "T-rash-negligent",
       "term": "rash or negligent",
       "definition": "Rash means a conscious taking of a risk; negligent means inadvertent failure to take care. Section 106 covers both, so the encoding treats them as one culpability value.",
-      "citations": ["bns-2023#s106"]
+      "citations": [
+        "bns-2023#s106"
+      ]
     },
     {
       "id": "T-not-amounting",
       "term": "not amounting to culpable homicide",
       "definition": "The boundary with ss.100-105: if the act was done with intention or knowledge of likely death, it is culpable homicide or murder, not s.106. Knowledge of mere possibility sits on the line and is recorded as an ambiguity.",
-      "citations": ["bns-2023#s106"]
+      "citations": [
+        "bns-2023#s106"
+      ]
     }
   ],
   "parameters": {
@@ -107,7 +113,11 @@
       "offence": null,
       "when": {
         "==": [
-          { "var": "death_caused", "type": "bool", "default": true },
+          {
+            "var": "death_caused",
+            "type": "bool",
+            "default": true
+          },
           false
         ]
       },
@@ -121,14 +131,57 @@
       "offence": null,
       "when": {
         "and": [
-          { "==": [{ "var": "death_caused", "type": "bool", "default": true }, true] },
-          { "or": [
-            { "in": [{ "var": "culpability", "type": "enum", "default": "none" }, ["knowledge_likely_death", "intention_death"]] },
-            { "and": [
-              { "==": [{ "var": "culpability", "type": "enum", "default": "none" }, "knowledge_possibility_death"] },
-              { "==": [{ "var": "param.knowledge_possibility_is_culpable", "type": "bool", "default": false }, true] }
-            ] }
-          ] }
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "or": [
+              {
+                "in": [
+                  {
+                    "var": "culpability",
+                    "type": "enum",
+                    "default": "none"
+                  },
+                  [
+                    "knowledge_likely_death",
+                    "intention_death"
+                  ]
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "==": [
+                      {
+                        "var": "culpability",
+                        "type": "enum",
+                        "default": "none"
+                      },
+                      "knowledge_possibility_death"
+                    ]
+                  },
+                  {
+                    "==": [
+                      {
+                        "var": "param.knowledge_possibility_is_culpable",
+                        "type": "bool",
+                        "default": false
+                      },
+                      true
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
         ]
       },
       "text": "by doing any rash or negligent act not amounting to culpable homicide",
@@ -141,8 +194,26 @@
       "offence": null,
       "when": {
         "and": [
-          { "==": [{ "var": "death_caused", "type": "bool", "default": true }, true] },
-          { "==": [{ "var": "culpability", "type": "enum", "default": "none" }, "none"] }
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "culpability",
+                "type": "enum",
+                "default": "none"
+              },
+              "none"
+            ]
+          }
         ]
       },
       "text": "by doing any rash or negligent act",
@@ -155,9 +226,39 @@
       "offence": "causing_death_by_dangerous_driving",
       "when": {
         "and": [
-          { "==": [{ "var": "death_caused", "type": "bool", "default": true }, true] },
-          { "in": [{ "var": "culpability", "type": "enum", "default": "none" }, ["rash_negligent", "knowledge_possibility_death"]] },
-          { "==": [{ "var": "driving_context", "type": "enum", "default": "not_driving" }, "dangerous_or_racing"] }
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "culpability",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "rash_negligent",
+                "knowledge_possibility_death"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "driving_context",
+                "type": "enum",
+                "default": "not_driving"
+              },
+              "dangerous_or_racing"
+            ]
+          }
         ]
       },
       "text": "Whoever causes death of any person by driving a vehicle in a manner dangerous to human life, or by racing",
@@ -170,9 +271,42 @@
       "offence": "causing_death_by_negligence",
       "when": {
         "and": [
-          { "==": [{ "var": "death_caused", "type": "bool", "default": true }, true] },
-          { "in": [{ "var": "culpability", "type": "enum", "default": "none" }, ["rash_negligent", "knowledge_possibility_death"]] },
-          { "in": [{ "var": "driving_context", "type": "enum", "default": "not_driving" }, ["not_driving", "ordinary_driving"]] }
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "culpability",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "rash_negligent",
+                "knowledge_possibility_death"
+              ]
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "driving_context",
+                "type": "enum",
+                "default": "not_driving"
+              },
+              [
+                "not_driving",
+                "ordinary_driving"
+              ]
+            ]
+          }
         ]
       },
       "text": "Whoever causes death of any person by doing any rash or negligent act not amounting to culpable homicide",
@@ -198,22 +332,34 @@
     {
       "when": {
         "==": [
-          { "var": "offence_kind", "type": "str", "default": "" },
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
           "causing_death_by_dangerous_driving"
         ]
       },
       "text": "Imprisonment up to 10 years, or fine, or both [s.106(2)]",
-      "citations": ["bns-2023#s106"]
+      "citations": [
+        "bns-2023#s106"
+      ]
     },
     {
       "when": {
         "==": [
-          { "var": "offence_kind", "type": "str", "default": "" },
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
           "causing_death_by_negligence"
         ]
       },
       "text": "Imprisonment up to 5 years, or fine, or both [s.106(1)]",
-      "citations": ["bns-2023#s106"]
+      "citations": [
+        "bns-2023#s106"
+      ]
     }
   ],
   "ambiguities": [
@@ -226,7 +372,9 @@
       "position_a": "Possibility is rashness: only knowledge of likelihood (or intention) is culpable homicide, so s.106 covers possibility-knowledge.",
       "position_b": "Possibility is culpable: anyone who foresees death as possible and proceeds is at least culpable, so s.106 excludes possibility-knowledge.",
       "resolution": null,
-      "citations": ["bns-2023#s106"],
+      "citations": [
+        "bns-2023#s106"
+      ],
       "variants": [
         {
           "id": "possibility-is-rash",

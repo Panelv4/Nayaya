@@ -1,0 +1,129 @@
+{
+  "pack": "in.bns.abetment-suicide",
+  "title": "Abetment of suicide — BNS 2023 s.107",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 3,
+  "domain_size": 20,
+  "digest": "58aed6d1ae85cb74",
+  "gaps": {
+    "pack": "in.bns.abetment-suicide",
+    "kind": "gap",
+    "count": 0,
+    "checked": 20,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.abetment-suicide",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 20,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.abetment-suicide",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 20,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.abetment-suicide",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-107-MENTAL-ILLNESS",
+        "provision": "s.107(2)",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-107-1",
+      "cites": "s.107(1), text",
+      "text": "Abetting an adult's suicide: s.107(1), up to twelve years.",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": true,
+        "victim_category": "adult"
+      },
+      "expected": "abetment_suicide",
+      "actual": "abetment_suicide",
+      "ok": true
+    },
+    {
+      "id": "ILL-107-2-CHILD",
+      "cites": "s.107(2), text",
+      "text": "Abetting a child's suicide: s.107(2), the enhanced tariff.",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": true,
+        "victim_category": "child"
+      },
+      "expected": "abetment_suicide_vulnerable",
+      "actual": "abetment_suicide_vulnerable",
+      "ok": true
+    },
+    {
+      "id": "ILL-107-NO-SUICIDE",
+      "cites": "s.107, 'commission of suicide'",
+      "text": "Abetment without a suicide is not s.107.",
+      "facts": {
+        "suicide_occurred": false,
+        "abetted": true,
+        "victim_category": "adult"
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-107-NO-ABETMENT",
+      "cites": "s.107, 'abets the commission'",
+      "text": "A suicide without abetment is not s.107.",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": false,
+        "victim_category": "adult"
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-107-INTOXICATED",
+      "cites": "s.107(2), text",
+      "text": "Abetting an intoxicated person's suicide: s.107(2).",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": true,
+        "victim_category": "intoxicated"
+      },
+      "expected": "abetment_suicide_vulnerable",
+      "actual": "abetment_suicide_vulnerable",
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.107(1) abetment of suicide (up to twelve years)",
+      "s.107(2) abetment of suicide of a child, person with mental illness, delirious or intoxicated person (death, life, or ten years minimum)"
+    ],
+    "out_of_scope": [
+      "ss.100-106 homicide and negligence (separate packs in.bns.homicide, in.bns.negligence)",
+      "s.108 attempt to murder (separate pack in.bns.attempt-murder)",
+      "abetment generally (BNS s.45: instigation, conspiracy, aiding)",
+      "sentencing discretion within the maxima"
+    ]
+  }
+}

@@ -1,0 +1,72 @@
+{
+  "amendment": "amend.bns.107-penalty",
+  "title": "BNS s.107(1) — the penalty for abetting suicide rises from ten years to twelve",
+  "kind": "real",
+  "enacted": true,
+  "commencement": "2024-07-01",
+  "summary": "IPC s.306 punished abetting suicide with imprisonment up to ten years. BNS s.107(1) re-enacts the offence with a maximum of twelve years. Nothing about what counts as the offence changed, so this is a pure sentencing amendment: it tests whether the machinery can see a change that moves no verdict at all. Section 107(2) (vulnerable victims) is new in the BNS and has no IPC equivalent, so it is identical before and after.",
+  "source": {
+    "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.107(1), repealing IPC s.306",
+    "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf"
+  },
+  "before_label": "IPC s.306 (before 1 July 2024)",
+  "after_label": "BNS s.107(1) (from 1 July 2024)",
+  "expected_reading": "Decisions should not move at all: the offence and its elements are identical before and after. Every case that is an offence stays an offence. What changes is the sentence attached to s.107(1) cases, which is why the report separates decisions from sentences.",
+  "pack": "in.bns.abetment-suicide",
+  "pack_review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "outcomes": [
+    "abetment_suicide",
+    "abetment_suicide_vulnerable",
+    "not_offence"
+  ],
+  "comparison": {
+    "before": "in.bns.abetment-suicide",
+    "after": "in.bns.abetment-suicide",
+    "checked": 20,
+    "facts_added": [],
+    "facts_removed": [],
+    "domain_facts": 3,
+    "changed": 1,
+    "decisions_changed": 0,
+    "sentences_changed": 1,
+    "unchanged": 19,
+    "pct": 5.0,
+    "pct_decisions": 0.0,
+    "matrix": {
+      "abetment_suicide": {
+        "abetment_suicide": 1
+      },
+      "abetment_suicide_vulnerable": {
+        "abetment_suicide_vulnerable": 4
+      },
+      "not_offence": {
+        "not_offence": 15
+      }
+    },
+    "moved": [
+      {
+        "facts": {
+          "suicide_occurred": true,
+          "abetted": true,
+          "victim_category": "adult"
+        },
+        "before": "abetment_suicide",
+        "after": "abetment_suicide",
+        "kind": "sentence",
+        "before_branch": "N-107-1",
+        "after_branch": "N-107-1",
+        "before_sentence": "Imprisonment up to ten years, or fine, or both [IPC s.306]",
+        "after_sentence": "Imprisonment up to twelve years, or fine, or both [s.107(1)]"
+      }
+    ],
+    "digest_before": "58aed6d1ae85cb74",
+    "digest_after": "58aed6d1ae85cb74"
+  },
+  "pack_before": {},
+  "coverage": {
+    "domain": 20,
+    "facts_added": [],
+    "facts_removed": []
+  },
+  "examples": []
+}

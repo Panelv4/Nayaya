@@ -4,7 +4,7 @@ Three kinds of test, deliberately kept apart:
 
 * **library tests** — the evaluator, the analyser, the amendment machinery;
 * **statute tests** — does the encoding reproduce the illustrations and the
-  structure of BNS ss.100-105, BNS s.106 and MV Act s.185?
+  structure of BNS ss.100-108 and MV Act s.185?
 * **negative tests** — can the tool be caught being wrong? A tool that reports
   "no problems" on a deliberately broken pack is worse than no tool.
 
@@ -25,6 +25,8 @@ from nyayacode import eval as ev                                   # noqa: E402
 HOMICIDE = "in.bns.homicide"
 MV = "in.mv.drunken-driving"
 NEGLIGENCE = "in.bns.negligence"
+ABETMENT = "in.bns.abetment-suicide"
+ATTEMPT = "in.bns.attempt-murder"
 
 
 # --------------------------------------------------------------------- library
@@ -68,7 +70,7 @@ class EvaluatorTests(unittest.TestCase):
 
 class PackLoadingTests(unittest.TestCase):
     def test_all_shipped_packs_load_and_are_total(self):
-        self.assertEqual(len(packmod.available()), 3)
+        self.assertEqual(len(packmod.available()), 5)
         for pid in packmod.available():
             p = packmod.load(pid)
             self.assertGreater(analyze._domain_size(p), 0)
@@ -274,6 +276,72 @@ class NegligenceEncodingTests(unittest.TestCase):
         self.assertEqual(amb["max_sentence_moved"], 0)
 
 
+class AbetmentEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(ABETMENT)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_no_suicide_is_never_abetment(self):
+        for cat in ("adult", "child", "mental_illness", "delirious", "intoxicated"):
+            d = self.p.decide({"suicide_occurred": False, "abetted": True,
+                               "victim_category": cat})
+            self.assertIsNone(d.get("offence"), cat)
+
+    def test_vulnerable_victim_gets_enhanced_tariff(self):
+        for cat in ("child", "mental_illness", "delirious", "intoxicated"):
+            d = self.p.decide({"suicide_occurred": True, "abetted": True,
+                               "victim_category": cat})
+            self.assertEqual(d.get("offence"), "abetment_suicide_vulnerable", cat)
+            self.assertEqual(d["branch"], "N-107-2", cat)
+
+    def test_adult_gets_general_tariff(self):
+        d = self.p.decide({"suicide_occurred": True, "abetted": True,
+                           "victim_category": "adult"})
+        self.assertEqual(d.get("offence"), "abetment_suicide")
+        self.assertEqual(d["branch"], "N-107-1")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
+class AttemptEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(ATTEMPT)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_death_is_never_an_attempt(self):
+        # An attempt that succeeds is murder, not an attempt.
+        d = self.p.decide({"attempt_act": True, "death_caused": True,
+                           "hurt_caused": True})
+        self.assertIsNone(d.get("offence"))
+        self.assertEqual(d["branch"], "N-DEATH")
+
+    def test_hurt_raises_tariff_to_life(self):
+        d = self.p.decide({"attempt_act": True, "death_caused": False,
+                           "hurt_caused": True})
+        self.assertEqual(d.get("offence"), "attempt_murder_hurt")
+        d2 = self.p.decide({"attempt_act": True, "death_caused": False,
+                            "hurt_caused": False})
+        self.assertEqual(d2.get("offence"), "attempt_murder")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
 # ------------------------------------------------------------------- amendments
 
 class AmendmentTests(unittest.TestCase):
@@ -285,7 +353,7 @@ class AmendmentTests(unittest.TestCase):
         return analyze.compare(before, after)
 
     def test_all_shipped_amendments_apply_cleanly(self):
-        self.assertEqual(len(packmod.amendments()), 4)
+        self.assertEqual(len(packmod.amendments()), 5)
         for aid in packmod.amendments():
             c = self._cmp(aid)
             self.assertGreater(c["checked"], 0, aid)
@@ -295,6 +363,13 @@ class AmendmentTests(unittest.TestCase):
         self.assertEqual(c["decisions_changed"], 0,
                          "raising a maximum cannot change whether conduct is an offence")
         self.assertEqual(c["sentences_changed"], 4)
+        for m in c["moved"]:
+            self.assertEqual(m["kind"], "sentence")
+
+    def test_the_107_penalty_amendment_moves_no_decision_but_sentences(self):
+        c = self._cmp("amend.bns.107-penalty")
+        self.assertEqual(c["decisions_changed"], 0)
+        self.assertEqual(c["sentences_changed"], 1)
         for m in c["moved"]:
             self.assertEqual(m["kind"], "sentence")
 

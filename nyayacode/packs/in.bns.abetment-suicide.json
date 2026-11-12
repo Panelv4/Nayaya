@@ -1,0 +1,274 @@
+{
+  "id": "in.bns.abetment-suicide",
+  "title": "Abetment of suicide — BNS 2023 s.107",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.107. The offence needs three things at once — a suicide, abetment, and (for the enhanced tariff) a vulnerable victim — so the encoding is a small conjunction with a victim-category split. 'Mental illness' is undefined in the section and is recorded as an unresolved ambiguity rather than guessed."
+  },
+  "scope": {
+    "in_scope": [
+      "s.107(1) abetment of suicide (up to twelve years)",
+      "s.107(2) abetment of suicide of a child, person with mental illness, delirious or intoxicated person (death, life, or ten years minimum)"
+    ],
+    "out_of_scope": [
+      "ss.100-106 homicide and negligence (separate packs in.bns.homicide, in.bns.negligence)",
+      "s.108 attempt to murder (separate pack in.bns.attempt-murder)",
+      "abetment generally (BNS s.45: instigation, conspiracy, aiding)",
+      "sentencing discretion within the maxima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.107",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, s.306 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of s.107(1). The maximum rose from ten years (IPC) to twelve years (BNS); s.107(2) has no IPC equivalent."
+    }
+  ],
+  "citations": ["bns-2023#s107"],
+  "facts": [
+    {
+      "name": "suicide_occurred",
+      "type": "bool",
+      "label": "The suicide was committed"
+    },
+    {
+      "name": "abetted",
+      "type": "bool",
+      "label": "The accused abetted the suicide (instigated, conspired, or aided)"
+    },
+    {
+      "name": "victim_category",
+      "type": "enum",
+      "label": "Category of the person who died by suicide",
+      "values": [
+        "adult",
+        "child",
+        "mental_illness",
+        "delirious",
+        "intoxicated"
+      ],
+      "value_labels": {
+        "adult": "adult (none of the s.107(2) categories)",
+        "child": "child",
+        "mental_illness": "person with mental illness",
+        "delirious": "delirious person",
+        "intoxicated": "intoxicated person"
+      }
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-abetment",
+      "term": "abets",
+      "definition": "Instigates, conspires, or aids the suicide (BNS s.45). The encoding treats abetment as a single fact; which means of abetment is proved does not change the outcome.",
+      "citations": ["bns-2023#s107"]
+    },
+    {
+      "id": "T-vulnerable",
+      "term": "vulnerable victim",
+      "definition": "A child, a person with mental illness, a delirious person, or an intoxicated person. Abetting their suicide carries the enhanced tariff in s.107(2).",
+      "citations": ["bns-2023#s107"]
+    }
+  ],
+  "parameters": {
+    "max_years_107_1": 12,
+    "min_years_107_2": 10
+  },
+  "branches": [
+    {
+      "id": "N-NO-SUICIDE",
+      "provision": "s.107",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "suicide_occurred", "type": "bool", "default": true },
+          false
+        ]
+      },
+      "text": "If any person abets the commission of suicide ...",
+      "notes": "No suicide means s.107 is not engaged. Abetting an attempt is not this offence."
+    },
+    {
+      "id": "N-NO-ABETMENT",
+      "provision": "s.107",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "suicide_occurred", "type": "bool", "default": true }, true] },
+          { "==": [{ "var": "abetted", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "If any person abets the commission of suicide ...",
+      "notes": "A suicide without abetment is not this offence. The abetment is the whole offence."
+    },
+    {
+      "id": "N-107-2",
+      "provision": "s.107(2)",
+      "verdict": "offence",
+      "offence": "abetment_suicide_vulnerable",
+      "when": {
+        "and": [
+          { "==": [{ "var": "suicide_occurred", "type": "bool", "default": true }, true] },
+          { "==": [{ "var": "abetted", "type": "bool", "default": false }, true] },
+          { "in": [{ "var": "victim_category", "type": "enum", "default": "adult" }, ["child", "mental_illness", "delirious", "intoxicated"]] }
+        ]
+      },
+      "text": "If any person abets the commission of suicide of a child or any person with mental illness or a delirious person or a person who is intoxicated",
+      "notes": "The enhanced tariff. This sub-section has no IPC equivalent."
+    },
+    {
+      "id": "N-107-1",
+      "provision": "s.107(1)",
+      "verdict": "offence",
+      "offence": "abetment_suicide",
+      "when": {
+        "and": [
+          { "==": [{ "var": "suicide_occurred", "type": "bool", "default": true }, true] },
+          { "==": [{ "var": "abetted", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "victim_category", "type": "enum", "default": "adult" }, "adult"] }
+        ]
+      },
+      "text": "If any person abets the commission of suicide, he shall be punished with imprisonment for a term which may extend to twelve years, or with fine, or with both.",
+      "notes": "The general provision. The maximum rose from ten years (IPC s.306) to twelve years (BNS)."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.107",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.107",
+      "provision": "bns-2023#s107"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "abetment_suicide_vulnerable"
+        ]
+      },
+      "text": "Death, or imprisonment for life, or imprisonment for not less than ten years, or fine, or both [s.107(2)]",
+      "citations": ["bns-2023#s107"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "abetment_suicide"
+        ]
+      },
+      "text": "Imprisonment up to twelve years, or fine, or both [s.107(1)]",
+      "citations": ["bns-2023#s107"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-107-MENTAL-ILLNESS",
+      "provision": "s.107(2)",
+      "status": "unresolved",
+      "question": "What counts as 'mental illness' in s.107(2)?",
+      "why_it_matters": "The enhanced tariff (death, life, or ten years minimum) turns on whether the victim had a mental illness. The section does not define the term, and the pack records only one reading, so the analyser reports n/a rather than a number.",
+      "position_a": "Mental illness means a clinically recognised condition at the time of the suicide.",
+      "position_b": "Mental illness includes any diagnosed or treated psychiatric condition, past or present.",
+      "resolution": null,
+      "citations": ["bns-2023#s107"],
+      "variants": [
+        {
+          "id": "clinical-at-time",
+          "label": "clinically recognised condition at the time (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-107-1",
+      "cites": "s.107(1), text",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": true,
+        "victim_category": "adult"
+      },
+      "expect": {
+        "offence_kind": "abetment_suicide"
+      },
+      "text": "Abetting an adult's suicide: s.107(1), up to twelve years."
+    },
+    {
+      "id": "ILL-107-2-CHILD",
+      "cites": "s.107(2), text",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": true,
+        "victim_category": "child"
+      },
+      "expect": {
+        "offence_kind": "abetment_suicide_vulnerable"
+      },
+      "text": "Abetting a child's suicide: s.107(2), the enhanced tariff."
+    },
+    {
+      "id": "ILL-107-NO-SUICIDE",
+      "cites": "s.107, 'commission of suicide'",
+      "facts": {
+        "suicide_occurred": false,
+        "abetted": true,
+        "victim_category": "adult"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "Abetment without a suicide is not s.107."
+    },
+    {
+      "id": "ILL-107-NO-ABETMENT",
+      "cites": "s.107, 'abets the commission'",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": false,
+        "victim_category": "adult"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A suicide without abetment is not s.107."
+    },
+    {
+      "id": "ILL-107-INTOXICATED",
+      "cites": "s.107(2), text",
+      "facts": {
+        "suicide_occurred": true,
+        "abetted": true,
+        "victim_category": "intoxicated"
+      },
+      "expect": {
+        "offence_kind": "abetment_suicide_vulnerable"
+      },
+      "text": "Abetting an intoxicated person's suicide: s.107(2)."
+    }
+  ]
+}
