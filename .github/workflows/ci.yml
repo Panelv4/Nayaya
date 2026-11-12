@@ -22,7 +22,7 @@ jobs:
         run: python -c "import sys; print('stdlib only, python', sys.version)"
 
       - name: Byte-compile everything (catches syntax errors early)
-        run: python -m compileall -q server.py engine.py db.py legal_kb.py digilocker.py seed.py smoke.py tests.py nyayacode
+        run: python -m compileall -q server.py engine.py db.py legal_kb.py digilocker.py seed.py smoke.py tests.py uncertainty.py nyayacode
 
       - name: Pack check (every pack reproduces its statute)
         run: python -m nyayacode check

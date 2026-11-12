@@ -374,6 +374,15 @@ everything: anything private returns 404, exactly as before. The owner-only
 actions (vote, correct, map evidence, download) stay closed and the page shows a
 sign-in prompt instead.
 
+**Graded answers.** The intake form asks yes/no questions, and the engine reads
+tri-state facts. `uncertainty.py` bridges the gap: a graded answer (`"maybe"`,
+`0.7`) becomes `UNKNOWN` rather than being guessed either way, and the report
+lists the affected facts under open questions. Doubt on a vulnerability flag on
+a serious matter fires T-17 and escalates the case, which is the intended
+behaviour — see the README section "Graded answers, and why doubt never
+resolves itself" for the bands and the two guards (out-of-range numbers raise;
+the collapse never touches the engine's own `config`).
+
 **Language toggle.** The header chip is a real control. It swaps the interface
 chrome (navigation, buttons, form labels) using a dictionary in
 `assets/auth.js`, is remembered per browser, and never touches regions marked

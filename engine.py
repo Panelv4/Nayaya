@@ -19,6 +19,8 @@ import sqlite3
 from contextlib import closing
 from typing import Any, Dict, List, Optional
 
+import uncertainty
+
 LEVEL_ORDER = {"L0": 0, "L1": 1, "L2": 2, "L3": 3}
 TIER_LABEL = {1: "S1", 2: "S2", 3: "S3", 4: "S4", 5: "S5"}
 DISCLAIMER = (
@@ -462,6 +464,49 @@ def _normalize_tri_state(data: Any, prefix: str = "") -> None:
             path in TRI_STATE_KEYS or str(key) in _TRI_STATE_LEAVES
         ):
             data[key] = "TRUE" if value else "FALSE"
+
+
+def _collapse_graded_answers(data: Any, prefix: str = "") -> Dict[str, str]:
+    """Rewrite graded answers to tri-state, and report which facts were graded.
+
+    Intake may say a fact is "maybe" true, or give a likelihood such as 0.7.
+    The rule base only understands TRUE/FALSE/UNKNOWN, so every graded answer
+    collapses to UNKNOWN -- never to TRUE or FALSE, because in a triage tool
+    doubt must raise human review rather than quietly settle a fact (fail
+    closed). Definite answers (Python bools, "TRUE"/"FALSE", 0.95, 0.05) are
+    simply normalised to the tri-state spelling. Anything else -- an age, a
+    date, a free-text field -- is left alone for the handlers that own it.
+
+    Returns {dotted path: "UNKNOWN"} for the graded facts only, so the report
+    can name them in its open questions. Without that, a graded fact would look
+    exactly like a question nobody asked.
+    """
+    graded: Dict[str, str] = {}
+    if not isinstance(data, dict):
+        return graded
+    for key in list(data.keys()):
+        path = f"{prefix}.{key}" if prefix else str(key)
+        value = data[key]
+        if isinstance(value, dict):
+            graded.update(_collapse_graded_answers(value, path))
+            continue
+        if isinstance(value, bool):
+            continue  # _normalize_tri_state already handles booleans correctly
+        if isinstance(value, str):
+            key_norm = value.strip().upper().replace(" ", "_").replace("-", "_")
+            if key_norm in uncertainty.GRADED_LABELS:
+                data[key] = "UNKNOWN"
+                graded[path] = "UNKNOWN"
+            continue
+        if isinstance(value, (int, float)):
+            try:
+                label = uncertainty.classify(value)
+            except (TypeError, ValueError):
+                continue  # outside [0, 1]: a count or an age, not a likelihood
+            data[key] = "TRUE" if label == "TRUE" else "FALSE" if label == "FALSE" else "UNKNOWN"
+            if label not in ("TRUE", "FALSE"):
+                graded[path] = "UNKNOWN"
+    return graded
 
 
 def _flag_true(data: Dict[str, Any], *paths: str) -> bool:
@@ -945,6 +990,12 @@ class Engine:
         # caller's input objects.
         data: Dict[str, Any] = copy.deepcopy(facts)
         data.update(copy.deepcopy(runtime_variables))
+        # Graded intake ("maybe", 0.7) collapses to UNKNOWN before tri-state
+        # normalization, so the rule base never sees a value it cannot read.
+        # This runs BEFORE config/retrieved_sources are injected: those are
+        # engine-owned and contain legitimate floats (confidence_threshold
+        # 0.85), which must not be mistaken for probabilities and blanked.
+        graded_facts = _collapse_graded_answers(data)
         data["config"] = self.config
         data["retrieved_sources"] = retrieved_sources
         _normalize_tri_state(data)
@@ -1152,6 +1203,16 @@ class Engine:
             open_questions.append("Unrepresented party with unresolved legal-aid check (Art. 39A; T-15).")
         if data.get("material_facts_missing_or_contradictory"):
             open_questions.append("Material facts are missing or contradictory (T-17).")
+        if graded_facts:
+            # A graded answer is doubt, not an answer: say so, and say which
+            # facts, so the officer knows what to firm up rather than reading
+            # the resulting UNKNOWN as "the question was never asked".
+            open_questions.append(
+                "Graded or uncertain answers were treated as UNKNOWN and must be "
+                "confirmed before reliance: "
+                + ", ".join(sorted(graded_facts))
+                + " (fail-closed; any banded likelihood becomes UNKNOWN)."
+            )
         if data.get("document_integrity_concern"):
             open_questions.append("Document integrity concern flagged (T-20).")
         if data.get("rule_version_missing_for_date"):

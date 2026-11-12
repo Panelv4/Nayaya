@@ -2486,7 +2486,7 @@ Environment:
   NYAYA_HOST / NYAYA_PORT                    bind address (default 127.0.0.1:8000)
   NYAYA_DB / NYAYA_AUDIT_DB / NYAYA_EVIDENCE_DIR
                                              data paths (defaults: ./nyaya-rac*.sqlite3, ./evidence)
-  NYAYA_ADMIN_EMAIL / NYAYA_ADMIN_PASSWORD   bootstrap admin (password must be 12+ chars)
+  NYAYA_ADMIN_EMAIL / NYAYA_ADMIN_PASSWORD   bootstrap admin (password must be {min}+ chars)
   NYAYA_ALLOW_PUBLIC_BIND=1                  required to bind beyond loopback (no TLS!)
   NYAYA_PREVIEW=1                            sandbox/preview mode: bind 0.0.0.0
   NYAYA_TRUSTED_PROXIES                      comma-separated peer IPs/CIDRs allowed to set
@@ -2502,7 +2502,7 @@ Health: GET /health (no auth). Docs: docs/PORTAL.md, docs/API.md.
 
 if __name__ == "__main__":
     if len(sys.argv) >= 2 and sys.argv[1] in ("--help", "-h"):
-        print(USAGE.format(ver=APP_VERSION))
+        print(USAGE.format(ver=APP_VERSION, min=PASSWORD_MIN_LEN))
         sys.exit(0)
     if len(sys.argv) >= 2 and sys.argv[1] == "--version":
         print(f"NYAYA-RAC {APP_VERSION}")
@@ -2520,6 +2520,6 @@ if __name__ == "__main__":
         print("Promoted" if ok else "No such user:", sys.argv[2])
         sys.exit(0 if ok else 1)
     if len(sys.argv) >= 2 and sys.argv[1].startswith("--"):
-        print(f"Unknown option: {sys.argv[1]}\n\n" + USAGE.format(ver=APP_VERSION))
+        print(f"Unknown option: {sys.argv[1]}\n\n" + USAGE.format(ver=APP_VERSION, min=PASSWORD_MIN_LEN))
         sys.exit(2)
     main()

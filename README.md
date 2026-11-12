@@ -80,6 +80,35 @@ both readings and the analyser decides the entire case space under each:
 
 ---
 
+## Graded answers, and why doubt never resolves itself
+
+Intake rarely produces clean booleans. A caller may say a victim *might* have a
+disability, or a form may carry a likelihood such as `0.7`. `uncertainty.py`
+names five levels on a 0..1 scale:
+
+| Likelihood | Label | Meaning |
+|---|---|---|
+| `p >= 0.90` | `TRUE` | definitely true |
+| `0.65 – 0.90` | `MAYBE` | leans true |
+| `0.50 – 0.65` | `MIGHT_BE` | possible, slight lean true |
+| `0.35 – 0.50` | `MIGHT_NOT_BE` | possible, slight lean false |
+| `0.10 – 0.35` | `MAYBE_NOT` | leans false |
+| `p < 0.10` | `FALSE` | definitely false |
+
+The rule is deliberately blunt: **every graded band collapses to `UNKNOWN`**,
+never to `TRUE` or `FALSE`. In a triage tool, doubt must raise human review — a
+`maybe` on a disability flag becomes an unknown flag, and on a serious matter
+that fires T-17 ("material facts missing/contradictory") and escalates the case
+to mandatory judicial review. The report names each graded fact in its open
+questions, so a collapsed `UNKNOWN` is never indistinguishable from a question
+nobody asked.
+
+Two boundaries are enforced rather than assumed. A number outside `[0, 1]` is not
+a likelihood — an age of `17` raises instead of silently becoming "definitely
+true". And the collapse runs over intake only, before the engine injects its own
+`config` (which legitimately contains `confidence_threshold = 0.85`), so the
+engine can never blank out its own settings.
+
 ## What it reports on a pack
 
 | Check | Question it answers |
@@ -181,7 +210,8 @@ nyayacode/            the library: pack format, evaluator, analyser, amendments,
 server.py + pages/    a citizen case-reporting prototype built on the library
   (see docs/PORTAL.md — one application, not the argument)
 tests/                library tests, incl. negative tests that break a pack on purpose
-tests.py, smoke.py    portal tests (125) and end-to-end HTTP checks (150)
+tests.py, smoke.py    portal tests (142) and end-to-end HTTP checks (153)
+uncertainty.py        graded intake answers, collapsed fail-closed to UNKNOWN
 demo_out/             generated analysis and impact reports (nothing hand-written)
 seed.py               builds a demo database from obviously fictional accounts
 ```
