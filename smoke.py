@@ -318,9 +318,22 @@ s, replay = call("POST", "/api/digilocker/callback",
 check("code replay rejected", replay.get("reason_code") == "CODE_REPLAYED", str(replay))
 s, st = call("GET", "/api/digilocker/status", token=dl_tok)
 check("account now LINKED", st.get("status") == "LINKED" and st.get("verified") is True, str(st.get("status")))
-s, chk = call("GET", "/api/digilocker/verify?artefact=" + str(att.get("artefact_id")))
-check("artefact verifies publicly (hash intact)", s == 200 and chk.get("valid") is True, f"{s} {chk}")
-s, chk2 = call("GET", "/api/digilocker/verify?artefact=dlv_nope")
+s, anon = call("GET", "/api/digilocker/verify?artefact=" + str(att.get("artefact_id")))
+check("artefact verification requires a session", s == 401, f"{s} {anon}")
+s, chk = call("GET", "/api/digilocker/verify?artefact=" + str(att.get("artefact_id")), token=dl_tok)
+check("artefact verifies for its owner (hash intact)", s == 200 and chk.get("valid") is True, f"{s} {chk}")
+s, chk1 = call("GET", "/api/digilocker/verify?artefact=" + str(att.get("artefact_id")), token=stranger_tok)
+# A logged-in outsider learns whether the artefact exists and nothing more:
+# no digest, no issuer reference, no dates.
+check("another logged-in user cannot read the artefact record",
+      s == 200 and chk1.get("found") is True
+      and "doc_sha256" not in chk1 and "issuer_ref_masked" not in chk1
+      and "expires_on" not in chk1 and "verified_at" not in chk1, f"{s} {chk1}")
+# The verdict itself (found / valid / state) is what verification exists to
+# answer, so it is shared; the identifying record is not.
+check("the outsider still gets a verdict to act on",
+      chk1.get("found") is True and "state" in chk1, f"{chk1}")
+s, chk2 = call("GET", "/api/digilocker/verify?artefact=dlv_nope", token=dl_tok)
 check("unknown artefact reported as not found", chk2.get("found") is False)
 s, rep = intake(dl_tok, evidence=[], no_evidence_ack=True)
 dl = rep["summary"]["digilocker"]

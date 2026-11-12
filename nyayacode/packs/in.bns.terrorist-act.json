@@ -1,0 +1,451 @@
+{
+  "id": "in.bns.terrorist-act",
+  "title": "Terrorist act — BNS 2023 s.113",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.113. This brings the terrorist-act offence (drawn from the Unlawful Activities (Prevention) Act) into the general penal code. The encoding separates the underlying act (done with intent to threaten the unity, integrity, sovereignty, security or economic security of India, or to strike terror) from the accused's role, because s.113 punishes each role differently. The breadth of 'strike terror' and the overlap with the UAPA are recorded as unresolved ambiguities; the Explanation's direction that a Superintendent of Police decide whether to register under s.113 or the UAPA is a procedural discretion and is not encoded."
+  },
+  "scope": {
+    "in_scope": [
+      "s.113(2)(a) committing a terrorist act resulting in death (death or life and fine)",
+      "s.113(2)(b) committing a terrorist act, other cases (five years to life and fine)",
+      "s.113(3) conspiring, attempting, advocating, abetting, advising, inciting, facilitating or preparatory acts (five years to life and fine)",
+      "s.113(4) organising training camps or recruiting (five years to life and fine)",
+      "s.113(5) membership of an organisation involved in a terrorist act (up to life and fine)",
+      "s.113(6) harbouring or concealing a terrorist (three years to life and fine)",
+      "s.113(7) possessing property derived from a terrorist act (up to life and fine)"
+    ],
+    "out_of_scope": [
+      "s.111 organised crime (separate pack in.bns.organised-crime)",
+      "s.112 petty organised crime (separate pack in.bns.petty-organised-crime)",
+      "the Unlawful Activities (Prevention) Act, 1967 (the Explanation leaves the choice of statute to the police)",
+      "the underlying offences (murder, explosives, etc.) charged separately",
+      "sentencing discretion within the maxima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.113",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF. New offence in the general penal code; modelled on the UAPA."
+    }
+  ],
+  "citations": ["bns-2023#s113"],
+  "facts": [
+    {
+      "name": "act_type",
+      "type": "enum",
+      "label": "The underlying conduct",
+      "values": [
+        "terrorist_act",
+        "other"
+      ],
+      "value_labels": {
+        "terrorist_act": "terrorist act (s.113(1))",
+        "other": "not a terrorist act"
+      }
+    },
+    {
+      "name": "role",
+      "type": "enum",
+      "label": "The accused's role",
+      "values": [
+        "commits",
+        "conspire_abet",
+        "organise_recruit",
+        "membership",
+        "harbouring",
+        "possession",
+        "none"
+      ],
+      "value_labels": {
+        "commits": "commits the terrorist act",
+        "conspire_abet": "conspires, attempts, advocates, abets, advises, incites, facilitates, or does a preparatory act",
+        "organise_recruit": "organises training camps or recruits persons",
+        "membership": "is a member of an organisation involved in a terrorist act",
+        "harbouring": "harbours or conceals a person who committed a terrorist act",
+        "possession": "possesses property derived from a terrorist act",
+        "none": "no punishable role"
+      }
+    },
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The terrorist act resulted in a death"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-terrorist-act",
+      "term": "terrorist act",
+      "definition": "Whoever does any act with the intent to threaten or likely to threaten the unity, integrity, sovereignty, security, or economic security of India or with the intent to strike terror or likely to strike terror in the people or any section of the people in India or in any foreign country, by using bombs, dynamite or other explosive substance or inflammable substance or firearms or other lethal weapons or poisonous or noxious gases or other chemicals or by any other substance (whether biological, radioactive, nuclear or otherwise) of a hazardous nature or by any other means of whatever nature to cause or likely to cause death, injury, loss of property, disruption of essential supplies, damage to monetary stability, or damage to defence property; or overawes by criminal force; or detains, kidnaps or abducts any person to compel a government, commits a terrorist act (s.113(1)).",
+      "citations": ["bns-2023#s113"]
+    }
+  ],
+  "parameters": {
+    "min_years_principal": 5,
+    "min_years_harbouring": 3
+  },
+  "branches": [
+    {
+      "id": "N-NO-ACT",
+      "provision": "s.113",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "act_type", "type": "enum", "default": "other" },
+          "other"
+        ]
+      },
+      "text": "Whoever does any act with the intent to threaten or likely to threaten the unity, integrity, sovereignty, security, or economic security of India or with the intent to strike terror ... commit a terrorist act.",
+      "notes": "If the conduct is not a terrorist act as defined in s.113(1), s.113 is not engaged. The underlying offence may still be punishable elsewhere."
+    },
+    {
+      "id": "N-NO-ROLE",
+      "provision": "s.113",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "none"] }
+        ]
+      },
+      "text": "Whoever commits a terrorist act ... Whoever conspires or attempts ... Whoever organises ... Any person who is a member ... Whoever voluntarily harbours ... Whoever knowingly possesses ...",
+      "notes": "A terrorist act occurred, but the accused has no punishable role in it under s.113."
+    },
+    {
+      "id": "N-113-2A",
+      "provision": "s.113(2)(a)",
+      "verdict": "offence",
+      "offence": "terrorist_act_death",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "commits"] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "Whoever commits a terrorist act shall, if such offence has resulted in the death of any person, be punished with death or imprisonment for life, and shall also be liable to fine.",
+      "notes": "Committing a terrorist act that results in death."
+    },
+    {
+      "id": "N-113-2B",
+      "provision": "s.113(2)(b)",
+      "verdict": "offence",
+      "offence": "terrorist_act",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "commits"] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "in any other case, be punished with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life, and shall also be liable to fine.",
+      "notes": "Committing a terrorist act where no death resulted."
+    },
+    {
+      "id": "N-113-3",
+      "provision": "s.113(3)",
+      "verdict": "offence",
+      "offence": "terrorist_act_abet",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "conspire_abet"] }
+        ]
+      },
+      "text": "Whoever conspires or attempts to commit, or advocates, abets, advises or incites, directly or knowingly facilitates the commission of a terrorist act or any act preparatory to the commission of a terrorist act, shall be punished with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life, and shall also be liable to fine.",
+      "notes": "Conspiracy, attempt, advocacy, abetment, advice, incitement, facilitation, or preparatory acts."
+    },
+    {
+      "id": "N-113-4",
+      "provision": "s.113(4)",
+      "verdict": "offence",
+      "offence": "terrorist_act_organise",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "organise_recruit"] }
+        ]
+      },
+      "text": "Whoever organises or causes to be organised any camp or camps for imparting training in terrorist act, or recruits or causes to be recruited any person or persons for commission of a terrorist act, shall be punished with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life, and shall also be liable to fine.",
+      "notes": "Organising training camps or recruiting."
+    },
+    {
+      "id": "N-113-5",
+      "provision": "s.113(5)",
+      "verdict": "offence",
+      "offence": "terrorist_act_membership",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "membership"] }
+        ]
+      },
+      "text": "Any person who is a member of an organisation which is involved in terrorist act, shall be punished with imprisonment for a term which may extend to imprisonment for life, and shall also be liable to fine.",
+      "notes": "Mere membership of an organisation involved in a terrorist act."
+    },
+    {
+      "id": "N-113-6",
+      "provision": "s.113(6)",
+      "verdict": "offence",
+      "offence": "terrorist_act_harbouring",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "harbouring"] }
+        ]
+      },
+      "text": "Whoever voluntarily harbours or conceals, or attempts to harbour or conceal any person knowing that such person has committed a terrorist act shall be punished with imprisonment for a term which shall not be less than three years but which may extend to imprisonment for life, and shall also be liable to fine: Provided that this sub-section shall not apply to any case in which the harbour or concealment is by the spouse of the offender.",
+      "notes": "Harbouring or concealing a terrorist. The spouse proviso is a fact about the harbourer, not encoded as a separate fact; it is recorded in the notes."
+    },
+    {
+      "id": "N-113-7",
+      "provision": "s.113(7)",
+      "verdict": "offence",
+      "offence": "terrorist_act_possession",
+      "when": {
+        "and": [
+          { "==": [{ "var": "act_type", "type": "enum", "default": "other" }, "terrorist_act"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "possession"] }
+        ]
+      },
+      "text": "Whoever knowingly possesses any property derived or obtained from commission of any terrorist act or acquired through the commission of any terrorist act shall be punished with imprisonment for a term which may extend to imprisonment for life, and shall also be liable to fine.",
+      "notes": "Possessing property derived from a terrorist act."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.113",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.113",
+      "provision": "bns-2023#s113"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act_death"
+        ]
+      },
+      "text": "Death, or imprisonment for life, and fine [s.113(2)(a)]",
+      "citations": ["bns-2023#s113"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act"
+        ]
+      },
+      "text": "Imprisonment not less than five years but up to life, and fine [s.113(2)(b)]",
+      "citations": ["bns-2023#s113"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act_abet"
+        ]
+      },
+      "text": "Imprisonment not less than five years but up to life, and fine [s.113(3)]",
+      "citations": ["bns-2023#s113"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act_organise"
+        ]
+      },
+      "text": "Imprisonment not less than five years but up to life, and fine [s.113(4)]",
+      "citations": ["bns-2023#s113"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act_membership"
+        ]
+      },
+      "text": "Imprisonment up to life, and fine [s.113(5)]",
+      "citations": ["bns-2023#s113"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act_harbouring"
+        ]
+      },
+      "text": "Imprisonment not less than three years but up to life, and fine [s.113(6)]",
+      "citations": ["bns-2023#s113"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "terrorist_act_possession"
+        ]
+      },
+      "text": "Imprisonment up to life, and fine [s.113(7)]",
+      "citations": ["bns-2023#s113"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-113-STRIKE-TERROR",
+      "provision": "s.113(1)",
+      "status": "unresolved",
+      "question": "How broad is 'strike terror' in s.113(1)?",
+      "why_it_matters": "Section 113(1) covers an act done with intent to strike terror 'or likely to strike terror', by an open-ended list of means 'or by any other means of whatever nature'. Whether violent conduct aimed at a narrower object is a terrorist act turns on that breadth. The pack records only one reading — that 'terrorist_act' is a single fact to be proved — so the analyser reports n/a rather than a number.",
+      "position_a": "'Strike terror' requires an intent to terrorise the public or a section of it at large.",
+      "position_b": "'Strike terror' is satisfied by any act likely to cause terror in those affected by it.",
+      "resolution": null,
+      "citations": ["bns-2023#s113"],
+      "variants": [
+        {
+          "id": "public-at-large",
+          "label": "intent to terrorise the public at large (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-113-2A",
+      "cites": "s.113(2)(a), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "commits",
+        "death_caused": true
+      },
+      "expect": {
+        "offence_kind": "terrorist_act_death"
+      },
+      "text": "A bomb blast intended to strike terror kills commuters: s.113(2)(a), death or life and fine."
+    },
+    {
+      "id": "ILL-113-2B",
+      "cites": "s.113(2)(b), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "commits",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "terrorist_act"
+      },
+      "text": "A bomb planted to strike terror is recovered before it explodes: s.113(2)(b), five years to life and fine."
+    },
+    {
+      "id": "ILL-113-3",
+      "cites": "s.113(3), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "conspire_abet",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "terrorist_act_abet"
+      },
+      "text": "Inciting others to carry out the bombing: s.113(3)."
+    },
+    {
+      "id": "ILL-113-4",
+      "cites": "s.113(4), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "organise_recruit",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "terrorist_act_organise"
+      },
+      "text": "Running a camp that trains recruits in terrorist acts: s.113(4)."
+    },
+    {
+      "id": "ILL-113-5",
+      "cites": "s.113(5), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "membership",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "terrorist_act_membership"
+      },
+      "text": "Being a member of an organisation involved in a terrorist act: s.113(5)."
+    },
+    {
+      "id": "ILL-113-6",
+      "cites": "s.113(6), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "harbouring",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "terrorist_act_harbouring"
+      },
+      "text": "Hiding a person who committed a terrorist act: s.113(6)."
+    },
+    {
+      "id": "ILL-113-7",
+      "cites": "s.113(7), text",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "possession",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "terrorist_act_possession"
+      },
+      "text": "Knowingly possessing property obtained from a terrorist act: s.113(7)."
+    },
+    {
+      "id": "ILL-113-NO-ACT",
+      "cites": "s.113(1), 'commit a terrorist act'",
+      "facts": {
+        "act_type": "other",
+        "role": "commits",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "Conduct that is not a terrorist act is not s.113, whatever the role."
+    },
+    {
+      "id": "ILL-113-NO-ROLE",
+      "cites": "s.113, 'whoever'",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "none",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A terrorist act occurred but the accused has no punishable role: not s.113."
+    }
+  ]
+}

@@ -16,7 +16,10 @@ import json
 import os
 import re
 import sqlite3
+from contextlib import closing
 from typing import Any, Dict, List, Optional
+
+import uncertainty
 
 LEVEL_ORDER = {"L0": 0, "L1": 1, "L2": 2, "L3": 3}
 TIER_LABEL = {1: "S1", 2: "S2", 3: "S3", 4: "S4", 5: "S5"}
@@ -463,6 +466,49 @@ def _normalize_tri_state(data: Any, prefix: str = "") -> None:
             data[key] = "TRUE" if value else "FALSE"
 
 
+def _collapse_graded_answers(data: Any, prefix: str = "") -> Dict[str, str]:
+    """Rewrite graded answers to tri-state, and report which facts were graded.
+
+    Intake may say a fact is "maybe" true, or give a likelihood such as 0.7.
+    The rule base only understands TRUE/FALSE/UNKNOWN, so every graded answer
+    collapses to UNKNOWN -- never to TRUE or FALSE, because in a triage tool
+    doubt must raise human review rather than quietly settle a fact (fail
+    closed). Definite answers (Python bools, "TRUE"/"FALSE", 0.95, 0.05) are
+    simply normalised to the tri-state spelling. Anything else -- an age, a
+    date, a free-text field -- is left alone for the handlers that own it.
+
+    Returns {dotted path: "UNKNOWN"} for the graded facts only, so the report
+    can name them in its open questions. Without that, a graded fact would look
+    exactly like a question nobody asked.
+    """
+    graded: Dict[str, str] = {}
+    if not isinstance(data, dict):
+        return graded
+    for key in list(data.keys()):
+        path = f"{prefix}.{key}" if prefix else str(key)
+        value = data[key]
+        if isinstance(value, dict):
+            graded.update(_collapse_graded_answers(value, path))
+            continue
+        if isinstance(value, bool):
+            continue  # _normalize_tri_state already handles booleans correctly
+        if isinstance(value, str):
+            key_norm = value.strip().upper().replace(" ", "_").replace("-", "_")
+            if key_norm in uncertainty.GRADED_LABELS:
+                data[key] = "UNKNOWN"
+                graded[path] = "UNKNOWN"
+            continue
+        if isinstance(value, (int, float)):
+            try:
+                label = uncertainty.classify(value)
+            except (TypeError, ValueError):
+                continue  # outside [0, 1]: a count or an age, not a likelihood
+            data[key] = "TRUE" if label == "TRUE" else "FALSE" if label == "FALSE" else "UNKNOWN"
+            if label not in ("TRUE", "FALSE"):
+                graded[path] = "UNKNOWN"
+    return graded
+
+
 def _flag_true(data: Dict[str, Any], *paths: str) -> bool:
     """Tri-state-aware truthiness: True only for Python True or the "TRUE" string
     (never for "FALSE"/"UNKNOWN"/None). Accepts several alias paths."""
@@ -491,8 +537,8 @@ def _parse_punishment_text(value: Any):
     return years, life, death
 
 
-def _tri_state_value(data: Dict[str, Any], key: str) -> str:
-    v = resolve_path(data, key)
+def _tri_state_of(v: Any) -> str:
+    """Convert a single value to a tri-state string."""
     if isinstance(v, bool):
         return "TRUE" if v else "FALSE"
     if isinstance(v, str):
@@ -500,6 +546,38 @@ def _tri_state_value(data: Dict[str, Any], key: str) -> str:
         if u in ("TRUE", "FALSE", "UNKNOWN"):
             return u
     return "UNKNOWN"
+
+
+def _tri_state_value(data: Dict[str, Any], key: str) -> str:
+    return _tri_state_of(resolve_path(data, key))
+
+# Minority status is NOT a tri-state: intake and the rule base use their own
+# vocabulary (CONFIRMED_MINOR / CONFIRMED_ADULT / DISPUTED / UNDETERMINED).
+# Passing it through the tri-state helper collapsed every real value to
+# "UNKNOWN", which silently disabled the minor-protection triggers.
+_MINOR_STATUSES = frozenset(
+    ("CONFIRMED_MINOR", "CONFIRMED_ADULT", "DISPUTED", "UNDETERMINED")
+)
+
+
+def _minor_status_of(v: Any) -> str:
+    """Normalize a minority-status value, preserving the domain vocabulary."""
+    if isinstance(v, bool):
+        return "CONFIRMED_MINOR" if v else "CONFIRMED_ADULT"
+    if isinstance(v, str):
+        u = v.strip().upper().replace(" ", "_").replace("-", "_")
+        if u in _MINOR_STATUSES:
+            return u
+        # Tolerate the tri-state spellings used by some callers.
+        if u in ("TRUE", "YES", "MINOR"):
+            return "CONFIRMED_MINOR"
+        if u in ("FALSE", "NO", "ADULT", "MAJOR"):
+            return "CONFIRMED_ADULT"
+    return "UNDETERMINED"
+
+
+def _minor_status(data: Dict[str, Any], key: str) -> str:
+    return _minor_status_of(resolve_path(data, key))
 
 
 def _evidence_refs(condition: Any) -> str:
@@ -846,7 +924,7 @@ class Engine:
             return None
 
     def _init_db(self) -> None:
-        with sqlite3.connect(self.db_path) as c:
+        with closing(sqlite3.connect(self.db_path)) as c, c:
             c.execute(
                 """CREATE TABLE IF NOT EXISTS audit (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -863,7 +941,7 @@ class Engine:
 
     def _audit_insert(self, case_id: str, final_level: str, triggers: List[Dict[str, Any]],
                       urgency: str, input_hash: str, output: Dict[str, Any]) -> int:
-        with sqlite3.connect(self.db_path) as c:
+        with closing(sqlite3.connect(self.db_path)) as c, c:
             cur = c.execute(
                 "INSERT INTO audit (at, case_id, rule_base_version, final_level, triggers_fired, urgency, input_hash, output) "
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -884,7 +962,7 @@ class Engine:
         return True
 
     def audit_recent(self, limit: int = 100) -> List[Dict[str, Any]]:
-        with sqlite3.connect(self.db_path) as c:
+        with closing(sqlite3.connect(self.db_path)) as c:
             c.row_factory = sqlite3.Row
             rows = c.execute(
                 "SELECT id, at, case_id, rule_base_version, final_level, triggers_fired, urgency, input_hash FROM audit ORDER BY id DESC LIMIT ?",
@@ -912,6 +990,12 @@ class Engine:
         # caller's input objects.
         data: Dict[str, Any] = copy.deepcopy(facts)
         data.update(copy.deepcopy(runtime_variables))
+        # Graded intake ("maybe", 0.7) collapses to UNKNOWN before tri-state
+        # normalization, so the rule base never sees a value it cannot read.
+        # This runs BEFORE config/retrieved_sources are injected: those are
+        # engine-owned and contain legitimate floats (confidence_threshold
+        # 0.85), which must not be mistaken for probabilities and blanked.
+        graded_facts = _collapse_graded_answers(data)
         data["config"] = self.config
         data["retrieved_sources"] = retrieved_sources
         _normalize_tri_state(data)
@@ -1028,7 +1112,7 @@ class Engine:
 
         # ---- output schema assembly ----
         regime = str(data.get("regime", "UNDETERMINED"))
-        offence_date_iso = _yyyymmdd_to_iso(data.get("offence.start_yyyymmdd"))
+        offence_date_iso = _yyyymmdd_to_iso(resolve_path(data, "offence.start_yyyymmdd"))
         cutover = self.config.get("regime_cutover_yyyymmdd", 20240701)
         regime_basis = (
             f"Offence date {offence_date_iso or 'not provided'}; regime cutover "
@@ -1047,7 +1131,7 @@ class Engine:
             if o.get("verified_in_corpus") is not True:
                 unverified_provisions.append(f"{statute} {provision}")
             def tri(v: Any) -> str:
-                return _tri_state_value({}, v) if v is not None else "UNKNOWN"
+                return _tri_state_of(v) if v is not None else "UNKNOWN"
             max_y = pun.get("max_years")
             min_y = pun.get("min_years")
             max_pun = f"{max_y} years" if _is_number(max_y) else "Not specified"
@@ -1067,9 +1151,9 @@ class Engine:
             )
 
         parties: Dict[str, Any] = {
-            "victim_minor_status": _tri_state_value(data, "parties.victim_minor_status"),
-            "victim_age_basis": str(data.get("parties.victim_age_basis", "Age evidence not recorded")),
-            "accused_minor_status": _tri_state_value(data, "parties.accused_minor_status"),
+            "victim_minor_status": _minor_status(data, "parties.victim_minor_status"),
+            "victim_age_basis": str(resolve_path(data, "parties.victim_age_basis") or "Age evidence not recorded"),
+            "accused_minor_status": _minor_status(data, "parties.accused_minor_status"),
             "vulnerability_flags": {flag: _tri_state_value(data, f"flags.{flag}") for flag in NINE_FLAGS},
         }
 
@@ -1101,13 +1185,13 @@ class Engine:
 
         # ---- open questions ----
         open_questions: List[str] = []
-        if not data.get("offence.start_yyyymmdd"):
+        if not resolve_path(data, "offence.start_yyyymmdd"):
             open_questions.append("Offence date not provided; the applicable legal regime cannot be determined (Art. 20(1) risk).")
         if regime in ("MIXED", "UNDETERMINED"):
             open_questions.append(f"Regime is {regime}; apply transitional/savings clauses (SA-08) and verify the rule version in corpus (T-16).")
-        if data.get("parties.victim_minor_status") in ("DISPUTED", "UNDETERMINED"):
+        if _minor_status(data, "parties.victim_minor_status") in ("DISPUTED", "UNDETERMINED"):
             open_questions.append("Victim minority status disputed/undetermined — treat as minor for protective handling pending judicial determination (T-08).")
-        if data.get("parties.accused_minor_status") in ("DISPUTED", "UNDETERMINED"):
+        if _minor_status(data, "parties.accused_minor_status") in ("DISPUTED", "UNDETERMINED"):
             open_questions.append("Accused minority status disputed/undetermined — route to Juvenile Justice Board pending determination (T-09).")
         if derived.get("accused_age_band_16_17_possible") and agg.get("heinous_any"):
             open_questions.append("Accused possibly aged 16–18 with a heinous offence — JJ Act s.15 preliminary assessment may be required (T-02).")
@@ -1119,6 +1203,16 @@ class Engine:
             open_questions.append("Unrepresented party with unresolved legal-aid check (Art. 39A; T-15).")
         if data.get("material_facts_missing_or_contradictory"):
             open_questions.append("Material facts are missing or contradictory (T-17).")
+        if graded_facts:
+            # A graded answer is doubt, not an answer: say so, and say which
+            # facts, so the officer knows what to firm up rather than reading
+            # the resulting UNKNOWN as "the question was never asked".
+            open_questions.append(
+                "Graded or uncertain answers were treated as UNKNOWN and must be "
+                "confirmed before reliance: "
+                + ", ".join(sorted(graded_facts))
+                + " (fail-closed; any banded likelihood becomes UNKNOWN)."
+            )
         if data.get("document_integrity_concern"):
             open_questions.append("Document integrity concern flagged (T-20).")
         if data.get("rule_version_missing_for_date"):
@@ -1137,7 +1231,7 @@ class Engine:
             penalties.append("regime determination")
         if domain == "CRIMINAL":
             for fkey in ("parties.victim_minor_status", "parties.accused_minor_status"):
-                if _tri_state_value(data, fkey) in ("DISPUTED", "UNDETERMINED"):
+                if _minor_status(data, fkey) in ("DISPUTED", "UNDETERMINED"):
                     score -= 0.10
                     penalties.append(fkey)
         if final_index >= 3:

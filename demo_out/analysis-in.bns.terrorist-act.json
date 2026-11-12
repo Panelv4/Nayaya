@@ -1,0 +1,187 @@
+{
+  "pack": "in.bns.terrorist-act",
+  "title": "Terrorist act — BNS 2023 s.113",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 3,
+  "domain_size": 28,
+  "digest": "212c56b0198aa3ab",
+  "gaps": {
+    "pack": "in.bns.terrorist-act",
+    "kind": "gap",
+    "count": 0,
+    "checked": 28,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.terrorist-act",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 28,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.terrorist-act",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 28,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.terrorist-act",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-113-STRIKE-TERROR",
+        "provision": "s.113(1)",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-113-2A",
+      "cites": "s.113(2)(a), text",
+      "text": "A bomb blast intended to strike terror kills commuters: s.113(2)(a), death or life and fine.",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "commits",
+        "death_caused": true
+      },
+      "expected": "terrorist_act_death",
+      "actual": "terrorist_act_death",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-2B",
+      "cites": "s.113(2)(b), text",
+      "text": "A bomb planted to strike terror is recovered before it explodes: s.113(2)(b), five years to life and fine.",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "commits",
+        "death_caused": false
+      },
+      "expected": "terrorist_act",
+      "actual": "terrorist_act",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-3",
+      "cites": "s.113(3), text",
+      "text": "Inciting others to carry out the bombing: s.113(3).",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "conspire_abet",
+        "death_caused": false
+      },
+      "expected": "terrorist_act_abet",
+      "actual": "terrorist_act_abet",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-4",
+      "cites": "s.113(4), text",
+      "text": "Running a camp that trains recruits in terrorist acts: s.113(4).",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "organise_recruit",
+        "death_caused": false
+      },
+      "expected": "terrorist_act_organise",
+      "actual": "terrorist_act_organise",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-5",
+      "cites": "s.113(5), text",
+      "text": "Being a member of an organisation involved in a terrorist act: s.113(5).",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "membership",
+        "death_caused": false
+      },
+      "expected": "terrorist_act_membership",
+      "actual": "terrorist_act_membership",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-6",
+      "cites": "s.113(6), text",
+      "text": "Hiding a person who committed a terrorist act: s.113(6).",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "harbouring",
+        "death_caused": false
+      },
+      "expected": "terrorist_act_harbouring",
+      "actual": "terrorist_act_harbouring",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-7",
+      "cites": "s.113(7), text",
+      "text": "Knowingly possessing property obtained from a terrorist act: s.113(7).",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "possession",
+        "death_caused": false
+      },
+      "expected": "terrorist_act_possession",
+      "actual": "terrorist_act_possession",
+      "ok": true
+    },
+    {
+      "id": "ILL-113-NO-ACT",
+      "cites": "s.113(1), 'commit a terrorist act'",
+      "text": "Conduct that is not a terrorist act is not s.113, whatever the role.",
+      "facts": {
+        "act_type": "other",
+        "role": "commits",
+        "death_caused": false
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-113-NO-ROLE",
+      "cites": "s.113, 'whoever'",
+      "text": "A terrorist act occurred but the accused has no punishable role: not s.113.",
+      "facts": {
+        "act_type": "terrorist_act",
+        "role": "none",
+        "death_caused": false
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.113(2)(a) committing a terrorist act resulting in death (death or life and fine)",
+      "s.113(2)(b) committing a terrorist act, other cases (five years to life and fine)",
+      "s.113(3) conspiring, attempting, advocating, abetting, advising, inciting, facilitating or preparatory acts (five years to life and fine)",
+      "s.113(4) organising training camps or recruiting (five years to life and fine)",
+      "s.113(5) membership of an organisation involved in a terrorist act (up to life and fine)",
+      "s.113(6) harbouring or concealing a terrorist (three years to life and fine)",
+      "s.113(7) possessing property derived from a terrorist act (up to life and fine)"
+    ],
+    "out_of_scope": [
+      "s.111 organised crime (separate pack in.bns.organised-crime)",
+      "s.112 petty organised crime (separate pack in.bns.petty-organised-crime)",
+      "the Unlawful Activities (Prevention) Act, 1967 (the Explanation leaves the choice of statute to the police)",
+      "the underlying offences (murder, explosives, etc.) charged separately",
+      "sentencing discretion within the maxima"
+    ]
+  }
+}

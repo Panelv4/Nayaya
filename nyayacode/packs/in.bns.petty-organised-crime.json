@@ -1,0 +1,275 @@
+{
+  "id": "in.bns.petty-organised-crime",
+  "title": "Petty organised crime — BNS 2023 s.112",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.112. This is a new offence in the BNS with no IPC equivalent. The offence needs three things at once — membership of a group or gang, one of the listed acts (theft, snatching, cheating, ticket touting, betting or gambling, selling examination papers, or a similar act), and committing it. The open-ended 'any other similar criminal act' is recorded as an unresolved ambiguity."
+  },
+  "scope": {
+    "in_scope": [
+      "s.112(2) committing petty organised crime (one to seven years and fine)"
+    ],
+    "out_of_scope": [
+      "s.111 organised crime (separate pack in.bns.organised-crime)",
+      "s.113 terrorist act (separate pack in.bns.terrorist-act)",
+      "the underlying acts (theft, cheating, etc.) charged separately",
+      "sentencing discretion within the range"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.112",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF. New offence; no IPC equivalent."
+    }
+  ],
+  "citations": ["bns-2023#s112"],
+  "facts": [
+    {
+      "name": "gang_member",
+      "type": "bool",
+      "label": "The accused is a member of a group or gang"
+    },
+    {
+      "name": "act_type",
+      "type": "enum",
+      "label": "The act committed",
+      "values": [
+        "theft",
+        "snatching",
+        "cheating",
+        "ticket_tout",
+        "betting",
+        "exam_papers",
+        "similar",
+        "none"
+      ],
+      "value_labels": {
+        "theft": "theft (including trick theft, pick-pocketing, shoplifting, card skimming, ATM theft)",
+        "snatching": "snatching",
+        "cheating": "cheating",
+        "ticket_tout": "unauthorised selling of tickets",
+        "betting": "unauthorised betting or gambling",
+        "exam_papers": "selling of public examination question papers",
+        "similar": "any other similar criminal act",
+        "none": "no listed act"
+      }
+    },
+    {
+      "name": "commits",
+      "type": "bool",
+      "label": "The accused commits the act (singly or jointly)"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-petty",
+      "term": "petty organised crime",
+      "definition": "Whoever, being a member of a group or gang, either singly or jointly, commits any act of theft, snatching, cheating, unauthorised selling of tickets, unauthorised betting or gambling, selling of public examination question papers or any other similar criminal act, is said to commit petty organised crime (s.112(1)).",
+      "citations": ["bns-2023#s112"]
+    },
+    {
+      "id": "T-theft",
+      "term": "theft (Explanation)",
+      "definition": "For the purposes of s.112(1), 'theft' includes trick theft, theft from vehicle, dwelling house or business premises, cargo theft, pick pocketing, theft through card skimming, shoplifting and theft of Automated Teller Machine.",
+      "citations": ["bns-2023#s112"]
+    }
+  ],
+  "parameters": {
+    "min_years": 1,
+    "max_years": 7
+  },
+  "branches": [
+    {
+      "id": "N-NO-GANG",
+      "provision": "s.112",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "gang_member", "type": "bool", "default": false },
+          false
+        ]
+      },
+      "text": "Whoever, being a member of a group or gang, either singly or jointly, commits any act ... is said to commit petty organised crime.",
+      "notes": "Not a member of a group or gang means s.112 is not engaged. The act may still be punishable on its own."
+    },
+    {
+      "id": "N-NO-ACT",
+      "provision": "s.112",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "gang_member", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "act_type", "type": "enum", "default": "none" }, "none"] }
+        ]
+      },
+      "text": "commits any act of theft, snatching, cheating, unauthorised selling of tickets, unauthorised betting or gambling, selling of public examination question papers or any other similar criminal act ...",
+      "notes": "No listed act means s.112 is not engaged."
+    },
+    {
+      "id": "N-NO-COMMIT",
+      "provision": "s.112",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "gang_member", "type": "bool", "default": false }, true] },
+          { "in": [{ "var": "act_type", "type": "enum", "default": "none" }, ["theft", "snatching", "cheating", "ticket_tout", "betting", "exam_papers", "similar"]] },
+          { "==": [{ "var": "commits", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "commits any act ...",
+      "notes": "A gang member who does not commit a listed act does not commit petty organised crime."
+    },
+    {
+      "id": "N-112",
+      "provision": "s.112(2)",
+      "verdict": "offence",
+      "offence": "petty_organised_crime",
+      "when": {
+        "and": [
+          { "==": [{ "var": "gang_member", "type": "bool", "default": false }, true] },
+          { "in": [{ "var": "act_type", "type": "enum", "default": "none" }, ["theft", "snatching", "cheating", "ticket_tout", "betting", "exam_papers", "similar"]] },
+          { "==": [{ "var": "commits", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "Whoever commits any petty organised crime shall be punished with imprisonment for a term which shall not be less than one year but which may extend to seven years, and shall also be liable to fine.",
+      "notes": "Gang membership plus a listed act, committed singly or jointly."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.112",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.112",
+      "provision": "bns-2023#s112"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "petty_organised_crime"
+        ]
+      },
+      "text": "Imprisonment not less than one year but up to seven years, and fine [s.112(2)]",
+      "citations": ["bns-2023#s112"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-112-SIMILAR-ACT",
+      "provision": "s.112(1)",
+      "status": "unresolved",
+      "question": "What counts as 'any other similar criminal act' in s.112(1)?",
+      "why_it_matters": "The listed acts (theft, snatching, cheating, ticket touting, betting, examination papers) are specific, but 'any other similar criminal act' is open-ended. Whether an unlisted act is 'similar' decides whether s.112 applies. The pack records only one reading — that 'similar' is a single fact to be proved — so the analyser reports n/a rather than a number.",
+      "position_a": "'Similar' means an act of the same kind as the listed ones (acquisitive street crime by a gang).",
+      "position_b": "'Similar' means any criminal act committed by a gang member in a group context.",
+      "resolution": null,
+      "citations": ["bns-2023#s112"],
+      "variants": [
+        {
+          "id": "same-kind",
+          "label": "same kind as the listed acts (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-112-THEFT",
+      "cites": "s.112(1), 'theft'",
+      "facts": {
+        "gang_member": true,
+        "act_type": "theft",
+        "commits": true
+      },
+      "expect": {
+        "offence_kind": "petty_organised_crime"
+      },
+      "text": "A gang member pick-pockets commuters: s.112, one to seven years and fine."
+    },
+    {
+      "id": "ILL-112-SNATCHING",
+      "cites": "s.112(1), 'snatching'",
+      "facts": {
+        "gang_member": true,
+        "act_type": "snatching",
+        "commits": true
+      },
+      "expect": {
+        "offence_kind": "petty_organised_crime"
+      },
+      "text": "A gang member snatches a phone from a pedestrian: s.112."
+    },
+    {
+      "id": "ILL-112-EXAM",
+      "cites": "s.112(1), 'selling of public examination question papers'",
+      "facts": {
+        "gang_member": true,
+        "act_type": "exam_papers",
+        "commits": true
+      },
+      "expect": {
+        "offence_kind": "petty_organised_crime"
+      },
+      "text": "A gang sells leaked examination papers: s.112."
+    },
+    {
+      "id": "ILL-112-NO-GANG",
+      "cites": "s.112(1), 'being a member of a group or gang'",
+      "facts": {
+        "gang_member": false,
+        "act_type": "theft",
+        "commits": true
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A lone thief is not petty organised crime, though theft is punishable separately."
+    },
+    {
+      "id": "ILL-112-NO-ACT",
+      "cites": "s.112(1), 'commits any act'",
+      "facts": {
+        "gang_member": true,
+        "act_type": "none",
+        "commits": true
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A gang member who commits no listed act is not s.112."
+    },
+    {
+      "id": "ILL-112-NO-COMMIT",
+      "cites": "s.112(1), 'commits'",
+      "facts": {
+        "gang_member": true,
+        "act_type": "theft",
+        "commits": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A gang member who does not commit the act is not s.112."
+    }
+  ]
+}

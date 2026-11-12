@@ -42,14 +42,14 @@ All 256 move `culpable_homicide → murder`. The tool reduces the change to a
 the reader sees the case, not a row of an enumeration. That prediction is written
 in the amendment file *before* the run; the numbers are the check on it.
 
-Three amendments ship, one of each kind, because they are different claims and
-should not be mixed:
+Four amendments ship, because they are different claims and should not be mixed:
 
 | Amendment | Kind | Decisions | Sentences |
 |---|---|---|---|
 | `amend.mv.2019-penalty` — MV Act s.185 fines raised | **real** (2019) | 0 | **273** of 732 |
 | `amend.bns.101b-generic-knowledge` — s.101(b) read down | **interpretive** | **768** of 10,752 | 0 |
 | `amend.bns.exc4-abolished` — Exception 4 repealed | **hypothetical** | **256** of 10,752 | 0 |
+| `amend.bns.106-penalty` — BNS s.106(1) penalty raised from two to five years | **real** (2024) | 0 | **4** of 30 |
 
 The first is why decisions and sentences are counted separately: a verdict-only
 comparison would report a famous amendment as a no-op.
@@ -152,6 +152,17 @@ witness.
 | Pack | Provisions | Case space | Review status |
 |---|---|---|---|
 | `in.bns.homicide` | BNS 2023 ss.100-105 and Exceptions 1-5 | 10,752 | **unreviewed** |
+| `in.bns.negligence` | BNS 2023 s.106 (negligence and dangerous driving) | 30 | **unreviewed** |
+| `in.bns.abetment-suicide` | BNS 2023 ss.107-108 (abetment of suicide) | 20 | **unreviewed** |
+| `in.bns.attempt-murder` | BNS 2023 s.109 (attempt to murder) | 16 | **unreviewed** |
+| `in.bns.attempt-culpable-homicide` | BNS 2023 s.110 (attempt to commit culpable homicide) | 8 | **unreviewed** |
+| `in.bns.organised-crime` | BNS 2023 s.111 (organised crime) | 28 | **unreviewed** |
+| `in.bns.petty-organised-crime` | BNS 2023 s.112 (petty organised crime) | 32 | **unreviewed** |
+| `in.bns.terrorist-act` | BNS 2023 s.113 (terrorist act) | 28 | **unreviewed** |
+| `in.bns.hurt` | BNS 2023 ss.114–116 (hurt, the eight kinds of grievous hurt, voluntarily causing hurt) | 60 | **unreviewed** |
+| `in.bns.grievous-hurt` | BNS 2023 s.117 (incl. the new s.117(3) and s.117(4)) | 240 | **unreviewed** |
+| `in.bns.hurt-dangerous-means` | BNS 2023 s.118 (dangerous weapons or means) | 12 | **unreviewed** |
+| `in.bns.hurt-aggravated` | BNS 2023 ss.119–125 (extortion, public servants, provocation, poison, acid, negligence) | 480 | **unreviewed** |
 | `in.mv.drunken-driving` | MV Act 1988 s.185, pre and post 2019 | 732 | **unreviewed** |
 
 The second pack exists to show the machinery is not specific to a penal code:
@@ -159,13 +170,20 @@ s.185 has a numeric threshold instead of a mental element, two limbs that are
 alternatives rather than a hierarchy, and an amendment that moves no verdict at
 all. The analyser, the amendment format and the report are unchanged.
 
+The third pack (`in.bns.negligence`) exists to show the boundary between two
+packs: s.106 applies only to a rash or negligent act "not amounting to
+culpable homicide", so its encoding must say where that line falls. Its
+recorded ambiguity — does knowledge of the *possibility* of death amount to
+culpable homicide, or is it still rashness? — moves 3 of its 30 cases.
+
 ### Review status is the honest part
 
-`encoded_unreviewed` means exactly that. Both packs reproduce every illustration
-printed in the statute and the analyser finds no gaps or undeclared contentions in
-them. **That is not the same as being right.** A lawyer reading ss.100-105 against
-the India Code text is the only thing that moves a pack to `reviewed`, and no
-amount of passing tests substitutes for it.
+`encoded_unreviewed` means exactly that. All three packs reproduce every
+illustration printed in the statute and the analyser finds no gaps or
+undeclared contentions in them. **That is not the same as being right.** A
+lawyer reading the provisions against the India Code text is the only thing
+that moves a pack to `reviewed`, and no amount of passing tests substitutes
+for it.
 
 ---
 

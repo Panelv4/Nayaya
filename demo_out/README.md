@@ -4,9 +4,21 @@ Every file here is generated — nothing is hand-written. Regenerate with:
 
 ```bash
 python3 -m nyayacode analyze --pack in.bns.homicide --out demo_out
+python3 -m nyayacode analyze --pack in.bns.negligence --out demo_out
+python3 -m nyayacode analyze --pack in.bns.abetment-suicide --out demo_out
+python3 -m nyayacode analyze --pack in.bns.attempt-murder --out demo_out
+python3 -m nyayacode analyze --pack in.bns.attempt-culpable-homicide --out demo_out
+python3 -m nyayacode analyze --pack in.bns.organised-crime --out demo_out
+python3 -m nyayacode analyze --pack in.bns.petty-organised-crime --out demo_out
+python3 -m nyayacode analyze --pack in.bns.terrorist-act --out demo_out
+python3 -m nyayacode analyze --pack in.bns.hurt --out demo_out
+python3 -m nyayacode analyze --pack in.bns.grievous-hurt --out demo_out
+python3 -m nyayacode analyze --pack in.bns.hurt-dangerous-means --out demo_out
+python3 -m nyayacode analyze --pack in.bns.hurt-aggravated --out demo_out
 python3 -m nyayacode analyze --pack in.mv.drunken-driving --out demo_out
 python3 -m nyayacode impact  --amendment amend.bns.exc4-abolished --out demo_out
 python3 -m nyayacode impact  --amendment amend.bns.101b-generic-knowledge --out demo_out
+python3 -m nyayacode impact  --amendment amend.bns.106-penalty --out demo_out
 python3 -m nyayacode impact  --amendment amend.mv.2019-penalty --out demo_out
 ```
 
@@ -27,13 +39,14 @@ thing Exception 4 does. The minimal witness is three facts:
 That prediction is written in the amendment file *before* the run, and the numbers
 are the check on it.
 
-## Three amendments, three different kinds of change
+## Four amendments, three different kinds of change
 
 | Amendment | Kind | Decisions | Sentences |
 |---|---|---|---|
 | `amend.mv.2019-penalty` | **real** — the 2019 Act did this | 0 | **273** of 732 |
 | `amend.bns.101b-generic-knowledge` | **interpretive** — a court could do this | **768** of 10,752 | 0 |
 | `amend.bns.exc4-abolished` | **hypothetical** — nobody has proposed it | **256** of 10,752 | 0 |
+| `amend.bns.106-penalty` | **real** — the BNS did this | 0 | **4** of 30 |
 
 The first is the one that shows why decisions and sentences are counted separately:
 the 2019 amendment raised fines without touching what counts as an offence, so a tool

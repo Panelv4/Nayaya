@@ -1,0 +1,144 @@
+{
+  "pack": "in.bns.hurt",
+  "title": "Hurt, grievous hurt and voluntarily causing hurt - BNS 2023 ss.114-116",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 3,
+  "domain_size": 60,
+  "digest": "3cebf1b3cea8ac9d",
+  "gaps": {
+    "pack": "in.bns.hurt",
+    "kind": "gap",
+    "count": 0,
+    "checked": 60,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.hurt",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 60,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.hurt",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 60,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.hurt",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-116-FIFTEEN-DAYS",
+        "provision": "s.116(h)",
+        "status": "resolved_by_amendment",
+        "question": "How long must severe pain or incapacity last for the residual clause of grievous hurt to apply?",
+        "variants": [
+          {
+            "variant": "bns-fifteen",
+            "label": "15 days (BNS, current)",
+            "moved": 0,
+            "sentence_moved": 0
+          },
+          {
+            "variant": "ipc-twenty",
+            "label": "20 days (IPC, pre-cutover)",
+            "moved": 0,
+            "sentence_moved": 0
+          }
+        ],
+        "max_moved": 0,
+        "max_sentence_moved": 0
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-114-SLAP",
+      "cites": "s.114, s.115(2)",
+      "text": "A slaps B in a heated argument. B feels pain but there is no visible injury. Bodily pain is enough for hurt, and the slap was intended to hurt: s.115(2), up to one year or Rs 10,000.",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "grievous_kind": "NONE"
+      },
+      "expected": "voluntarily_causing_hurt",
+      "actual": "voluntarily_causing_hurt",
+      "ok": true
+    },
+    {
+      "id": "ILL-116-FRACTURE",
+      "cites": "s.116(g), s.117",
+      "text": "A single blow fractures B's wrist. A fracture of a bone is grievous hurt under s.116(g) even though it may heal, and the sentence follows under s.117(2).",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "BONE_TOOTH"
+      },
+      "expected": "grievous_hurt_classification",
+      "actual": "grievous_hurt_classification",
+      "ok": true
+    },
+    {
+      "id": "ILL-116-FIFTEEN",
+      "cites": "s.116(h)",
+      "text": "No bone is broken and no listed organ is lost, but the sufferer cannot follow ordinary pursuits for fifteen days. The residual clause makes the hurt grievous - fifteen days under the BNS, twenty under the IPC.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "FIFTEEN_DAYS"
+      },
+      "expected": "grievous_hurt_classification",
+      "actual": "grievous_hurt_classification",
+      "ok": true
+    },
+    {
+      "id": "ILL-115-ACCIDENT",
+      "cites": "s.115(1), s.125",
+      "text": "A careless handling of a machine injures a co-worker. There was no intention or knowledge that hurt was likely, so s.115 is not engaged; the negligence track is s.125.",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": false,
+        "grievous_kind": "NONE"
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-116-NO-CLAUSE",
+      "cites": "s.116",
+      "text": "A claim of grievous hurt that names none of the eight clauses is a contradiction; the encoding reports a gap rather than choosing.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "NONE"
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.114 hurt: bodily pain, disease or infirmity",
+      "s.115(1)-(2) voluntarily causing hurt (up to one year / Rs 10,000)",
+      "s.116 the eight kinds of grievous hurt, as a classification"
+    ],
+    "out_of_scope": [
+      "the sentence for grievous hurt - s.117, pack in.bns.grievous-hurt",
+      "dangerous weapons and means - s.118, pack in.bns.hurt-dangerous-means",
+      "extortion, public servants, provocation, poison - ss.119-123, pack in.bns.hurt-aggravated",
+      "acid - s.124, rash or negligent conduct - s.125, pack in.bns.hurt-aggravated",
+      "assault and criminal force (ss.129-131), which need no resulting injury",
+      "attempt to murder (s.109) and culpable homicide (ss.100-105)"
+    ]
+  }
+}

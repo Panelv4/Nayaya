@@ -1,0 +1,151 @@
+{
+  "pack": "in.bns.grievous-hurt",
+  "title": "Voluntarily causing grievous hurt - BNS 2023 s.117",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 5,
+  "domain_size": 240,
+  "digest": "c164e3685be1c8a9",
+  "gaps": {
+    "pack": "in.bns.grievous-hurt",
+    "kind": "gap",
+    "count": 0,
+    "checked": 240,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.grievous-hurt",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 240,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.grievous-hurt",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 240,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.grievous-hurt",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-117-GRAVITY-VS-INTENTION",
+        "provision": "s.117",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      },
+      {
+        "ambiguity": "AMB-117-3-MINIMUM",
+        "provision": "s.117(3)",
+        "status": "resolved_by_amendment",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-117-BASIC",
+      "cites": "s.117(2)",
+      "text": "A single blow fractures B's arm. Grievous hurt under s.116(g), voluntarily caused: up to seven years and fine under s.117(2).",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "BONE_TOOTH",
+        "permanent_disability": false,
+        "group_five_or_more_identity": false
+      },
+      "expected": "voluntarily_causing_grievous_hurt",
+      "actual": "voluntarily_causing_grievous_hurt",
+      "ok": true
+    },
+    {
+      "id": "ILL-117-3",
+      "cites": "s.117(3)",
+      "text": "The injury leaves B permanently unable to use the limb. New tier under s.117(3): rigorous imprisonment of not less than ten years, up to life.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "MEMBER_IMPAIRED",
+        "permanent_disability": true,
+        "group_five_or_more_identity": false
+      },
+      "expected": "grievous_hurt_permanent_disability",
+      "actual": "grievous_hurt_permanent_disability",
+      "ok": true
+    },
+    {
+      "id": "ILL-117-4",
+      "cites": "s.117(4)",
+      "text": "Five men beat B because of his caste and fracture his ribs. New group provision under s.117(4): up to seven years and fine for each participant.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "BONE_TOOTH",
+        "permanent_disability": false,
+        "group_five_or_more_identity": true
+      },
+      "expected": "grievous_hurt_group_identity",
+      "actual": "grievous_hurt_group_identity",
+      "ok": true
+    },
+    {
+      "id": "ILL-117-1-KNOWLEDGE",
+      "cites": "s.117(1), illustration",
+      "text": "A strikes a blow intending to disfigure B's face. The face is not disfigured but B is in severe pain for twenty days. s.117(1)'s illustration: this is still voluntarily causing grievous hurt.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "FIFTEEN_DAYS",
+        "permanent_disability": false,
+        "group_five_or_more_identity": false
+      },
+      "expected": "voluntarily_causing_grievous_hurt",
+      "actual": "voluntarily_causing_grievous_hurt",
+      "ok": true
+    },
+    {
+      "id": "ILL-117-NO-INTENT",
+      "cites": "s.117(1)",
+      "text": "A negligently drops a beam that fractures B's foot. Without the intention or knowledge required by s.117(1) this is not s.117 at all.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": false,
+        "grievous_kind": "BONE_TOOTH",
+        "permanent_disability": false,
+        "group_five_or_more_identity": false
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.117(2) voluntarily causing grievous hurt (up to seven years and fine)",
+      "s.117(3) permanent disability or persistent vegetative state (rigorous imprisonment, minimum ten years, up to life)",
+      "s.117(4) five or more persons, identity ground (up to seven years and fine)"
+    ],
+    "out_of_scope": [
+      "the definition of hurt and the eight kinds of grievous hurt - ss.114, 116, pack in.bns.hurt",
+      "dangerous weapons or means - s.118, which raises the tariff to life, pack in.bns.hurt-dangerous-means",
+      "acid - s.124, pack in.bns.hurt-aggravated",
+      "provocation mitigation - s.122, pack in.bns.hurt-aggravated",
+      "attempt to murder (s.109): injury gravity alone never moves a case there"
+    ]
+  }
+}

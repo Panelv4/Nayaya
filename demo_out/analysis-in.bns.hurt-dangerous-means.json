@@ -1,0 +1,116 @@
+{
+  "pack": "in.bns.hurt-dangerous-means",
+  "title": "Hurt or grievous hurt by dangerous weapons or means - BNS 2023 s.118",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 3,
+  "domain_size": 12,
+  "digest": "eb8b001134cabf5f",
+  "gaps": {
+    "pack": "in.bns.hurt-dangerous-means",
+    "kind": "gap",
+    "count": 0,
+    "checked": 12,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.hurt-dangerous-means",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 12,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.hurt-dangerous-means",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 12,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.hurt-dangerous-means",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-118-1-BAILABILITY",
+        "provision": "s.118(1)",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-118-1-KNIFE",
+      "cites": "s.118(1)",
+      "text": "A slashes B with a knife but the injury is a shallow cut only. Hurt by a stabbing instrument: up to three years or Rs 20,000 under s.118(1) - and non-bailable.",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "means": "DANGEROUS"
+      },
+      "expected": "hurt_dangerous_means",
+      "actual": "hurt_dangerous_means",
+      "ok": true
+    },
+    {
+      "id": "ILL-118-2",
+      "cites": "s.118(2)",
+      "text": "A stabs B with a knife, causing grievous hurt. s.118(2): imprisonment for life, or one to ten years, and fine.",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "means": "DANGEROUS"
+      },
+      "expected": "grievous_hurt_dangerous_means",
+      "actual": "grievous_hurt_dangerous_means",
+      "ok": true
+    },
+    {
+      "id": "ILL-118-ORDINARY",
+      "cites": "s.118(1), s.115",
+      "text": "A punch is not a dangerous means; the case belongs to s.115.",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "means": "ORDINARY"
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-118-ACCIDENT",
+      "cites": "s.125",
+      "text": "A hunter's shot accidentally hits B. Not voluntary, so s.118 is not engaged; the negligence track is s.125.",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": false,
+        "means": "DANGEROUS"
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.118(1) hurt by a dangerous weapon or means (up to three years / Rs 20,000)",
+      "s.118(2) grievous hurt by such means (life, or one to ten years, and fine)"
+    ],
+    "out_of_scope": [
+      "ordinary-means hurt - ss.115, 117, packs in.bns.hurt and in.bns.grievous-hurt",
+      "acid - s.124, which is the specific and graver provision, pack in.bns.hurt-aggravated",
+      "poison administered with intent to cause hurt or commit an offence - s.123",
+      "hurt in furtherance of extortion or to deter a public servant - ss.119-121"
+    ]
+  }
+}

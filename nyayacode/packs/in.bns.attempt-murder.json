@@ -1,0 +1,326 @@
+{
+  "id": "in.bns.attempt-murder",
+  "title": "Attempt to murder — BNS 2023 s.109",
+  "jurisdiction": "IN",
+  "version": "1.1.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.109, including its four statutory illustrations. The offence is an attempt that fails: if the act kills, it is murder or culpable homicide (separate pack in.bns.homicide), not an attempt. The encoding therefore tests death first, then hurt, then whether the offender is already under a life sentence, which is what separates the ten-year tariff from life and from death-or-natural-life."
+  },
+  "scope": {
+    "in_scope": [
+      "s.109(1) attempt to murder (up to ten years)",
+      "s.109(1) attempt to murder with hurt caused (life)",
+      "s.109(2) attempt to murder by a person under a life sentence with hurt caused (death or remainder of natural life)"
+    ],
+    "out_of_scope": [
+      "ss.100-105 culpable homicide and murder (separate pack in.bns.homicide)",
+      "s.106 causing death by negligence (separate pack in.bns.negligence)",
+      "ss.107-108 abetment of suicide (separate pack in.bns.abetment-suicide)",
+      "s.110 attempt to commit culpable homicide (separate pack in.bns.attempt-culpable-homicide)",
+      "sentencing discretion within the maxima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.109",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, s.307 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of s.109. The maxima are materially the same (ten years; life if hurt is caused), except that s.109(2) now offers 'death or imprisonment for life (remainder of natural life)' where IPC s.307 offered death only."
+    }
+  ],
+  "citations": ["bns-2023#s109"],
+  "facts": [
+    {
+      "name": "attempt_act",
+      "type": "bool",
+      "label": "The accused did an act amounting to an attempt to commit murder (beyond mere preparation)"
+    },
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The act caused a death"
+    },
+    {
+      "name": "hurt_caused",
+      "type": "bool",
+      "label": "Hurt was caused to any person by the act"
+    },
+    {
+      "name": "under_life_sentence",
+      "type": "bool",
+      "label": "The offender is under a sentence of imprisonment for life"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-attempt",
+      "term": "attempt",
+      "definition": "An act done towards the commission of murder, beyond mere preparation. Illustration (c) to s.109 draws the line: buying and loading a gun is not yet the offence; firing it is. The encoding treats 'amounting to an attempt' as a single fact; where preparation ends is fact-specific and is recorded as an ambiguity.",
+      "citations": ["bns-2023#s109"]
+    },
+    {
+      "id": "T-hurt",
+      "term": "hurt",
+      "definition": "Bodily pain, disease or infirmity (BNS s.114(1)). Hurt to any person by the act raises the tariff from ten years to life.",
+      "citations": ["bns-2023#s109"]
+    }
+  ],
+  "parameters": {
+    "max_years_attempt": 10
+  },
+  "branches": [
+    {
+      "id": "N-NO-ATTEMPT",
+      "provision": "s.109",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "attempt_act", "type": "bool", "default": false },
+          false
+        ]
+      },
+      "text": "Whoever does any act with such intention or knowledge ... that, if he by that act caused death, he would be guilty of murder ...",
+      "notes": "No act amounting to an attempt means s.109 is not engaged. Mere preparation (illustrations (c) and (d), first limbs) is not an attempt."
+    },
+    {
+      "id": "N-DEATH",
+      "provision": "s.109",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "Whoever does any act ... that, if he by that act caused death, he would be guilty of murder ...",
+      "notes": "If the act kills, the offence is murder or culpable homicide (ss.100-105), not an attempt. An attempt that succeeds is not an attempt."
+    },
+    {
+      "id": "N-109-2",
+      "provision": "s.109(2)",
+      "verdict": "offence",
+      "offence": "attempt_murder_life_convict",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "under_life_sentence", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "When any person offending under sub-section (1) is under sentence of imprisonment for life, he may, if hurt is caused, be punished with death or with imprisonment for life, which shall mean the remainder of that person's natural life.",
+      "notes": "The life-convict limb. IPC s.307 offered death only; s.109(2) adds the alternative of the remainder of natural life."
+    },
+    {
+      "id": "N-109-HURT",
+      "provision": "s.109(1)",
+      "verdict": "offence",
+      "offence": "attempt_murder_hurt",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "under_life_sentence", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "and if hurt is caused to any person by such act, the offender shall be liable either to imprisonment for life, or to such punishment as is hereinbefore mentioned.",
+      "notes": "Hurt to any person by the act raises the tariff to life."
+    },
+    {
+      "id": "N-109",
+      "provision": "s.109(1)",
+      "verdict": "offence",
+      "offence": "attempt_murder",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "Whoever does any act with such intention or knowledge, and under such circumstances that, if he by that act caused death, he would be guilty of murder, shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+      "notes": "The basic attempt: no death, no hurt."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.109",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.109",
+      "provision": "bns-2023#s109"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_murder_life_convict"
+        ]
+      },
+      "text": "Death, or imprisonment for life (the remainder of that person's natural life) [s.109(2)]",
+      "citations": ["bns-2023#s109"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_murder_hurt"
+        ]
+      },
+      "text": "Imprisonment for life, or imprisonment up to ten years [s.109(1), hurt caused]",
+      "citations": ["bns-2023#s109"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_murder"
+        ]
+      },
+      "text": "Imprisonment up to ten years, and fine [s.109(1)]",
+      "citations": ["bns-2023#s109"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-109-ATTEMPT-LINE",
+      "provision": "s.109",
+      "status": "unresolved",
+      "question": "Where does preparation end and an attempt begin?",
+      "why_it_matters": "The line between preparation (not an offence) and attempt (s.109) is fact-specific and the section does not draw it beyond the illustrations. The pack records only one reading — that 'amounting to an attempt' is a single fact to be proved — so the analyser reports n/a rather than a number.",
+      "position_a": "An attempt is any act directly towards murder, however close to completion.",
+      "position_b": "An attempt requires an act that would have caused death but for an external factor.",
+      "resolution": null,
+      "citations": ["bns-2023#s109"],
+      "variants": [
+        {
+          "id": "directly-towards",
+          "label": "directly towards murder (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-109-A",
+      "cites": "s.109, illustration (a)",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": false,
+        "under_life_sentence": false
+      },
+      "expect": {
+        "offence_kind": "attempt_murder"
+      },
+      "text": "A shoots at Z with intention to kill him, under such circumstances that, if death ensued, A would be guilty of murder. A is liable to punishment under this section."
+    },
+    {
+      "id": "ILL-109-B",
+      "cites": "s.109, illustration (b)",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": false,
+        "under_life_sentence": false
+      },
+      "expect": {
+        "offence_kind": "attempt_murder"
+      },
+      "text": "A, with the intention of causing the death of a child of tender years, exposes it in a desert place. A has committed the offence, though the death of the child does not ensue."
+    },
+    {
+      "id": "ILL-109-C-PREP",
+      "cites": "s.109, illustration (c), first limb",
+      "facts": {
+        "attempt_act": false,
+        "death_caused": false,
+        "hurt_caused": false,
+        "under_life_sentence": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A, intending to murder Z, buys a gun and loads it. A has not yet committed the offence."
+    },
+    {
+      "id": "ILL-109-C-FIRE",
+      "cites": "s.109, illustration (c), second limb",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": true,
+        "under_life_sentence": false
+      },
+      "expect": {
+        "offence_kind": "attempt_murder_hurt"
+      },
+      "text": "A fires the gun at Z. He has committed the offence, and, if by such firing he wounds Z, he is liable to the punishment provided by the latter part of sub-section (1)."
+    },
+    {
+      "id": "ILL-109-D-PREP",
+      "cites": "s.109, illustration (d), first limb",
+      "facts": {
+        "attempt_act": false,
+        "death_caused": false,
+        "hurt_caused": false,
+        "under_life_sentence": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A, intending to murder Z by poison, purchases poison and mixes the same with food which remains in A's keeping; A has not yet committed the offence."
+    },
+    {
+      "id": "ILL-109-D-PLACE",
+      "cites": "s.109, illustration (d), second limb",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": false,
+        "under_life_sentence": false
+      },
+      "expect": {
+        "offence_kind": "attempt_murder"
+      },
+      "text": "A places the food on Z's table or delivers it to Z's servants to place it on Z's table. A has committed the offence defined in this section."
+    },
+    {
+      "id": "ILL-109-LIFE-CONVICT",
+      "cites": "s.109(2), text",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": true,
+        "under_life_sentence": true
+      },
+      "expect": {
+        "offence_kind": "attempt_murder_life_convict"
+      },
+      "text": "A person under a life sentence attempts murder and causes hurt: death or the remainder of natural life."
+    }
+  ]
+}

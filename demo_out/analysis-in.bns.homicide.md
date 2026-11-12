@@ -49,4 +49,4 @@ Each ambiguity is a question the text does not settle. The pack records both rea
 
 **Encoded:** s.100 culpable homicide; s.101 murder; s.101 Exceptions 1-5; s.102 transferred malice; s.103 punishment for murder; s.104 murder by life-convict; s.105 culpable homicide not amounting to murder
 
-**Deliberately not encoded:** s.106 death by negligence; s.107 abetment of suicide; s.108 attempt to murder; s.299-304 IPC (repealed 1 July 2024); sentencing discretion (rarest-of-rare doctrine); private defence under ss.34-44 beyond the Exception 2 excess case
+**Deliberately not encoded:** s.106 death by negligence (separate pack in.bns.negligence); ss.107-108 abetment of suicide (separate pack in.bns.abetment-suicide); s.109 attempt to murder (separate pack in.bns.attempt-murder); s.299-304 IPC (repealed 1 July 2024); sentencing discretion (rarest-of-rare doctrine); private defence under ss.34-44 beyond the Exception 2 excess case

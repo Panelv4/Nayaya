@@ -4,7 +4,7 @@ Three kinds of test, deliberately kept apart:
 
 * **library tests** — the evaluator, the analyser, the amendment machinery;
 * **statute tests** — does the encoding reproduce the illustrations and the
-  structure of BNS ss.100-105 and MV Act s.185?
+  structure of BNS ss.100-108 and MV Act s.185?
 * **negative tests** — can the tool be caught being wrong? A tool that reports
   "no problems" on a deliberately broken pack is worse than no tool.
 
@@ -24,6 +24,13 @@ from nyayacode import eval as ev                                   # noqa: E402
 
 HOMICIDE = "in.bns.homicide"
 MV = "in.mv.drunken-driving"
+NEGLIGENCE = "in.bns.negligence"
+ABETMENT = "in.bns.abetment-suicide"
+ATTEMPT = "in.bns.attempt-murder"
+ATTEMPT_CH = "in.bns.attempt-culpable-homicide"
+ORGANISED = "in.bns.organised-crime"
+PETTY = "in.bns.petty-organised-crime"
+TERRORIST = "in.bns.terrorist-act"
 
 
 # --------------------------------------------------------------------- library
@@ -66,11 +73,56 @@ class EvaluatorTests(unittest.TestCase):
 
 
 class PackLoadingTests(unittest.TestCase):
-    def test_both_shipped_packs_load_and_are_total(self):
-        self.assertEqual(len(packmod.available()), 2)
+    def test_all_shipped_packs_load_and_are_total(self):
+        self.assertEqual(len(packmod.available()), 13)
         for pid in packmod.available():
             p = packmod.load(pid)
             self.assertGreater(analyze._domain_size(p), 0)
+
+    def test_hurt_packs_are_shipped_and_analysable(self):
+        """The four Chapter VI packs must load, be total, and have no gaps."""
+        for pid in ("in.bns.hurt", "in.bns.grievous-hurt",
+                    "in.bns.hurt-dangerous-means", "in.bns.hurt-aggravated"):
+            self.assertIn(pid, packmod.available())
+            p = packmod.load(pid)
+            gaps = analyze.find_gaps(p)
+            self.assertEqual(gaps["count"], 0, f"{pid} has gaps: {gaps['points'][:2]}")
+            overlaps = analyze.find_overlaps(p)
+            self.assertEqual(overlaps["count"], 0,
+                             f"{pid} has undeclared contentions: {overlaps['points'][:2]}")
+
+    def test_hurt_pack_sentences(self):
+        """Spot-check the tariffs that changed most from the IPC."""
+        g = packmod.load("in.bns.grievous-hurt")
+        # s.117(3): ten-year floor, up to life.
+        d = g.decide({"hurt_kind": "GRIEVOUS", "voluntary": True, "grievous_kind": "MEMBER_IMPAIRED",
+                      "permanent_disability": True, "group_five_or_more_identity": False})
+        self.assertEqual(d["offence"], "grievous_hurt_permanent_disability")
+        # s.117(2): the ordinary seven years.
+        d = g.decide({"hurt_kind": "GRIEVOUS", "voluntary": True, "grievous_kind": "BONE_TOOTH",
+                      "permanent_disability": False, "group_five_or_more_identity": False})
+        self.assertEqual(d["offence"], "voluntarily_causing_grievous_hurt")
+        # Gravity of the injury never moves a case to attempt to murder on its
+        # own: the pack must record that boundary as an open ambiguity rather
+        # than silently leaving it out.
+        amb = {a["id"]: a for a in g.ambiguities}
+        self.assertIn("AMB-117-GRAVITY-VS-INTENTION", amb)
+        self.assertEqual(amb["AMB-117-GRAVITY-VS-INTENTION"]["status"], "unresolved")
+
+    def test_acid_attack_beats_the_dangerous_means_pack(self):
+        a = packmod.load("in.bns.hurt-aggravated")
+        d = a.decide({"hurt_kind": "GRIEVOUS", "voluntary": True, "purpose": "NONE",
+                      "poison_or_stupefying": False, "acid_used": True,
+                      "grave_sudden_provocation": False, "rash_negligent_act": False})
+        self.assertEqual(d["offence"], "acid_attack")
+        self.assertIn("not less than ten years", json.dumps(a.doc["punishment_rules"]))
+
+    def test_negligent_act_is_routed_away_from_the_voluntary_offences(self):
+        a = packmod.load("in.bns.hurt-aggravated")
+        d = a.decide({"hurt_kind": "GRIEVOUS", "voluntary": False, "purpose": "NONE",
+                      "poison_or_stupefying": False, "acid_used": False,
+                      "grave_sudden_provocation": False, "rash_negligent_act": True})
+        self.assertEqual(d["offence"], "negligent_act_causing_grievous_hurt")
 
     def test_a_pack_with_a_non_total_condition_is_refused(self):
         # An int fact with no declared range makes `domain()` unbuildable, which
@@ -213,6 +265,271 @@ class MVEncodingTests(unittest.TestCase):
         self.assertEqual(g["count"], 0, "below-threshold driving must be decided, not missing")
 
 
+class NegligenceEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(NEGLIGENCE)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_no_death_is_never_a_negligence_offence(self):
+        # The analyser caught this bug in an earlier draft of the homicide
+        # pack: limbs did not test death_caused at all.
+        for culp in ("rash_negligent", "knowledge_possibility_death", "intention_death"):
+            for drv in ("not_driving", "ordinary_driving", "dangerous_or_racing"):
+                d = self.p.decide({"death_caused": False, "culpability": culp,
+                                   "driving_context": drv})
+                self.assertIsNone(d.get("offence"), f"{culp}/{drv} without death")
+
+    def test_intention_is_not_s106(self):
+        # 'not amounting to culpable homicide' excludes intention and
+        # knowledge of likely death: those are ss.100-105, not s.106.
+        for culp in ("intention_death", "knowledge_likely_death"):
+            d = self.p.decide({"death_caused": True, "culpability": culp,
+                               "driving_context": "not_driving"})
+            self.assertIsNone(d.get("offence"), culp)
+            self.assertEqual(d["branch"], "N-CULPABLE-HOMICIDE", culp)
+
+    def test_dangerous_driving_is_106_2_not_106_1(self):
+        d = self.p.decide({"death_caused": True, "culpability": "rash_negligent",
+                           "driving_context": "dangerous_or_racing"})
+        self.assertEqual(d.get("offence"), "causing_death_by_dangerous_driving")
+        self.assertEqual(d["branch"], "N-106-2")
+
+    def test_ordinary_negligent_driving_is_106_1(self):
+        d = self.p.decide({"death_caused": True, "culpability": "rash_negligent",
+                           "driving_context": "ordinary_driving"})
+        self.assertEqual(d.get("offence"), "causing_death_by_negligence")
+        self.assertEqual(d["branch"], "N-106-1")
+
+    def test_pure_accident_is_not_an_offence(self):
+        d = self.p.decide({"death_caused": True, "culpability": "none",
+                           "driving_context": "not_driving"})
+        self.assertIsNone(d.get("offence"))
+        self.assertEqual(d["branch"], "N-NO-FAULT")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+    def test_possibility_knowledge_boundary_moves_cases(self):
+        # The recorded ambiguity is real: flipping the parameter moves the
+        # possibility-knowledge cases out of s.106.
+        sens = analyze.find_ambiguity_sensitivity(self.p)
+        amb = [a for a in sens["ambiguities"] if a["ambiguity"] == "AMB-106-KNOWLEDGE-BOUNDARY"][0]
+        self.assertEqual(amb["max_moved"], 3)
+        self.assertEqual(amb["max_sentence_moved"], 0)
+
+
+class AbetmentEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(ABETMENT)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_no_suicide_is_never_abetment(self):
+        for cat in ("adult", "child", "mental_illness", "delirious", "intoxicated"):
+            d = self.p.decide({"suicide_occurred": False, "abetted": True,
+                               "victim_category": cat})
+            self.assertIsNone(d.get("offence"), cat)
+
+    def test_vulnerable_victim_gets_enhanced_tariff(self):
+        for cat in ("child", "mental_illness", "delirious", "intoxicated"):
+            d = self.p.decide({"suicide_occurred": True, "abetted": True,
+                               "victim_category": cat})
+            self.assertEqual(d.get("offence"), "abetment_suicide_vulnerable", cat)
+            self.assertEqual(d["branch"], "N-107", cat)
+
+    def test_adult_gets_general_tariff(self):
+        d = self.p.decide({"suicide_occurred": True, "abetted": True,
+                           "victim_category": "adult"})
+        self.assertEqual(d.get("offence"), "abetment_suicide")
+        self.assertEqual(d["branch"], "N-108")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
+class AttemptEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(ATTEMPT)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_death_is_never_an_attempt(self):
+        # An attempt that succeeds is murder, not an attempt.
+        d = self.p.decide({"attempt_act": True, "death_caused": True,
+                           "hurt_caused": True})
+        self.assertIsNone(d.get("offence"))
+        self.assertEqual(d["branch"], "N-DEATH")
+
+    def test_hurt_raises_tariff_to_life(self):
+        d = self.p.decide({"attempt_act": True, "death_caused": False,
+                           "hurt_caused": True})
+        self.assertEqual(d.get("offence"), "attempt_murder_hurt")
+        d2 = self.p.decide({"attempt_act": True, "death_caused": False,
+                            "hurt_caused": False})
+        self.assertEqual(d2.get("offence"), "attempt_murder")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
+class AttemptCulpableHomicideEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(ATTEMPT_CH)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_death_is_never_an_attempt(self):
+        d = self.p.decide({"attempt_act": True, "death_caused": True,
+                           "hurt_caused": True})
+        self.assertIsNone(d.get("offence"))
+        self.assertEqual(d["branch"], "N-DEATH")
+
+    def test_hurt_raises_tariff_to_seven_years(self):
+        d = self.p.decide({"attempt_act": True, "death_caused": False,
+                           "hurt_caused": True})
+        self.assertEqual(d.get("offence"), "attempt_culpable_homicide_hurt")
+        d2 = self.p.decide({"attempt_act": True, "death_caused": False,
+                            "hurt_caused": False})
+        self.assertEqual(d2.get("offence"), "attempt_culpable_homicide")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
+class OrganisedCrimeEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(ORGANISED)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_death_separates_the_top_tariff(self):
+        base = {"activity": "organised_crime", "role": "commits"}
+        self.assertEqual(self.p.decide({**base, "death_caused": True})["offence"],
+                         "organised_crime_death")
+        self.assertEqual(self.p.decide({**base, "death_caused": False})["offence"],
+                         "organised_crime")
+
+    def test_each_role_is_a_distinct_offence(self):
+        roles = {"abet_conspire": "organised_crime_abet",
+                 "membership": "organised_crime_membership",
+                 "harbouring": "organised_crime_harbouring",
+                 "possession": "organised_crime_possession",
+                 "unaccounted_property": "organised_crime_unaccounted"}
+        for role, want in roles.items():
+            d = self.p.decide({"activity": "organised_crime", "role": role,
+                               "death_caused": False})
+            self.assertEqual(d.get("offence"), want, role)
+
+    def test_no_activity_is_never_organised_crime(self):
+        for role in ("commits", "membership", "harbouring"):
+            d = self.p.decide({"activity": "other", "role": role,
+                               "death_caused": True})
+            self.assertIsNone(d.get("offence"), role)
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
+class PettyOrganisedCrimeEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(PETTY)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_each_listed_act_is_petty_organised_crime(self):
+        for act in ("theft", "snatching", "cheating", "ticket_tout",
+                    "betting", "exam_papers", "similar"):
+            d = self.p.decide({"gang_member": True, "act_type": act,
+                               "commits": True})
+            self.assertEqual(d.get("offence"), "petty_organised_crime", act)
+
+    def test_lone_actor_is_not_petty_organised_crime(self):
+        d = self.p.decide({"gang_member": False, "act_type": "theft",
+                           "commits": True})
+        self.assertIsNone(d.get("offence"))
+        self.assertEqual(d["branch"], "N-NO-GANG")
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
+class TerroristActEncodingTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.p = packmod.load(TERRORIST)
+
+    def test_every_illustration_is_reproduced(self):
+        for ill in self.p.doc["illustrations"]:
+            self.assertEqual(self.p.decide(ill["facts"]).get("offence"),
+                             ill["expect"]["offence_kind"], ill["id"])
+
+    def test_death_separates_the_top_tariff(self):
+        base = {"act_type": "terrorist_act", "role": "commits"}
+        self.assertEqual(self.p.decide({**base, "death_caused": True})["offence"],
+                         "terrorist_act_death")
+        self.assertEqual(self.p.decide({**base, "death_caused": False})["offence"],
+                         "terrorist_act")
+
+    def test_each_role_is_a_distinct_offence(self):
+        roles = {"conspire_abet": "terrorist_act_abet",
+                 "organise_recruit": "terrorist_act_organise",
+                 "membership": "terrorist_act_membership",
+                 "harbouring": "terrorist_act_harbouring",
+                 "possession": "terrorist_act_possession"}
+        for role, want in roles.items():
+            d = self.p.decide({"act_type": "terrorist_act", "role": role,
+                               "death_caused": False})
+            self.assertEqual(d.get("offence"), want, role)
+
+    def test_no_act_is_never_a_terrorist_act(self):
+        for role in ("commits", "membership", "harbouring"):
+            d = self.p.decide({"act_type": "other", "role": role,
+                               "death_caused": True})
+            self.assertIsNone(d.get("offence"), role)
+
+    def test_no_gaps_and_no_contentions(self):
+        self.assertEqual(analyze.find_gaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_overlaps(self.p)["count"], 0)
+        self.assertEqual(analyze.find_unreachable(self.p)["count"], 0)
+
+
 # ------------------------------------------------------------------- amendments
 
 class AmendmentTests(unittest.TestCase):
@@ -224,10 +541,18 @@ class AmendmentTests(unittest.TestCase):
         return analyze.compare(before, after)
 
     def test_all_shipped_amendments_apply_cleanly(self):
-        self.assertEqual(len(packmod.amendments()), 3)
+        self.assertEqual(len(packmod.amendments()), 4)
         for aid in packmod.amendments():
             c = self._cmp(aid)
             self.assertGreater(c["checked"], 0, aid)
+
+    def test_the_106_penalty_amendment_moves_no_decision_but_sentences(self):
+        c = self._cmp("amend.bns.106-penalty")
+        self.assertEqual(c["decisions_changed"], 0,
+                         "raising a maximum cannot change whether conduct is an offence")
+        self.assertEqual(c["sentences_changed"], 4)
+        for m in c["moved"]:
+            self.assertEqual(m["kind"], "sentence")
 
     def test_repealing_exception_4_moves_exactly_those_cases(self):
         c = self._cmp("amend.bns.exc4-abolished")

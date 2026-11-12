@@ -1,0 +1,439 @@
+{
+  "id": "in.bns.hurt-dangerous-means",
+  "title": "Hurt or grievous hurt by dangerous weapons or means - BNS 2023 s.118",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the bare text of s.118. Two changes from ss.324/326 IPC are worth flagging: s.118(1) now caps the fine at Rs 20,000 (the IPC left it unlimited), and hurt by a dangerous weapon is now non-bailable and non-compoundable, which is a substantive shift, not a renumbering."
+  },
+  "scope": {
+    "in_scope": [
+      "s.118(1) hurt by a dangerous weapon or means (up to three years / Rs 20,000)",
+      "s.118(2) grievous hurt by such means (life, or one to ten years, and fine)"
+    ],
+    "out_of_scope": [
+      "ordinary-means hurt - ss.115, 117, packs in.bns.hurt and in.bns.grievous-hurt",
+      "acid - s.124, which is the specific and graver provision, pack in.bns.hurt-aggravated",
+      "poison administered with intent to cause hurt or commit an offence - s.123",
+      "hurt in furtherance of extortion or to deter a public servant - ss.119-121"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), Chapter VI, ss.114-125",
+      "url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. MHA published English text."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, ss.319-338 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of Chapter VI. Two substantive changes: the residual grievous-hurt period fell from 20 days to 15, and ss.117(3)-(4) are new."
+    },
+    {
+      "id": "bnss-2023",
+      "citation": "Bharatiya Nagarik Suraksha Sanhita, 2023, First Schedule",
+      "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Source of the cognizable / bailable / triable-by / compoundable labels."
+    }
+  ],
+  "citations": [
+    "bns-2023#s118",
+    "ipc-1860#s324",
+    "ipc-1860#s326"
+  ],
+  "facts": [
+    {
+      "name": "hurt_kind",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "HURT",
+        "GRIEVOUS"
+      ],
+      "label": "Bodily result: no hurt, hurt (s.114) or grievous hurt (s.116)"
+    },
+    {
+      "name": "voluntary",
+      "type": "bool",
+      "label": "The hurt was caused voluntarily: with intention to cause it, or knowledge that it was likely (s.115(1) / s.117(1))"
+    },
+    {
+      "name": "means",
+      "type": "enum",
+      "values": [
+        "ORDINARY",
+        "DANGEROUS"
+      ],
+      "label": "Means used: ordinary, or a dangerous weapon/means listed in s.118(1) (shooting/stabbing/cutting instrument, fire, poison, corrosive, explosive, animal)"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-hurt",
+      "term": "hurt",
+      "definition": "Bodily pain, disease or infirmity caused to any person (s.114). No visible wound is required; mental distress alone is not hurt.",
+      "citations": [
+        "bns-2023#s114"
+      ]
+    },
+    {
+      "id": "T-grievous",
+      "term": "grievous hurt",
+      "definition": "A closed list of eight kinds of hurt (s.116): emasculation; permanent loss of sight of either eye; permanent loss of hearing of either ear; loss of any member or joint; destruction or permanent impairment of any member or joint; permanent disfigurement of the head or face; fracture or dislocation of a bone or tooth; and any hurt that endangers life or keeps the sufferer in severe pain or unable to follow ordinary pursuits for fifteen days. The last limb was twenty days under s.320 IPC.",
+      "citations": [
+        "bns-2023#s116",
+        "ipc-1860#s320"
+      ]
+    },
+    {
+      "id": "T-voluntary",
+      "term": "voluntarily",
+      "definition": "Done with the intention of causing the hurt, or with knowledge that it was likely to be caused (s.115(1)). Intention or knowledge is enough; both are not needed.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "T-mens-rea-ladder",
+      "term": "the intention ladder",
+      "definition": "The gravity of the injury does not by itself fix the offence. Injury caused without the intention or knowledge required to kill stays in this chapter (s.117), however grave; injury caused WITH that intention or knowledge leaves it for attempt to murder (s.109) or culpable homicide (ss.100-105).",
+      "citations": [
+        "bns-2023#s117",
+        "bns-2023#s109"
+      ]
+    }
+  ],
+  "parameters": {
+    "max_years_hurt_dangerous": 3,
+    "max_fine_hurt_dangerous": 20000,
+    "min_years_grievous_dangerous": 1,
+    "max_years_grievous_dangerous": 10
+  },
+  "branches": [
+    {
+      "id": "D-NO-HURT",
+      "provision": "s.118",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          {
+            "var": "hurt_kind",
+            "type": "str",
+            "default": "NONE"
+          },
+          "NONE"
+        ]
+      },
+      "text": "Whoever ... voluntarily causes hurt ... by means of any instrument for shooting, stabbing or cutting ...",
+      "notes": "No hurt means s.118 is not engaged, however dangerous the weapon.",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    },
+    {
+      "id": "D-ORDINARY-MEANS",
+      "provision": "s.118",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "!=": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "means",
+                "type": "str",
+                "default": "ORDINARY"
+              },
+              "ORDINARY"
+            ]
+          }
+        ]
+      },
+      "text": "Whoever ... by means of any instrument for shooting, stabbing or cutting ...",
+      "notes": "The section is defined by the means. With ordinary means the case belongs to s.115 (hurt) or s.117 (grievous hurt) instead. This branch routes the case out rather than duplicating those tariffs.",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    },
+    {
+      "id": "D-INVOLUNTARY",
+      "provision": "s.118",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "!=": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "means",
+                "type": "str",
+                "default": "ORDINARY"
+              },
+              "DANGEROUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "text": "Whoever ... voluntarily causes hurt or grievous hurt ...",
+      "notes": "s.118 requires the hurt to be caused voluntarily. An accidental injury from a dangerous object is a s.125 negligence case, not this one.",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    },
+    {
+      "id": "D-118-2",
+      "provision": "s.118(2)",
+      "verdict": "offence",
+      "offence": "grievous_hurt_dangerous_means",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "means",
+                "type": "str",
+                "default": "ORDINARY"
+              },
+              "DANGEROUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "text": "Whoever, except in the case provided for by sub-section (2) of section 120, voluntarily causes grievous hurt by any means referred to in sub-section (1), shall be punished with imprisonment for life, or with imprisonment of either description for a term which shall not be less than one year but which may extend to ten years, and shall also be liable to fine.",
+      "notes": "The knife-and-firearm assault provision. Where life is not imposed there is a one-year floor. Cognizable, non-bailable, triable by a Magistrate of the first class.",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    },
+    {
+      "id": "D-118-1",
+      "provision": "s.118(1)",
+      "verdict": "offence",
+      "offence": "hurt_dangerous_means",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "means",
+                "type": "str",
+                "default": "ORDINARY"
+              },
+              "DANGEROUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "text": "Whoever, except in the case provided for by sub-section (2) of section 122, voluntarily causes hurt to any person by means of any instrument for shooting, stabbing or cutting, or any instrument which, used as a weapon of offence, is likely to cause death, or by means of fire or any heated substance, or by means of any poison or any corrosive substance, or by means of any explosive substance, or by means of any substance which it is deleterious to the human body to inhale, to swallow, or to receive into the blood, or by means of any animal, shall be punished with imprisonment of either description for a term which may extend to three years, or with fine which may extend to twenty thousand rupees, or with both.",
+      "notes": "Simple hurt with a dangerous weapon. The BNS made this non-bailable and non-compoundable, unlike s.324 IPC, and capped the fine at Rs 20,000.",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not s.118 (no hurt, ordinary means, or not voluntary)",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.118",
+      "provision": "bns-2023#s118"
+    },
+    "indeterminate": {
+      "label": "No provision applies - encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_dangerous_means"
+        ]
+      },
+      "text": "Imprisonment for life, or imprisonment of either description not less than one year and up to ten years, and fine [s.118(2)]",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "hurt_dangerous_means"
+        ]
+      },
+      "text": "Imprisonment up to three years, or fine up to Rs 20,000, or both [s.118(1)]",
+      "citations": [
+        "bns-2023#s118"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-118-1-BAILABILITY",
+      "provision": "s.118(1)",
+      "status": "unresolved",
+      "question": "Is hurt by a dangerous weapon bailable?",
+      "why_it_matters": "s.324 IPC was bailable and compoundable. The BNSS First Schedule makes s.118(1) non-bailable and non-compoundable, which changes what an accused can expect at the first hearing.",
+      "position_a": "Non-bailable and non-compoundable under the BNSS First Schedule (current encoding; this is the substantive change commentators flag).",
+      "position_b": "Bailable, carrying the IPC position forward by analogy.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s118",
+        "bnss-2023#sch1"
+      ],
+      "variants": [
+        {
+          "id": "non-bailable",
+          "label": "non-bailable (BNSS First Schedule, current)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-118-1-KNIFE",
+      "cites": "s.118(1)",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "means": "DANGEROUS"
+      },
+      "expect": {
+        "offence_kind": "hurt_dangerous_means"
+      },
+      "text": "A slashes B with a knife but the injury is a shallow cut only. Hurt by a stabbing instrument: up to three years or Rs 20,000 under s.118(1) - and non-bailable."
+    },
+    {
+      "id": "ILL-118-2",
+      "cites": "s.118(2)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "means": "DANGEROUS"
+      },
+      "expect": {
+        "offence_kind": "grievous_hurt_dangerous_means"
+      },
+      "text": "A stabs B with a knife, causing grievous hurt. s.118(2): imprisonment for life, or one to ten years, and fine."
+    },
+    {
+      "id": "ILL-118-ORDINARY",
+      "cites": "s.118(1), s.115",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "means": "ORDINARY"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A punch is not a dangerous means; the case belongs to s.115."
+    },
+    {
+      "id": "ILL-118-ACCIDENT",
+      "cites": "s.125",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": false,
+        "means": "DANGEROUS"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A hunter's shot accidentally hits B. Not voluntary, so s.118 is not engaged; the negligence track is s.125."
+    }
+  ]
+}

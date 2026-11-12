@@ -1,0 +1,458 @@
+{
+  "id": "in.bns.organised-crime",
+  "title": "Organised crime — BNS 2023 s.111",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.111. This is a new offence in the BNS with no IPC equivalent. The encoding separates the underlying activity (a continuing unlawful activity by a syndicate) from the accused's role (committing, abetting, membership, harbouring, possession), because s.111 punishes each role differently. The definition of 'continuing unlawful activity' — which requires more than one charge-sheet in ten years with cognizance taken — is contested and is recorded as an unresolved ambiguity."
+  },
+  "scope": {
+    "in_scope": [
+      "s.111(2)(a) committing organised crime resulting in death (death or life, fine not less than ten lakh rupees)",
+      "s.111(2)(b) committing organised crime, other cases (five years to life, fine not less than five lakh rupees)",
+      "s.111(3) abetting, attempting, conspiring, facilitating or preparatory acts (five years to life, fine not less than five lakh rupees)",
+      "s.111(4) membership of an organised crime syndicate (five years to life, fine not less than five lakh rupees)",
+      "s.111(5) harbouring or concealing an offender (three years to life, fine not less than five lakh rupees)",
+      "s.111(6) possessing property derived from organised crime (three years to life, fine not less than two lakh rupees)",
+      "s.111(7) possessing unaccounted property on behalf of a syndicate member (three to ten years, fine not less than one lakh rupees)"
+    ],
+    "out_of_scope": [
+      "s.112 petty organised crime (separate pack in.bns.petty-organised-crime)",
+      "s.113 terrorist act (separate pack in.bns.terrorist-act)",
+      "the underlying offences (kidnapping, extortion, etc.) charged separately",
+      "sentencing discretion within the maxima and the fine minima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.111",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF. New offence; no IPC equivalent."
+    }
+  ],
+  "citations": ["bns-2023#s111"],
+  "facts": [
+    {
+      "name": "activity",
+      "type": "enum",
+      "label": "The underlying conduct",
+      "values": [
+        "organised_crime",
+        "other"
+      ],
+      "value_labels": {
+        "organised_crime": "organised crime (a continuing unlawful activity by a syndicate, s.111(1))",
+        "other": "not organised crime"
+      }
+    },
+    {
+      "name": "role",
+      "type": "enum",
+      "label": "The accused's role",
+      "values": [
+        "commits",
+        "abet_conspire",
+        "membership",
+        "harbouring",
+        "possession",
+        "unaccounted_property",
+        "none"
+      ],
+      "value_labels": {
+        "commits": "commits the organised crime",
+        "abet_conspire": "abets, attempts, conspires, facilitates, or does a preparatory act",
+        "membership": "is a member of an organised crime syndicate",
+        "harbouring": "harbours or conceals a person who committed organised crime",
+        "possession": "possesses property derived from organised crime",
+        "unaccounted_property": "possesses property on behalf of a syndicate member which he cannot satisfactorily account for",
+        "none": "no punishable role"
+      }
+    },
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The organised crime resulted in a death"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-organised-crime",
+      "term": "organised crime",
+      "definition": "Any continuing unlawful activity including kidnapping, robbery, vehicle theft, extortion, land grabbing, contract killing, economic offence, cyber-crimes, trafficking of persons, drugs, weapons or illicit goods or services, or human trafficking for prostitution or ransom, by any person or group acting in concert, singly or jointly, either as a member of an organised crime syndicate or on behalf of such syndicate, by use of violence, threat of violence, intimidation, coercion, or any other unlawful means to obtain direct or indirect material benefit including a financial benefit (s.111(1)).",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "id": "T-continuing",
+      "term": "continuing unlawful activity",
+      "definition": "An activity prohibited by law which is a cognizable offence punishable with imprisonment of three years or more, undertaken by any person, either singly or jointly, as a member of an organised crime syndicate or on behalf of such syndicate in respect of which more than one charge-sheets have been filed before a competent Court within the preceding period of ten years and that Court has taken cognizance of such offence, and includes economic offence (s.111(1), Explanation (ii)).",
+      "citations": ["bns-2023#s111"]
+    }
+  ],
+  "parameters": {
+    "fine_min_death_lakh": 10,
+    "fine_min_other_lakh": 5,
+    "fine_min_possession_lakh": 2,
+    "fine_min_unaccounted_lakh": 1
+  },
+  "branches": [
+    {
+      "id": "N-NO-ACTIVITY",
+      "provision": "s.111",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "activity", "type": "enum", "default": "other" },
+          "other"
+        ]
+      },
+      "text": "Any continuing unlawful activity ... by any person or a group of persons acting in concert ... as a member of an organised crime syndicate or on behalf of such syndicate ... shall constitute organised crime.",
+      "notes": "If the conduct is not organised crime as defined in s.111(1), s.111 is not engaged. The underlying offence may still be punishable elsewhere."
+    },
+    {
+      "id": "N-NO-ROLE",
+      "provision": "s.111",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "none"] }
+        ]
+      },
+      "text": "Whoever commits organised crime ... Whoever abets, attempts, conspires ... Any person who is a member ... Whoever ... harbours ... Whoever possesses ...",
+      "notes": "Organised crime occurred, but the accused has no punishable role in it under s.111."
+    },
+    {
+      "id": "N-111-2A",
+      "provision": "s.111(2)(a)",
+      "verdict": "offence",
+      "offence": "organised_crime_death",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "commits"] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "Whoever commits organised crime shall, if such offence has resulted in the death of any person, be punished with death or imprisonment for life, and shall also be liable to fine which shall not be less than ten lakh rupees.",
+      "notes": "Committing organised crime that results in death."
+    },
+    {
+      "id": "N-111-2B",
+      "provision": "s.111(2)(b)",
+      "verdict": "offence",
+      "offence": "organised_crime",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "commits"] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "in any other case, be punished with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life, and shall also be liable to fine which shall not be less than five lakh rupees.",
+      "notes": "Committing organised crime where no death resulted."
+    },
+    {
+      "id": "N-111-3",
+      "provision": "s.111(3)",
+      "verdict": "offence",
+      "offence": "organised_crime_abet",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "abet_conspire"] }
+        ]
+      },
+      "text": "Whoever abets, attempts, conspires or knowingly facilitates the commission of an organised crime, or otherwise engages in any act preparatory to an organised crime, shall be punished with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life, and shall also be liable to fine which shall not be less than five lakh rupees.",
+      "notes": "Abetting, attempting, conspiring, facilitating, or preparatory acts."
+    },
+    {
+      "id": "N-111-4",
+      "provision": "s.111(4)",
+      "verdict": "offence",
+      "offence": "organised_crime_membership",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "membership"] }
+        ]
+      },
+      "text": "Any person who is a member of an organised crime syndicate shall be punished with imprisonment for a term which shall not be less than five years but which may extend to imprisonment for life, and shall also be liable to fine which shall not be less than five lakh rupees.",
+      "notes": "Mere membership of the syndicate."
+    },
+    {
+      "id": "N-111-5",
+      "provision": "s.111(5)",
+      "verdict": "offence",
+      "offence": "organised_crime_harbouring",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "harbouring"] }
+        ]
+      },
+      "text": "Whoever, intentionally, harbours or conceals any person who has committed the offence of an organised crime shall be punished with imprisonment for a term which shall not be less than three years but which may extend to imprisonment for life, and shall also be liable to fine which shall not be less than five lakh rupees: Provided that this sub-section shall not apply to any case in which the harbour or concealment is by the spouse of the offender.",
+      "notes": "Harbouring or concealing an offender. The spouse proviso is a fact about the harbourer, not encoded as a separate fact; it is recorded in the notes."
+    },
+    {
+      "id": "N-111-6",
+      "provision": "s.111(6)",
+      "verdict": "offence",
+      "offence": "organised_crime_possession",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "possession"] }
+        ]
+      },
+      "text": "Whoever possesses any property derived or obtained from the commission of an organised crime or proceeds of any organised crime or which has been acquired through the organised crime, shall be punishable with imprisonment for a term which shall not be less than three years but which may extend to imprisonment for life and shall also be liable to fine which shall not be less than two lakh rupees.",
+      "notes": "Possessing property derived from organised crime."
+    },
+    {
+      "id": "N-111-7",
+      "provision": "s.111(7)",
+      "verdict": "offence",
+      "offence": "organised_crime_unaccounted",
+      "when": {
+        "and": [
+          { "==": [{ "var": "activity", "type": "enum", "default": "other" }, "organised_crime"] },
+          { "==": [{ "var": "role", "type": "enum", "default": "none" }, "unaccounted_property"] }
+        ]
+      },
+      "text": "If any person on behalf of a member of an organised crime syndicate is, or at any time has been in possession of movable or immovable property which he cannot satisfactorily account for, shall be punishable with imprisonment for a term which shall not be less than three years but which may extend to imprisonment for ten years and shall also be liable to fine which shall not be less than one lakh rupees.",
+      "notes": "Possessing unaccounted property on behalf of a syndicate member."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.111",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.111",
+      "provision": "bns-2023#s111"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime_death"
+        ]
+      },
+      "text": "Death, or imprisonment for life, and fine not less than ten lakh rupees [s.111(2)(a)]",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime"
+        ]
+      },
+      "text": "Imprisonment not less than five years but up to life, and fine not less than five lakh rupees [s.111(2)(b)]",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime_abet"
+        ]
+      },
+      "text": "Imprisonment not less than five years but up to life, and fine not less than five lakh rupees [s.111(3)]",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime_membership"
+        ]
+      },
+      "text": "Imprisonment not less than five years but up to life, and fine not less than five lakh rupees [s.111(4)]",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime_harbouring"
+        ]
+      },
+      "text": "Imprisonment not less than three years but up to life, and fine not less than five lakh rupees [s.111(5)]",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime_possession"
+        ]
+      },
+      "text": "Imprisonment not less than three years but up to life, and fine not less than two lakh rupees [s.111(6)]",
+      "citations": ["bns-2023#s111"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "organised_crime_unaccounted"
+        ]
+      },
+      "text": "Imprisonment not less than three years but up to ten years, and fine not less than one lakh rupees [s.111(7)]",
+      "citations": ["bns-2023#s111"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-111-CONTINUING",
+      "provision": "s.111(1)",
+      "status": "unresolved",
+      "question": "What makes an activity 'continuing' for s.111?",
+      "why_it_matters": "Section 111(1) Explanation (ii) requires more than one charge-sheet filed within the preceding ten years with cognizance taken. Whether a syndicate's activity is 'continuing' — and therefore organised crime at all — turns on that charge-sheet history, which the pack does not encode as a fact. The pack records only one reading, so the analyser reports n/a rather than a number.",
+      "position_a": "The two-charge-sheet-in-ten-years condition is a threshold that must be proved before s.111 applies.",
+      "position_b": "The condition describes the typical case and is not a threshold; the activity is continuing if it is repeated or ongoing.",
+      "resolution": null,
+      "citations": ["bns-2023#s111"],
+      "variants": [
+        {
+          "id": "threshold-proved",
+          "label": "two charge-sheets in ten years must be proved (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-111-2A",
+      "cites": "s.111(2)(a), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "commits",
+        "death_caused": true
+      },
+      "expect": {
+        "offence_kind": "organised_crime_death"
+      },
+      "text": "A syndicate's contract killing results in death: s.111(2)(a), death or life and fine not less than ten lakh rupees."
+    },
+    {
+      "id": "ILL-111-2B",
+      "cites": "s.111(2)(b), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "commits",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "organised_crime"
+      },
+      "text": "A syndicate's extortion racket, no death: s.111(2)(b), five years to life and fine not less than five lakh rupees."
+    },
+    {
+      "id": "ILL-111-3",
+      "cites": "s.111(3), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "abet_conspire",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "organised_crime_abet"
+      },
+      "text": "Conspiring to commit the syndicate's robbery: s.111(3)."
+    },
+    {
+      "id": "ILL-111-4",
+      "cites": "s.111(4), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "membership",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "organised_crime_membership"
+      },
+      "text": "Being a member of the syndicate: s.111(4)."
+    },
+    {
+      "id": "ILL-111-5",
+      "cites": "s.111(5), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "harbouring",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "organised_crime_harbouring"
+      },
+      "text": "Hiding a syndicate member who committed organised crime: s.111(5)."
+    },
+    {
+      "id": "ILL-111-6",
+      "cites": "s.111(6), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "possession",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "organised_crime_possession"
+      },
+      "text": "Possessing the proceeds of the syndicate's vehicle theft: s.111(6)."
+    },
+    {
+      "id": "ILL-111-7",
+      "cites": "s.111(7), text",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "unaccounted_property",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": "organised_crime_unaccounted"
+      },
+      "text": "Holding property for a syndicate member that he cannot satisfactorily account for: s.111(7)."
+    },
+    {
+      "id": "ILL-111-NO-ACTIVITY",
+      "cites": "s.111(1), 'shall constitute organised crime'",
+      "facts": {
+        "activity": "other",
+        "role": "commits",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "Conduct that is not organised crime is not s.111, whatever the role."
+    },
+    {
+      "id": "ILL-111-NO-ROLE",
+      "cites": "s.111, 'whoever'",
+      "facts": {
+        "activity": "organised_crime",
+        "role": "none",
+        "death_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "Organised crime occurred but the accused has no punishable role: not s.111."
+    }
+  ]
+}

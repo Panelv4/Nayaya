@@ -25,6 +25,7 @@ os.environ["NYAYA_ADMIN_PASSWORD"] = "TestAdminPass123"
 
 import digilocker as dl              # noqa: E402
 import engine as engine_mod          # noqa: E402
+import uncertainty as uncertainty_mod  # noqa: E402
 import legal_kb                      # noqa: E402
 import server as portal              # noqa: E402
 
@@ -1368,6 +1369,169 @@ class SessionPurgeTests(PortalFixture):
         # Live session survives; expired one is gone.
         self.assertIsNotNone(portal.session_user(live))
         self.assertIsNone(portal.session_user("expired-token"))
+
+
+# =========================================== graded uncertainty (uncertainty.py)
+
+
+class UncertaintyBandTests(unittest.TestCase):
+    """The bands and their exact edges. Off-by-one here changes a legal answer."""
+
+    def test_band_edges_are_half_open(self):
+        U = uncertainty_mod
+        cases = [
+            (0.0, "FALSE"), (0.0999, "FALSE"),
+            (0.10, "MAYBE_NOT"), (0.3499, "MAYBE_NOT"),
+            (0.35, "MIGHT_NOT_BE"), (0.4999, "MIGHT_NOT_BE"),
+            (0.50, "MIGHT_BE"), (0.6499, "MIGHT_BE"),
+            (0.65, "MAYBE"), (0.8999, "MAYBE"),
+            (0.90, "TRUE"), (1.0, "TRUE"),
+        ]
+        for p, expected in cases:
+            with self.subTest(p=p):
+                self.assertEqual(U.classify(p), expected)
+
+    def test_predicates_agree_with_classify(self):
+        U = uncertainty_mod
+        for p in (U.BANDS["MAYBE"][0], 0.5, 0.4, 0.2):
+            label = U.classify(p)
+            for name in ("maybe", "might_be", "might_not_be", "maybe_not"):
+                fn = getattr(U, name)
+                with self.subTest(p=p, label=name):
+                    self.assertEqual(fn(p), label == name.upper())
+
+    def test_out_of_range_is_an_error_not_an_answer(self):
+        """An age must never be read as 'definitely true'."""
+        U = uncertainty_mod
+        for bad in (17, -0.2, 1.5, float("nan")):
+            with self.subTest(bad=bad):
+                with self.assertRaises(ValueError):
+                    U.classify(bad)
+        for bad in ("0.7", None, [0.7]):
+            with self.subTest(bad=bad):
+                with self.assertRaises(TypeError):
+                    U.classify(bad)
+
+    def test_bools_are_definite_answers_not_probabilities(self):
+        U = uncertainty_mod
+        self.assertEqual(U.classify(True), "TRUE")
+        self.assertEqual(U.classify(False), "FALSE")
+        self.assertEqual(U.to_tri_state(True), "TRUE")
+        self.assertEqual(U.to_tri_state(False), "FALSE")
+
+    def test_tri_state_collapses_every_graded_band_to_unknown(self):
+        """The safety rule: doubt goes to human review, never to TRUE/FALSE."""
+        U = uncertainty_mod
+        for p in (0.10, 0.2, 0.35, 0.45, 0.50, 0.6, 0.65, 0.89):
+            with self.subTest(p=p):
+                self.assertEqual(U.to_tri_state(p), "UNKNOWN")
+        for label in ("maybe", "MIGHT_BE", "might-not-be", " Maybe_Not "):
+            with self.subTest(label=label):
+                self.assertEqual(U.to_tri_state(label), "UNKNOWN")
+
+    def test_definite_numbers_collapse(self):
+        U = uncertainty_mod
+        self.assertEqual(U.to_tri_state(0.95), "TRUE")
+        self.assertEqual(U.to_tri_state(0.05), "FALSE")
+
+    def test_integer_likelihoods_are_accepted(self):
+        """0 and 1 are likelihoods; the type check used to reject them while
+        classify() accepted them, so the two disagreed."""
+        U = uncertainty_mod
+        self.assertEqual(U.to_tri_state(0), "FALSE")
+        self.assertEqual(U.to_tri_state(1), "TRUE")
+
+    def test_unrecognised_values_pass_through_as_none(self):
+        U = uncertainty_mod
+        for v in ("TRUE", "FALSE", "unknown", None, {"a": 1}, [0.7]):
+            with self.subTest(v=v):
+                self.assertIsNone(U.to_tri_state(v))
+
+
+class EngineGradedFactTests(unittest.TestCase):
+    """Graded intake must reach the engine as UNKNOWN and be named in the report."""
+
+    def setUp(self):
+        self.engine = engine_mod.Engine()
+
+    def evaluate(self, **flags):
+        facts = with_base(flags=flags)
+        return self.engine.evaluate(facts, record_audit=False)["output"]
+
+    def test_graded_flag_becomes_unknown_and_is_reported(self):
+        out = self.evaluate(disability="maybe")
+        note = [
+            q for q in out["open_questions_for_judicial_officer"] if "Graded" in q
+        ]
+        self.assertEqual(len(note), 1)
+        self.assertIn("flags.disability", note[0])
+
+    def test_likelihood_and_label_are_equivalent(self):
+        a = self.evaluate(disability=0.7)
+        b = self.evaluate(disability="maybe")
+        self.assertEqual(
+            a["open_questions_for_judicial_officer"],
+            b["open_questions_for_judicial_officer"],
+        )
+
+    def test_definite_answers_raise_no_doubt_note(self):
+        for value in (True, "TRUE", 0.95):
+            with self.subTest(value=value):
+                out = self.evaluate(disability=value)
+                self.assertFalse(
+                    [q for q in out["open_questions_for_judicial_officer"] if "Graded" in q]
+                )
+
+    def test_clean_intake_raises_no_doubt_note(self):
+        out = self.evaluate()
+        self.assertFalse(
+            [q for q in out["open_questions_for_judicial_officer"] if "Graded" in q]
+        )
+
+    def test_config_floats_are_not_mistaken_for_likelihoods(self):
+        """confidence_threshold is 0.85 -- a number, not a probability answer.
+        An early version collapsed it and silently changed the engine's own
+        config, which is exactly the class of bug this module must not cause."""
+        self.assertEqual(engine_mod.EMBEDDED_DEMO["config"]["confidence_threshold"], 0.85)
+        out = self.evaluate()
+        self.assertGreater(out["confidence"]["overall"], 0.0)
+
+    def test_non_likelihood_numbers_are_left_alone(self):
+        facts = with_base(victim_age=17)
+        out = self.engine.evaluate(facts, record_audit=False)["output"]
+        self.assertFalse(
+            [q for q in out["open_questions_for_judicial_officer"] if "victim_age" in q]
+        )
+
+    def test_graded_flag_raises_human_review_through_t17(self):
+        """The whole point of fail-closed: doubt on a vulnerability flag must
+        escalate, not be absorbed. T-17 requires an UNKNOWN vulnerability flag
+        *and* a base tier of 3+, so it only fires on a serious matter."""
+        facts = with_base(
+            offences=[{"provision": "BNS s.103", "statute": "BNS",
+                       "max_punishment": "death", "verified_in_corpus": True}],
+            flags={"disability": "maybe"},
+        )
+        out = self.engine.evaluate(facts, record_audit=False)["output"]
+        triggers = [t["id"] for t in out["manual_review"]["triggers_fired"]]
+        self.assertIn("T-17", triggers)
+        self.assertEqual(out["manual_review"]["required_level"], "L3")
+
+    def test_definite_flag_does_not_fabricate_the_t17_route(self):
+        """The same case with a definite answer must not claim doubt."""
+        facts = with_base(
+            offences=[{"provision": "BNS s.103", "statute": "BNS",
+                       "max_punishment": "death", "verified_in_corpus": True}],
+            flags={"disability": True},
+        )
+        out = self.engine.evaluate(facts, record_audit=False)["output"]
+        triggers = [t["id"] for t in out["manual_review"]["triggers_fired"]]
+        self.assertNotIn("T-17", triggers)
+
+    def test_graded_facts_do_not_mutate_caller_input(self):
+        facts = with_base(flags={"disability": "maybe"})
+        self.engine.evaluate(facts, record_audit=False)
+        self.assertEqual(facts["flags"]["disability"], "maybe")
 
 
 if __name__ == "__main__":

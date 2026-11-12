@@ -1,0 +1,463 @@
+{
+  "id": "in.bns.negligence",
+  "title": "Causing death by negligence — BNS 2023 s.106",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.106. Deliberately small (30 cases): the point is the boundary with culpable homicide in ss.100-105 (separate pack in.bns.homicide) — s.106 applies only to a rash or negligent act 'not amounting to culpable homicide', so the encoding must say where that line falls and what it costs to move it."
+  },
+  "scope": {
+    "in_scope": [
+      "s.106(1) causing death by a rash or negligent act",
+      "s.106(2) causing death by dangerous driving or racing"
+    ],
+    "out_of_scope": [
+      "ss.100-105 culpable homicide and murder (separate pack in.bns.homicide)",
+      "ss.107-108 abetment of suicide (separate pack in.bns.abetment-suicide)",
+      "s.109 attempt to murder (separate pack in.bns.attempt-murder)",
+      "MV Act s.184 dangerous driving (no death)",
+      "sentencing discretion within the maxima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.106",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, s.304A (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of s.106(1). The maximum rose from two years (IPC) to five years (BNS); s.106(2) has no IPC equivalent."
+    }
+  ],
+  "citations": [
+    "bns-2023#s106"
+  ],
+  "facts": [
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The act caused a death"
+    },
+    {
+      "name": "culpability",
+      "type": "enum",
+      "label": "Mental element of the act",
+      "values": [
+        "none",
+        "rash_negligent",
+        "knowledge_possibility_death",
+        "knowledge_likely_death",
+        "intention_death"
+      ],
+      "value_labels": {
+        "none": "no rashness or negligence (pure accident)",
+        "rash_negligent": "rash or negligent (conscious risk or inadvertence)",
+        "knowledge_possibility_death": "knew death was possible",
+        "knowledge_likely_death": "knew death was likely",
+        "intention_death": "intended death"
+      }
+    },
+    {
+      "name": "driving_context",
+      "type": "enum",
+      "label": "Driving context of the act",
+      "values": [
+        "not_driving",
+        "ordinary_driving",
+        "dangerous_or_racing"
+      ],
+      "value_labels": {
+        "not_driving": "not driving a vehicle",
+        "ordinary_driving": "driving, but not in a manner dangerous to human life and not racing",
+        "dangerous_or_racing": "driving in a manner dangerous to human life, or racing"
+      }
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-rash-negligent",
+      "term": "rash or negligent",
+      "definition": "Rash means a conscious taking of a risk; negligent means inadvertent failure to take care. Section 106 covers both, so the encoding treats them as one culpability value.",
+      "citations": [
+        "bns-2023#s106"
+      ]
+    },
+    {
+      "id": "T-not-amounting",
+      "term": "not amounting to culpable homicide",
+      "definition": "The boundary with ss.100-105: if the act was done with intention or knowledge of likely death, it is culpable homicide or murder, not s.106. Knowledge of mere possibility sits on the line and is recorded as an ambiguity.",
+      "citations": [
+        "bns-2023#s106"
+      ]
+    }
+  ],
+  "parameters": {
+    "knowledge_possibility_is_culpable": false,
+    "max_years_106_1": 5,
+    "max_years_106_2": 10
+  },
+  "branches": [
+    {
+      "id": "N-NO-DEATH",
+      "provision": "s.106",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          {
+            "var": "death_caused",
+            "type": "bool",
+            "default": true
+          },
+          false
+        ]
+      },
+      "text": "Whoever causes death of any person by doing any rash or negligent act ...",
+      "notes": "No death means s.106 is not engaged at all. Hurt, attempt and abetment are different provisions and outside this pack."
+    },
+    {
+      "id": "N-CULPABLE-HOMICIDE",
+      "provision": "s.106",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "or": [
+              {
+                "in": [
+                  {
+                    "var": "culpability",
+                    "type": "enum",
+                    "default": "none"
+                  },
+                  [
+                    "knowledge_likely_death",
+                    "intention_death"
+                  ]
+                ]
+              },
+              {
+                "and": [
+                  {
+                    "==": [
+                      {
+                        "var": "culpability",
+                        "type": "enum",
+                        "default": "none"
+                      },
+                      "knowledge_possibility_death"
+                    ]
+                  },
+                  {
+                    "==": [
+                      {
+                        "var": "param.knowledge_possibility_is_culpable",
+                        "type": "bool",
+                        "default": false
+                      },
+                      true
+                    ]
+                  }
+                ]
+              }
+            ]
+          }
+        ]
+      },
+      "text": "by doing any rash or negligent act not amounting to culpable homicide",
+      "notes": "Intention or knowledge of likely death is culpable homicide or murder (ss.100-105, separate pack), so s.106 is excluded by its own words. Knowledge of mere possibility is treated as rashness in the current encoding; the ambiguity records the other reading."
+    },
+    {
+      "id": "N-NO-FAULT",
+      "provision": "s.106",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "culpability",
+                "type": "enum",
+                "default": "none"
+              },
+              "none"
+            ]
+          }
+        ]
+      },
+      "text": "by doing any rash or negligent act",
+      "notes": "A death without rashness or negligence (pure accident) is not s.106. The fault element is the whole offence."
+    },
+    {
+      "id": "N-106-2",
+      "provision": "s.106(2)",
+      "verdict": "offence",
+      "offence": "causing_death_by_dangerous_driving",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "culpability",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "rash_negligent",
+                "knowledge_possibility_death"
+              ]
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "driving_context",
+                "type": "enum",
+                "default": "not_driving"
+              },
+              "dangerous_or_racing"
+            ]
+          }
+        ]
+      },
+      "text": "Whoever causes death of any person by driving a vehicle in a manner dangerous to human life, or by racing",
+      "notes": "The specific provision for road deaths. It has no IPC equivalent; before 2024 such deaths were prosecuted as IPC s.304A (two years) or under the MV Act."
+    },
+    {
+      "id": "N-106-1",
+      "provision": "s.106(1)",
+      "verdict": "offence",
+      "offence": "causing_death_by_negligence",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "death_caused",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "culpability",
+                "type": "enum",
+                "default": "none"
+              },
+              [
+                "rash_negligent",
+                "knowledge_possibility_death"
+              ]
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "driving_context",
+                "type": "enum",
+                "default": "not_driving"
+              },
+              [
+                "not_driving",
+                "ordinary_driving"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever causes death of any person by doing any rash or negligent act not amounting to culpable homicide",
+      "notes": "The general provision. Ordinary negligent driving that kills falls here; only dangerous driving or racing goes to s.106(2)."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.106",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.106",
+      "provision": "bns-2023#s106"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "causing_death_by_dangerous_driving"
+        ]
+      },
+      "text": "Imprisonment up to 10 years, or fine, or both [s.106(2)]",
+      "citations": [
+        "bns-2023#s106"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "causing_death_by_negligence"
+        ]
+      },
+      "text": "Imprisonment up to 5 years, or fine, or both [s.106(1)]",
+      "citations": [
+        "bns-2023#s106"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-106-KNOWLEDGE-BOUNDARY",
+      "provision": "s.106",
+      "status": "unresolved",
+      "question": "Does knowledge of the possibility of death amount to culpable homicide (ss.100-105), or is it still rashness under s.106?",
+      "why_it_matters": "If knowledge of possibility is culpable homicide, those deaths leave s.106 entirely (and enter ss.100-105, where the maxima are far higher). If it is rashness, they stay in s.106 at five or ten years. Same facts, different offence and different ceiling.",
+      "position_a": "Possibility is rashness: only knowledge of likelihood (or intention) is culpable homicide, so s.106 covers possibility-knowledge.",
+      "position_b": "Possibility is culpable: anyone who foresees death as possible and proceeds is at least culpable, so s.106 excludes possibility-knowledge.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s106"
+      ],
+      "variants": [
+        {
+          "id": "possibility-is-rash",
+          "label": "possibility is rashness (current encoding, parameter is false)",
+          "patch": {}
+        },
+        {
+          "id": "possibility-is-culpable",
+          "label": "possibility is culpable homicide",
+          "patch": {
+            "parameters": {
+              "knowledge_possibility_is_culpable": true
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-106-1-NEGLIGENCE",
+      "cites": "s.106(1), text",
+      "facts": {
+        "death_caused": true,
+        "culpability": "rash_negligent",
+        "driving_context": "not_driving"
+      },
+      "expect": {
+        "offence_kind": "causing_death_by_negligence"
+      },
+      "text": "A rash act (not driving) causes a death without intention or knowledge of likely death: s.106(1)."
+    },
+    {
+      "id": "ILL-106-2-DANGEROUS",
+      "cites": "s.106(2), text",
+      "facts": {
+        "death_caused": true,
+        "culpability": "rash_negligent",
+        "driving_context": "dangerous_or_racing"
+      },
+      "expect": {
+        "offence_kind": "causing_death_by_dangerous_driving"
+      },
+      "text": "Driving in a manner dangerous to human life causes a death: s.106(2), not s.106(1)."
+    },
+    {
+      "id": "ILL-106-NO-DEATH",
+      "cites": "s.106, opening words 'causes death'",
+      "facts": {
+        "death_caused": false,
+        "culpability": "rash_negligent",
+        "driving_context": "dangerous_or_racing"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "Dangerous driving without a death is not s.106, however rash."
+    },
+    {
+      "id": "ILL-106-CULPABLE",
+      "cites": "s.106(1), 'not amounting to culpable homicide'",
+      "facts": {
+        "death_caused": true,
+        "culpability": "intention_death",
+        "driving_context": "not_driving"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "An intentional killing is murder (ss.100-105), so s.106 is excluded by its own words."
+    },
+    {
+      "id": "ILL-106-ACCIDENT",
+      "cites": "s.106(1), 'rash or negligent act'",
+      "facts": {
+        "death_caused": true,
+        "culpability": "none",
+        "driving_context": "not_driving"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A death without rashness or negligence (pure accident) is not s.106."
+    }
+  ]
+}

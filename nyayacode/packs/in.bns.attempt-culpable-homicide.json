@@ -1,0 +1,248 @@
+{
+  "id": "in.bns.attempt-culpable-homicide",
+  "title": "Attempt to commit culpable homicide — BNS 2023 s.110",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.110 and its illustration. This is the lesser attempt: the act is done with the intention or knowledge that would make it culpable homicide not amounting to murder (ss.100-105) if death resulted, rather than murder. If the act kills, it is culpable homicide, not an attempt. Hurt raises the tariff from three years to seven."
+  },
+  "scope": {
+    "in_scope": [
+      "s.110 attempt to commit culpable homicide (up to three years)",
+      "s.110 attempt to commit culpable homicide with hurt caused (up to seven years)"
+    ],
+    "out_of_scope": [
+      "ss.100-105 culpable homicide and murder (separate pack in.bns.homicide)",
+      "s.106 causing death by negligence (separate pack in.bns.negligence)",
+      "ss.107-108 abetment of suicide (separate pack in.bns.abetment-suicide)",
+      "s.109 attempt to murder (separate pack in.bns.attempt-murder)",
+      "sentencing discretion within the maxima"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.110",
+      "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. India Code PDF."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, s.308 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of s.110. The punishment is unchanged (up to three years; up to seven if hurt is caused)."
+    }
+  ],
+  "citations": ["bns-2023#s110"],
+  "facts": [
+    {
+      "name": "attempt_act",
+      "type": "bool",
+      "label": "The accused did an act amounting to an attempt to commit culpable homicide (with intention/knowledge that would be culpable homicide not amounting to murder if death resulted)"
+    },
+    {
+      "name": "death_caused",
+      "type": "bool",
+      "label": "The act caused a death"
+    },
+    {
+      "name": "hurt_caused",
+      "type": "bool",
+      "label": "Hurt was caused to any person by the act"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-attempt",
+      "term": "attempt",
+      "definition": "An act done towards the commission of culpable homicide not amounting to murder, beyond mere preparation. The encoding treats 'amounting to an attempt' as a single fact.",
+      "citations": ["bns-2023#s110"]
+    },
+    {
+      "id": "T-mens-rea",
+      "term": "mens rea boundary",
+      "definition": "The intention or knowledge that would make the act culpable homicide not amounting to murder (ss.100-105) if death resulted, as distinct from the intention or knowledge that would make it murder (s.109). Which side of that line a given act falls on is fact-specific and is recorded as an ambiguity.",
+      "citations": ["bns-2023#s110"]
+    }
+  ],
+  "parameters": {
+    "max_years_attempt": 3,
+    "max_years_attempt_hurt": 7
+  },
+  "branches": [
+    {
+      "id": "N-NO-ATTEMPT",
+      "provision": "s.110",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          { "var": "attempt_act", "type": "bool", "default": false },
+          false
+        ]
+      },
+      "text": "Whoever does any act with such intention or knowledge and under such circumstances that, if he by that act caused death, he would be guilty of culpable homicide not amounting to murder ...",
+      "notes": "No act amounting to an attempt means s.110 is not engaged. Mere preparation is not an attempt."
+    },
+    {
+      "id": "N-DEATH",
+      "provision": "s.110",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "Whoever does any act ... that, if he by that act caused death, he would be guilty of culpable homicide not amounting to murder ...",
+      "notes": "If the act kills, the offence is culpable homicide not amounting to murder (s.105), not an attempt. An attempt that succeeds is not an attempt."
+    },
+    {
+      "id": "N-110-HURT",
+      "provision": "s.110",
+      "verdict": "offence",
+      "offence": "attempt_culpable_homicide_hurt",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, true] }
+        ]
+      },
+      "text": "and, if hurt is caused to any person by such act, shall be punished with imprisonment of either description for a term which may extend to seven years, or with fine, or with both.",
+      "notes": "Hurt caused by the act raises the tariff from three years to seven."
+    },
+    {
+      "id": "N-110",
+      "provision": "s.110",
+      "verdict": "offence",
+      "offence": "attempt_culpable_homicide",
+      "when": {
+        "and": [
+          { "==": [{ "var": "attempt_act", "type": "bool", "default": false }, true] },
+          { "==": [{ "var": "death_caused", "type": "bool", "default": false }, false] },
+          { "==": [{ "var": "hurt_caused", "type": "bool", "default": false }, false] }
+        ]
+      },
+      "text": "Whoever does any act with such intention or knowledge and under such circumstances that, if he by that act caused death, he would be guilty of culpable homicide not amounting to murder, shall be punished with imprisonment of either description for a term which may extend to three years, or with fine, or with both.",
+      "notes": "The basic attempt: no death, no hurt."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.110",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.110",
+      "provision": "bns-2023#s110"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_culpable_homicide_hurt"
+        ]
+      },
+      "text": "Imprisonment up to seven years, or fine, or both [s.110, hurt caused]",
+      "citations": ["bns-2023#s110"]
+    },
+    {
+      "when": {
+        "==": [
+          { "var": "offence_kind", "type": "str", "default": "" },
+          "attempt_culpable_homicide"
+        ]
+      },
+      "text": "Imprisonment up to three years, or fine, or both [s.110]",
+      "citations": ["bns-2023#s110"]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-110-MENS-REA-BOUNDARY",
+      "provision": "s.110",
+      "status": "unresolved",
+      "question": "When is the mens rea murder-level (s.109) rather than culpable-homicide-level (s.110)?",
+      "why_it_matters": "The same act is s.109 (up to ten years, or life) or s.110 (up to three years, or seven) depending on whether the intention or knowledge would have made it murder or culpable homicide not amounting to murder if death resulted. That boundary turns on the ss.100-105 exceptions and is fact-specific. The pack records only one reading — that 'attempt_act' already embodies the culpable-homicide mens rea — so the analyser reports n/a rather than a number.",
+      "position_a": "The mens rea is culpable-homicide-level whenever a s.101 exception would have applied had death resulted.",
+      "position_b": "The mens rea is culpable-homicide-level whenever the intention falls short of an intention to cause death.",
+      "resolution": null,
+      "citations": ["bns-2023#s110"],
+      "variants": [
+        {
+          "id": "exception-applies",
+          "label": "exception would have applied (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-110-1",
+      "cites": "s.110, illustration",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": false
+      },
+      "expect": {
+        "offence_kind": "attempt_culpable_homicide"
+      },
+      "text": "A, on grave and sudden provocation, fires a pistol at Z, under such circumstances that if he thereby caused death, he would be guilty of culpable homicide not amounting to murder. A has committed the offence defined in this section."
+    },
+    {
+      "id": "ILL-110-HURT",
+      "cites": "s.110, 'if hurt is caused'",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": false,
+        "hurt_caused": true
+      },
+      "expect": {
+        "offence_kind": "attempt_culpable_homicide_hurt"
+      },
+      "text": "An attempt to commit culpable homicide that causes hurt: up to seven years."
+    },
+    {
+      "id": "ILL-110-DEATH",
+      "cites": "s.110, 'if he by that act caused death'",
+      "facts": {
+        "attempt_act": true,
+        "death_caused": true,
+        "hurt_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "An act that kills is culpable homicide not amounting to murder (s.105), not an attempt."
+    },
+    {
+      "id": "ILL-110-NO-ATTEMPT",
+      "cites": "s.110, 'does any act'",
+      "facts": {
+        "attempt_act": false,
+        "death_caused": false,
+        "hurt_caused": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "No act amounting to an attempt is not s.110."
+    }
+  ]
+}

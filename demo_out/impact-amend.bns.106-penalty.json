@@ -1,0 +1,114 @@
+{
+  "amendment": "amend.bns.106-penalty",
+  "title": "BNS s.106(1) — the penalty for causing death by negligence rises from two years to five",
+  "kind": "real",
+  "enacted": true,
+  "commencement": "2024-07-01",
+  "summary": "IPC s.304A punished causing death by a rash or negligent act with imprisonment up to two years. BNS s.106(1) re-enacts the offence with a maximum of five years. Nothing about what counts as the offence changed, so this is a pure sentencing amendment: it tests whether the machinery can see a change that moves no verdict at all. Section 106(2) (dangerous driving, ten years) is new in the BNS and has no IPC equivalent, so it is identical before and after.",
+  "source": {
+    "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), s.106(1), repealing IPC s.304A",
+    "url": "https://www.indiacode.nic.in/bitstream/123456789/20062/1/a202345.pdf"
+  },
+  "before_label": "IPC s.304A (before 1 July 2024)",
+  "after_label": "BNS s.106(1) (from 1 July 2024)",
+  "expected_reading": "Decisions should not move at all: the offence and its fault element are identical before and after. Every case that is an offence stays an offence. What changes is the sentence attached to s.106(1) cases, which is why the report separates decisions from sentences.",
+  "pack": "in.bns.negligence",
+  "pack_review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "outcomes": [
+    "causing_death_by_dangerous_driving",
+    "causing_death_by_negligence",
+    "not_offence"
+  ],
+  "comparison": {
+    "before": "in.bns.negligence",
+    "after": "in.bns.negligence",
+    "checked": 30,
+    "facts_added": [],
+    "facts_removed": [],
+    "domain_facts": 3,
+    "changed": 4,
+    "decisions_changed": 0,
+    "sentences_changed": 4,
+    "unchanged": 26,
+    "pct": 13.33,
+    "pct_decisions": 0.0,
+    "matrix": {
+      "not_offence": {
+        "not_offence": 24
+      },
+      "causing_death_by_negligence": {
+        "causing_death_by_negligence": 4
+      },
+      "causing_death_by_dangerous_driving": {
+        "causing_death_by_dangerous_driving": 2
+      }
+    },
+    "moved": [
+      {
+        "facts": {
+          "death_caused": true,
+          "culpability": "rash_negligent",
+          "driving_context": "not_driving"
+        },
+        "before": "causing_death_by_negligence",
+        "after": "causing_death_by_negligence",
+        "kind": "sentence",
+        "before_branch": "N-106-1",
+        "after_branch": "N-106-1",
+        "before_sentence": "Imprisonment up to 2 years, or fine, or both [IPC s.304A]",
+        "after_sentence": "Imprisonment up to 5 years, or fine, or both [s.106(1)]"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "culpability": "rash_negligent",
+          "driving_context": "ordinary_driving"
+        },
+        "before": "causing_death_by_negligence",
+        "after": "causing_death_by_negligence",
+        "kind": "sentence",
+        "before_branch": "N-106-1",
+        "after_branch": "N-106-1",
+        "before_sentence": "Imprisonment up to 2 years, or fine, or both [IPC s.304A]",
+        "after_sentence": "Imprisonment up to 5 years, or fine, or both [s.106(1)]"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "culpability": "knowledge_possibility_death",
+          "driving_context": "not_driving"
+        },
+        "before": "causing_death_by_negligence",
+        "after": "causing_death_by_negligence",
+        "kind": "sentence",
+        "before_branch": "N-106-1",
+        "after_branch": "N-106-1",
+        "before_sentence": "Imprisonment up to 2 years, or fine, or both [IPC s.304A]",
+        "after_sentence": "Imprisonment up to 5 years, or fine, or both [s.106(1)]"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "culpability": "knowledge_possibility_death",
+          "driving_context": "ordinary_driving"
+        },
+        "before": "causing_death_by_negligence",
+        "after": "causing_death_by_negligence",
+        "kind": "sentence",
+        "before_branch": "N-106-1",
+        "after_branch": "N-106-1",
+        "before_sentence": "Imprisonment up to 2 years, or fine, or both [IPC s.304A]",
+        "after_sentence": "Imprisonment up to 5 years, or fine, or both [s.106(1)]"
+      }
+    ],
+    "digest_before": "159665c2f149c611",
+    "digest_after": "159665c2f149c611"
+  },
+  "pack_before": {},
+  "coverage": {
+    "domain": 30,
+    "facts_added": [],
+    "facts_removed": []
+  },
+  "examples": []
+}
