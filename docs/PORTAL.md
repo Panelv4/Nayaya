@@ -256,7 +256,7 @@ time"*.
 | `POST /api/disclosure-request` | owner | `PRIVATE|REJECTED → PENDING` |
 | `POST /api/feedback` | anyone with access | 👍/👎 + comment, flags at net −2 |
 | `POST /api/evidence-map` | owner / admin | link evidence → fact |
-| `GET /api/kb`, `/api/provenance` | session | statutory rows, precedents, conflicts, graph |
+| `GET /api/kb`, `/api/provenance` | session | statutory rows, precedents, conflicts, graph (case nodes filtered to what the caller may see) |
 | `POST /api/admin/disclosure` | admin | `APPROVE / REJECT / DISCLOSE / REVOKE` + mode |
 | `POST /api/admin/manual-check` | admin | `UNCHECKED / VERIFIED / NEEDS_CORRECTION / REJECTED` |
 | `POST /api/admin/statutes`, `/verify`, `/precedents`, `/status` | admin | KB editing + human verification |
@@ -265,8 +265,29 @@ time"*.
 | `POST /api/admin/amendment-impact` | admin | dry run + optional SYSTEM revision |
 | `GET /api/digilocker/status`, `/events` | session | identity state, consent quota, audit trail |
 | `POST /api/digilocker/consent`, `/grant`, `/callback`, `/revoke` | session | consent → code → artefact → attest (or deny/withdraw) |
-| `GET /api/digilocker/verify?artefact=` | anyone | independent integrity check of an artefact id |
+| `GET /api/digilocker/verify?artefact=` | session | verification verdict for an artefact id; the identifying record only for its owner or an admin |
 | `POST /evaluate`, `GET /schema`, `GET /audit` | admin | technical workbench |
+
+### What each endpoint may reveal
+
+Three leaks were closed after review, and they share a cause — a handler that
+authenticated the caller and then answered a question about someone else:
+
+* **`/api/provenance`** walked the whole graph for any logged-in user who
+  supplied a case reference, and evidence edges carried the original filename in
+  their metadata. Case nodes are now dropped unless the caller owns the case or
+  it has been disclosed; evidence edges lose `filename` and `stored_path`
+  entirely. A stranger gets the same empty chain a non-existent case would give,
+  so absence cannot confirm that a case exists.
+* **`/api/digilocker/verify`** answered with no session at all, so anyone could
+  probe artefact ids and read back issuer, expiry and document digests. It now
+  requires a login. The owner and administrators get the full record; everyone
+  else gets existence plus the verdict and nothing that identifies the document.
+* **`X-Forwarded-For`** was trusted from any caller, so a fresh forged address on
+  each request reset the rate-limit bucket and the login limit could be walked
+  past indefinitely. The header is honoured only when the immediate TCP peer is
+  listed in `NYAYA_TRUSTED_PROXIES`, and then only its right-most hop. Unset by
+  default, which is right for a laptop tool that sits behind no proxy.
 
 Errors: `AccessDenied → 403`, `NotFound → 404` (also used to hide foreign private
 cases), `ValueError/TypeError → 400`.
@@ -324,6 +345,40 @@ a **SIMULATED** tag plus a plain-language honesty note, and `GET /api/digilocker
 returns `simulated: true` for every artefact. Going live means implementing two functions
 in `digilocker.py` (`exchange_code`, `_simulated_artefact` → partner gateway) — no other
 layer changes.
+
+**Password reset.** `POST /api/password-reset/request` with an email always
+answers the same way, so it cannot be used to test whether an address is
+registered. Tokens are stored as SHA-256 hashes (never in plaintext), expire in
+30 minutes, are single-use, and a successful reset deletes every existing
+session for that user. This build has no mail transport: the token is written to
+the server console for an administrator to relay, unless `NYAYA_RESET_ECHO=1` is
+set, in which case the response also carries a `reset_url` for local testing.
+The pages are `/forgot-password` and `/reset-password?token=…`.
+
+**Search and paging.** `/api/reports` and `/api/disclosed` accept `?q=`, `?page=`
+and `?size=` (maximum 100) and return `total` alongside the window, so a list is
+no longer silently cut off at 200 rows. `LIKE` wildcards in the search text are
+escaped, so a literal `%` or `_` behaves literally.
+
+**Evidence on a revision.** `/api/revise` accepts an `evidence` array, so proof
+found after filing can be attached without filing a second case. Each file is
+sealed with its own SHA-256 and linked to the revision by an
+`ATTACHED_IN_REVISION` provenance edge. Stored filenames carry a random token,
+because a revision's upload batch restarts its index at zero and would otherwise
+overwrite the previous revision's file of the same name.
+
+**Guest reading of disclosed cases.** An anonymous visitor may open a case that
+has been disclosed. `GET /api/report` uses a guest identity whose id can never
+match a stored `user_id`, so the existing disclosure check still decides
+everything: anything private returns 404, exactly as before. The owner-only
+actions (vote, correct, map evidence, download) stay closed and the page shows a
+sign-in prompt instead.
+
+**Language toggle.** The header chip is a real control. It swaps the interface
+chrome (navigation, buttons, form labels) using a dictionary in
+`assets/auth.js`, is remembered per browser, and never touches regions marked
+`data-i18n-skip` — case data and engine output stay in the language the server
+produced them in.
 
 ### Artefact integrity
 

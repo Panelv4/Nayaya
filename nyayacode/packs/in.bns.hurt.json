@@ -1,0 +1,446 @@
+{
+  "id": "in.bns.hurt",
+  "title": "Hurt, grievous hurt and voluntarily causing hurt - BNS 2023 ss.114-116",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the bare text of ss.114-116. Two of the three sections are pure definitions (s.114 hurt, s.116 the eight kinds of grievous hurt) and carry no sentence of their own; the only punishing branch here is s.115(2), one year or ten thousand rupees. The aggravated sentences live in the sibling packs, which take the same hurt/grievous classification as their input."
+  },
+  "scope": {
+    "in_scope": [
+      "s.114 hurt: bodily pain, disease or infirmity",
+      "s.115(1)-(2) voluntarily causing hurt (up to one year / Rs 10,000)",
+      "s.116 the eight kinds of grievous hurt, as a classification"
+    ],
+    "out_of_scope": [
+      "the sentence for grievous hurt - s.117, pack in.bns.grievous-hurt",
+      "dangerous weapons and means - s.118, pack in.bns.hurt-dangerous-means",
+      "extortion, public servants, provocation, poison - ss.119-123, pack in.bns.hurt-aggravated",
+      "acid - s.124, rash or negligent conduct - s.125, pack in.bns.hurt-aggravated",
+      "assault and criminal force (ss.129-131), which need no resulting injury",
+      "attempt to murder (s.109) and culpable homicide (ss.100-105)"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), Chapter VI, ss.114-125",
+      "url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. MHA published English text."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, ss.319-338 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of Chapter VI. Two substantive changes: the residual grievous-hurt period fell from 20 days to 15, and ss.117(3)-(4) are new."
+    },
+    {
+      "id": "bnss-2023",
+      "citation": "Bharatiya Nagarik Suraksha Sanhita, 2023, First Schedule",
+      "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Source of the cognizable / bailable / triable-by / compoundable labels."
+    }
+  ],
+  "citations": [
+    "bns-2023#s114",
+    "bns-2023#s115",
+    "bns-2023#s116",
+    "ipc-1860#s319",
+    "ipc-1860#s320",
+    "ipc-1860#s323"
+  ],
+  "facts": [
+    {
+      "name": "hurt_kind",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "HURT",
+        "GRIEVOUS"
+      ],
+      "label": "Bodily result: no hurt, hurt (s.114) or grievous hurt (s.116)"
+    },
+    {
+      "name": "voluntary",
+      "type": "bool",
+      "label": "The hurt was caused voluntarily: with intention to cause it, or knowledge that it was likely (s.115(1) / s.117(1))"
+    },
+    {
+      "name": "grievous_kind",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "EMASCULATION",
+        "SIGHT",
+        "HEARING",
+        "MEMBER_LOSS",
+        "MEMBER_IMPAIRED",
+        "DISFIGUREMENT",
+        "BONE_TOOTH",
+        "LIFE_ENDANGERED",
+        "FIFTEEN_DAYS"
+      ],
+      "label": "Which s.116 clause the injury falls under (NONE when it is only hurt)"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-hurt",
+      "term": "hurt",
+      "definition": "Bodily pain, disease or infirmity caused to any person (s.114). No visible wound is required; mental distress alone is not hurt.",
+      "citations": [
+        "bns-2023#s114"
+      ]
+    },
+    {
+      "id": "T-grievous",
+      "term": "grievous hurt",
+      "definition": "A closed list of eight kinds of hurt (s.116): emasculation; permanent loss of sight of either eye; permanent loss of hearing of either ear; loss of any member or joint; destruction or permanent impairment of any member or joint; permanent disfigurement of the head or face; fracture or dislocation of a bone or tooth; and any hurt that endangers life or keeps the sufferer in severe pain or unable to follow ordinary pursuits for fifteen days. The last limb was twenty days under s.320 IPC.",
+      "citations": [
+        "bns-2023#s116",
+        "ipc-1860#s320"
+      ]
+    },
+    {
+      "id": "T-voluntary",
+      "term": "voluntarily",
+      "definition": "Done with the intention of causing the hurt, or with knowledge that it was likely to be caused (s.115(1)). Intention or knowledge is enough; both are not needed.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "T-mens-rea-ladder",
+      "term": "the intention ladder",
+      "definition": "The gravity of the injury does not by itself fix the offence. Injury caused without the intention or knowledge required to kill stays in this chapter (s.117), however grave; injury caused WITH that intention or knowledge leaves it for attempt to murder (s.109) or culpable homicide (ss.100-105).",
+      "citations": [
+        "bns-2023#s117",
+        "bns-2023#s109"
+      ]
+    }
+  ],
+  "parameters": {
+    "max_years_simple_hurt": 1,
+    "max_fine_simple_hurt": 10000,
+    "grievous_residual_days": 15,
+    "grievous_residual_days_ipc": 20
+  },
+  "branches": [
+    {
+      "id": "H-NO-HURT",
+      "provision": "s.114",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          {
+            "var": "hurt_kind",
+            "type": "str",
+            "default": "NONE"
+          },
+          "NONE"
+        ]
+      },
+      "text": "Whoever causes bodily pain, disease or infirmity to any person is said to cause hurt.",
+      "notes": "No bodily pain, disease or infirmity means there is no hurt to punish. Assault or criminal force without a resulting injury is dealt with by ss.129-131, not here.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "H-INVOLUNTARY",
+      "provision": "s.115",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "text": "Whoever does any act with the intention of thereby causing hurt ... or with the knowledge that he is likely thereby to cause hurt ...",
+      "notes": "Hurt that was not caused voluntarily is outside s.115. If the act was rash or negligent, s.125 is the provision - not this one.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "H-115",
+      "provision": "s.115(2)",
+      "verdict": "offence",
+      "offence": "voluntarily_causing_hurt",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "text": "Whoever, except in the case provided for by sub-section (1) of section 122, voluntarily causes hurt, shall be punished with imprisonment of either description for a term which may extend to one year, or with fine which may extend to ten thousand rupees, or with both.",
+      "notes": "Simple hurt. Non-cognizable, bailable, compoundable, triable by any Magistrate. The s.122(1) provocation exception, which reduces this to one month, is applied as a defeater in the aggravated pack.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "H-GRIEVOUS",
+      "provision": "s.116",
+      "verdict": "offence",
+      "offence": "grievous_hurt_classification",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "!=": [
+              {
+                "var": "grievous_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "The following kinds of hurt only are designated as \"grievous\":- (a) Emasculation; (b) Permanent privation of the sight of either eye; (c) Permanent privation of the hearing of either ear; (d) Privation of any member or joint; (e) Destruction or permanent impairing of the powers of any member or joint; (f) Permanent disfiguration of the head or face; (g) Fracture or dislocation of a bone or tooth; (h) Any hurt which endangers life or which causes the sufferer to be during the space of fifteen days in severe bodily pain, or unable to follow his ordinary pursuits.",
+      "notes": "A classification branch: s.116 fixes that the injury is grievous, which is what triggers the seven-year tariff in s.117(2). It carries no sentence itself.",
+      "citations": [
+        "bns-2023#s116"
+      ]
+    },
+    {
+      "id": "H-GRIEVOUS-UNSPECIFIED",
+      "provision": "s.116",
+      "verdict": "indeterminate",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "grievous_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "The following kinds of hurt only are designated as \"grievous\" ...",
+      "notes": "The case asserts grievous hurt but names none of the eight s.116 clauses. That is a contradiction the encoding will not resolve silently, so it reports a gap: an injury outside the eight clauses is legally only hurt, whatever it felt like.",
+      "citations": [
+        "bns-2023#s116"
+      ]
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not hurt under s.114 / not voluntarily caused under s.115",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under Chapter VI",
+      "provision": "bns-2023#s115"
+    },
+    "indeterminate": {
+      "label": "No provision applies - encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "voluntarily_causing_hurt"
+        ]
+      },
+      "text": "Imprisonment up to one year, or fine up to Rs 10,000, or both [s.115(2)]",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_classification"
+        ]
+      },
+      "text": "No sentence in s.116 - grievous hurt is punished under s.117(2) with up to seven years and fine [s.116, s.117(2)]",
+      "citations": [
+        "bns-2023#s116",
+        "bns-2023#s117"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-116-FIFTEEN-DAYS",
+      "provision": "s.116(h)",
+      "status": "resolved_by_amendment",
+      "question": "How long must severe pain or incapacity last for the residual clause of grievous hurt to apply?",
+      "why_it_matters": "The period decides whether an injury that fits none of the specific clauses is grievous (seven years under s.117) or merely hurt (one year under s.115).",
+      "position_a": "Fifteen days, as s.116(h) reads under the BNS (current encoding).",
+      "position_b": "Twenty days, as s.320 IPC read before 1 July 2024.",
+      "resolution": "The BNS shortened the period from twenty days to fifteen. The encoding uses fifteen; the twenty-day reading is retained only for pre-cutover IPC cases.",
+      "citations": [
+        "bns-2023#s116",
+        "ipc-1860#s320"
+      ],
+      "variants": [
+        {
+          "id": "bns-fifteen",
+          "label": "15 days (BNS, current)",
+          "patch": {}
+        },
+        {
+          "id": "ipc-twenty",
+          "label": "20 days (IPC, pre-cutover)",
+          "patch": {
+            "parameters": {
+              "grievous_residual_days": 20
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-114-SLAP",
+      "cites": "s.114, s.115(2)",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "grievous_kind": "NONE"
+      },
+      "expect": {
+        "offence_kind": "voluntarily_causing_hurt"
+      },
+      "text": "A slaps B in a heated argument. B feels pain but there is no visible injury. Bodily pain is enough for hurt, and the slap was intended to hurt: s.115(2), up to one year or Rs 10,000."
+    },
+    {
+      "id": "ILL-116-FRACTURE",
+      "cites": "s.116(g), s.117",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "BONE_TOOTH"
+      },
+      "expect": {
+        "offence_kind": "grievous_hurt_classification"
+      },
+      "text": "A single blow fractures B's wrist. A fracture of a bone is grievous hurt under s.116(g) even though it may heal, and the sentence follows under s.117(2)."
+    },
+    {
+      "id": "ILL-116-FIFTEEN",
+      "cites": "s.116(h)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "FIFTEEN_DAYS"
+      },
+      "expect": {
+        "offence_kind": "grievous_hurt_classification"
+      },
+      "text": "No bone is broken and no listed organ is lost, but the sufferer cannot follow ordinary pursuits for fifteen days. The residual clause makes the hurt grievous - fifteen days under the BNS, twenty under the IPC."
+    },
+    {
+      "id": "ILL-115-ACCIDENT",
+      "cites": "s.115(1), s.125",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": false,
+        "grievous_kind": "NONE"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A careless handling of a machine injures a co-worker. There was no intention or knowledge that hurt was likely, so s.115 is not engaged; the negligence track is s.125."
+    },
+    {
+      "id": "ILL-116-NO-CLAUSE",
+      "cites": "s.116",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "NONE"
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A claim of grievous hurt that names none of the eight clauses is a contradiction; the encoding reports a gap rather than choosing."
+    }
+  ]
+}

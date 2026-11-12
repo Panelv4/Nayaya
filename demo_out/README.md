@@ -11,6 +11,10 @@ python3 -m nyayacode analyze --pack in.bns.attempt-culpable-homicide --out demo_
 python3 -m nyayacode analyze --pack in.bns.organised-crime --out demo_out
 python3 -m nyayacode analyze --pack in.bns.petty-organised-crime --out demo_out
 python3 -m nyayacode analyze --pack in.bns.terrorist-act --out demo_out
+python3 -m nyayacode analyze --pack in.bns.hurt --out demo_out
+python3 -m nyayacode analyze --pack in.bns.grievous-hurt --out demo_out
+python3 -m nyayacode analyze --pack in.bns.hurt-dangerous-means --out demo_out
+python3 -m nyayacode analyze --pack in.bns.hurt-aggravated --out demo_out
 python3 -m nyayacode analyze --pack in.mv.drunken-driving --out demo_out
 python3 -m nyayacode impact  --amendment amend.bns.exc4-abolished --out demo_out
 python3 -m nyayacode impact  --amendment amend.bns.101b-generic-knowledge --out demo_out

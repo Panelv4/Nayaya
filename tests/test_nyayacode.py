@@ -74,10 +74,55 @@ class EvaluatorTests(unittest.TestCase):
 
 class PackLoadingTests(unittest.TestCase):
     def test_all_shipped_packs_load_and_are_total(self):
-        self.assertEqual(len(packmod.available()), 9)
+        self.assertEqual(len(packmod.available()), 13)
         for pid in packmod.available():
             p = packmod.load(pid)
             self.assertGreater(analyze._domain_size(p), 0)
+
+    def test_hurt_packs_are_shipped_and_analysable(self):
+        """The four Chapter VI packs must load, be total, and have no gaps."""
+        for pid in ("in.bns.hurt", "in.bns.grievous-hurt",
+                    "in.bns.hurt-dangerous-means", "in.bns.hurt-aggravated"):
+            self.assertIn(pid, packmod.available())
+            p = packmod.load(pid)
+            gaps = analyze.find_gaps(p)
+            self.assertEqual(gaps["count"], 0, f"{pid} has gaps: {gaps['points'][:2]}")
+            overlaps = analyze.find_overlaps(p)
+            self.assertEqual(overlaps["count"], 0,
+                             f"{pid} has undeclared contentions: {overlaps['points'][:2]}")
+
+    def test_hurt_pack_sentences(self):
+        """Spot-check the tariffs that changed most from the IPC."""
+        g = packmod.load("in.bns.grievous-hurt")
+        # s.117(3): ten-year floor, up to life.
+        d = g.decide({"hurt_kind": "GRIEVOUS", "voluntary": True, "grievous_kind": "MEMBER_IMPAIRED",
+                      "permanent_disability": True, "group_five_or_more_identity": False})
+        self.assertEqual(d["offence"], "grievous_hurt_permanent_disability")
+        # s.117(2): the ordinary seven years.
+        d = g.decide({"hurt_kind": "GRIEVOUS", "voluntary": True, "grievous_kind": "BONE_TOOTH",
+                      "permanent_disability": False, "group_five_or_more_identity": False})
+        self.assertEqual(d["offence"], "voluntarily_causing_grievous_hurt")
+        # Gravity of the injury never moves a case to attempt to murder on its
+        # own: the pack must record that boundary as an open ambiguity rather
+        # than silently leaving it out.
+        amb = {a["id"]: a for a in g.ambiguities}
+        self.assertIn("AMB-117-GRAVITY-VS-INTENTION", amb)
+        self.assertEqual(amb["AMB-117-GRAVITY-VS-INTENTION"]["status"], "unresolved")
+
+    def test_acid_attack_beats_the_dangerous_means_pack(self):
+        a = packmod.load("in.bns.hurt-aggravated")
+        d = a.decide({"hurt_kind": "GRIEVOUS", "voluntary": True, "purpose": "NONE",
+                      "poison_or_stupefying": False, "acid_used": True,
+                      "grave_sudden_provocation": False, "rash_negligent_act": False})
+        self.assertEqual(d["offence"], "acid_attack")
+        self.assertIn("not less than ten years", json.dumps(a.doc["punishment_rules"]))
+
+    def test_negligent_act_is_routed_away_from_the_voluntary_offences(self):
+        a = packmod.load("in.bns.hurt-aggravated")
+        d = a.decide({"hurt_kind": "GRIEVOUS", "voluntary": False, "purpose": "NONE",
+                      "poison_or_stupefying": False, "acid_used": False,
+                      "grave_sudden_provocation": False, "rash_negligent_act": True})
+        self.assertEqual(d["offence"], "negligent_act_causing_grievous_hurt")
 
     def test_a_pack_with_a_non_total_condition_is_refused(self):
         # An int fact with no declared range makes `domain()` unbuildable, which

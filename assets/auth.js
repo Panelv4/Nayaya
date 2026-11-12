@@ -246,7 +246,180 @@ async function proceedWithToken(token) {
  * <svg class="ic" aria-hidden="true"><use href="#i-shield"></use></svg>.
  * Keeps every glyph vector-only (no emoji) and works in a sandboxed preview.
  */
+/* ------------------------------------------------------------------- i18n
+ * The header chip ("हिन्दी / English") was decoration: clicking it did nothing.
+ * This is a small dictionary layer, not a translation of the legal record —
+ * statute names, engine output and case data stay in the language the server
+ * produced them. It translates the interface chrome: navigation, buttons,
+ * labels and the static help text marked with data-i18n.
+ *
+ * Scope is deliberately honest: anything the engine generated is untouched, and
+ * `data-i18n-skip` marks regions that must never be machine-swapped.
+ */
+const NYAYA_I18N = {
+  hi: {
+    /* nav + chrome */
+    'Submit a report': 'रिपोर्ट दर्ज करें',
+    'My cases': 'मेरे मामले',
+    'Public register': 'सार्वजनिक रजिस्टर',
+    'Dashboard': 'डैशबोर्ड',
+    'Statutory database': 'वैधानिक डेटाबेस',
+    'Engine analysis': 'इंजन विश्लेषण',
+    'Admin': 'प्रशासन',
+    'Legal KB': 'विधि ज्ञानकोष',
+    'Logout': 'लॉग आउट',
+    'Login': 'लॉग इन',
+    'Home': 'मुख्य पृष्ठ',
+    'Accessibility': 'सुगम्यता',
+    'Search': 'खोजें',
+    'Clear': 'साफ़ करें',
+    'Next': 'आगे',
+    'Previous': 'पीछे',
+    'Download': 'डाउनलोड',
+    /* page headings */
+    'My cases.': 'मेरे मामले।',
+    'Welcome back': 'पुनः स्वागत है',
+    'Create your account': 'अपना खाता बनाएँ',
+    'Reset your password': 'अपना पासवर्ड रीसेट करें',
+    'Choose a new password': 'नया पासवर्ड चुनें',
+    'Disclosed cases': 'प्रकट किए गए मामले',
+    /* form labels used across pages */
+    'Full name': 'पूरा नाम',
+    'Email': 'ईमेल',
+    'Password': 'पासवर्ड',
+    'Confirm password': 'पासवर्ड की पुष्टि करें',
+    'New password': 'नया पासवर्ड',
+    'Confirm new password': 'नए पासवर्ड की पुष्टि करें',
+    'Incident date': 'घटना की तारीख',
+    'Incident end date': 'घटना समाप्ति तिथि',
+    'Location': 'स्थान',
+    'Domain': 'श्रेणी',
+    'Narrative': 'विवरण',
+    'Are you under 18?': 'क्या आप 18 वर्ष से कम हैं?',
+    'Woman or girl?': 'महिला या बालिका?',
+    'Sexual offence?': 'यौन अपराध?',
+    'Lawyer / legal aid?': 'वकील / विधिक सहायता?',
+    'Section cited': 'उद्धृत धारा',
+    'Statute': 'अधिनियम',
+    /* buttons */
+    'Send reset link': 'रीसेट लिंक भेजें',
+    'Update password': 'पासवर्ड अपडेट करें',
+    'Create account': 'खाता बनाएँ',
+    'Save correction & re-evaluate': 'सुधार सहेजें और पुनर्मूल्यांकन करें',
+    'Request disclosure': 'प्रकटीकरण का अनुरोध करें',
+    'Forgot your password?': 'पासवर्ड भूल गए?',
+    'Back to login': 'लॉग इन पर लौटें',
+    'Details': 'विवरण',
+    'Reminder:': 'स्मरण:',
+  }
+};
+
+const LANG_KEY = 'nyaya_lang';
+
+function getLang() {
+  try {
+    const store = _ls();
+    const v = store ? store.getItem(LANG_KEY) : null;
+    return v === 'hi' ? 'hi' : 'en';
+  } catch (e) { return 'en'; }
+}
+
+function setLang(lang) {
+  const l = lang === 'hi' ? 'hi' : 'en';
+  try { const store = _ls(); if (store) { store.setItem(LANG_KEY, l); } }
+  catch (e) { /* storage blocked: the toggle still works for this page view */ }
+  applyLang(l);
+}
+
+/* Swap text in place, remembering the English original so toggling back is
+ * lossless even though we never touched the markup. */
+function applyLang(lang) {
+  const dict = NYAYA_I18N[lang] || null;
+  document.documentElement.lang = lang === 'hi' ? 'hi' : 'en';
+  const walker = document.createTreeWalker(document.body, NodeFilter.SHOW_TEXT, {
+    acceptNode: function (n) {
+      var p = n.parentElement;
+      if (!p) { return NodeFilter.FILTER_REJECT; }
+      if (p.closest('[data-i18n-skip]')) { return NodeFilter.FILTER_REJECT; }
+      if (p.tagName === 'SCRIPT' || p.tagName === 'STYLE') { return NodeFilter.FILTER_REJECT; }
+      return n.nodeValue && n.nodeValue.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT;
+    }
+  });
+  const nodes = [];
+  while (walker.nextNode()) { nodes.push(walker.currentNode); }
+  nodes.forEach(function (n) {
+    if (n.__en == null) { n.__en = n.nodeValue; }
+    const raw = n.__en;
+    const key = raw.trim();
+    const target = dict && dict[key];
+    if (target) {
+      const lead = raw.match(/^\s*/)[0];
+      const trail = raw.match(/\s*$/)[0];
+      n.nodeValue = lead + target + trail;
+    } else {
+      n.nodeValue = raw;     // back to English
+    }
+  });
+  /* attributes too (placeholders, aria-labels, input buttons) */
+  document.querySelectorAll('input[placeholder], [aria-label], input[type=submit]').forEach(function (el) {
+    if (el.closest('[data-i18n-skip]')) { return; }
+    ['placeholder', 'aria-label', 'value'].forEach(function (attr) {
+      if (!el.hasAttribute(attr)) { return; }
+      const storeAttr = '__i18n_' + attr.replace('-', '');
+      if (el[storeAttr] == null) { el[storeAttr] = el.getAttribute(attr); }
+      const raw = el[storeAttr];
+      const target = dict && dict[raw.trim()];
+      el.setAttribute(attr, target || raw);
+    });
+  });
+  document.querySelectorAll('[data-lang-label]').forEach(function (el) {
+    el.textContent = lang === 'hi' ? 'हिन्दी' : 'हिन्दी / English';
+    el.title = lang === 'hi' ? 'Switch to English' : 'हिन्दी में देखें';
+  });
+  document.documentElement.setAttribute('data-lang', lang);
+}
+
+/* Every page ships the same inert chip; turn it into the control. */
+function installLangToggle() {
+  document.querySelectorAll('.utility .lang').forEach(function (chip) {
+    chip.setAttribute('data-lang-label', '');
+    chip.setAttribute('role', 'button');
+    chip.setAttribute('tabindex', '0');
+    chip.style.cursor = 'pointer';
+    chip.style.textDecoration = 'underline';
+    chip.style.textUnderlineOffset = '2px';
+    chip.addEventListener('click', function () { setLang(getLang() === 'hi' ? 'en' : 'hi'); });
+    chip.addEventListener('keydown', function (e) {
+      if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); setLang(getLang() === 'hi' ? 'en' : 'hi'); }
+    });
+  });
+  applyLang(getLang());
+}
+
+window.NYAYA_I18N = NYAYA_I18N;
+window.getLang = getLang;
+window.setLang = setLang;
+window.applyLang = applyLang;
 window.NYAYA_SPRITE = `{{SPRITE}}`;
+/* The toast element is styled as `#toast{opacity:0;display:none}` and only
+ * becomes visible under `#toast.show`. Pages used to just set display:block,
+ * which left it fully transparent — every notification was invisible. Toggle
+ * the class (and the display) together, and always hide on the timeout. */
+function toast(msg, ms) {
+  var t = document.getElementById('toast');
+  if (!t) { return; }
+  ms = ms || 3600;
+  t.textContent = msg;
+  t.classList.add('show');
+  t.style.display = 'flex';
+  clearTimeout(t._h);
+  t._h = setTimeout(function () {
+    t.classList.remove('show');
+    t.style.display = 'none';
+  }, ms);
+}
+window.toast = toast;
+
 function injectIcons() {
   if (document.getElementById('nyaya-sprite-host')) return;
   const host = document.createElement('div');
@@ -259,6 +432,9 @@ function injectIcons() {
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', injectIcons);
 else injectIcons();
 installLinkRelay();
+/* Turn the header language chip into a working toggle once the DOM is ready. */
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', installLangToggle);
+else installLangToggle();
 
 /* ---------------------------------------------------------------- DigiLocker panel
  * One shared renderer for the identity-verification flow so the dashboard and the

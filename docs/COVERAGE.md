@@ -12,7 +12,7 @@ Plus the Motor Vehicles Act, POCSO, IT Act, and hundreds of other statutes.
 No single change can encode all of it — and a tool that claims to would be
 lying. This document says what is encoded, what is next, and in what order.
 
-## Encoded today (9 packs, 11,646 cases)
+## Encoded today (13 packs)
 
 | Pack | Provisions | Case space | Status |
 |---|---|---|---|
@@ -24,6 +24,10 @@ lying. This document says what is encoded, what is next, and in what order.
 | `in.bns.organised-crime` | BNS s.111 | 28 | encoded_unreviewed |
 | `in.bns.petty-organised-crime` | BNS s.112 | 32 | encoded_unreviewed |
 | `in.bns.terrorist-act` | BNS s.113 | 28 | encoded_unreviewed |
+| `in.bns.hurt` | BNS ss.114–116 (definition of hurt, the eight kinds of grievous hurt, s.115 voluntarily causing hurt) | 60 | encoded_unreviewed |
+| `in.bns.grievous-hurt` | BNS s.117 (including the new s.117(3) ten-year floor and s.117(4) group liability) | 240 | encoded_unreviewed |
+| `in.bns.hurt-dangerous-means` | BNS s.118 (dangerous weapons or means) | 12 | encoded_unreviewed |
+| `in.bns.hurt-aggravated` | BNS ss.119–125 (extortion, public servants, provocation, poison, acid, negligence) | 480 | encoded_unreviewed |
 | `in.mv.drunken-driving` | MV Act s.185 | 732 | encoded_unreviewed |
 
 Amendments shipped: 4 (2 real penalty changes, 1 interpretive, 1 hypothetical).
@@ -40,8 +44,15 @@ tests, and a generated `demo_out/` report — the same bar as the packs above.
    `in.bns.petty-organised-crime`, `in.bns.terrorist-act`); each records a
    measured ambiguity about its contested definition.
 3. **BNS ss.114–125** — hurt and grievous hurt (definitions + punishments).
-   The hurt/grievous line is a list, so this pack is mostly a term table with
-   a boundary test.
+   ✓ Done, as four packs rather than one, because the chapter mixes definition
+   (ss.114, 116), ordinary sentence (ss.115, 117) and purpose- or means-based
+   aggravation (ss.118–125): `in.bns.hurt`, `in.bns.grievous-hurt`,
+   `in.bns.hurt-dangerous-means`, `in.bns.hurt-aggravated`. Two changes from the
+   IPC are encoded explicitly: the residual grievous-hurt period fell from
+   twenty days to fifteen, and ss.117(3)–(4) are new. s.122 (grave and sudden
+   provocation) is encoded as a defeater because it mitigates a sentence rather
+   than creating an offence; s.125 (rash or negligent conduct) is a defeater for
+   the same structural reason — an act cannot be both voluntary and negligent.
 4. **BNS ss.126–141** — wrongful restraint, confinement, kidnapping, abduction.
    Fact-heavy (age, consent, lawful guardianship); the case space will be
    larger and will test the analyser's performance.

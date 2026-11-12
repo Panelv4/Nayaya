@@ -1,0 +1,613 @@
+{
+  "id": "in.bns.grievous-hurt",
+  "title": "Voluntarily causing grievous hurt - BNS 2023 s.117",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the bare text of s.117. The basic sentence (seven years and fine) is unchanged from s.325 IPC. Two tiers are new in the BNS: s.117(3) imposes a ten-year minimum where the grievous hurt leaves permanent disability or a persistent vegetative state, and s.117(4) imports group liability for five or more persons acting on an identity ground."
+  },
+  "scope": {
+    "in_scope": [
+      "s.117(2) voluntarily causing grievous hurt (up to seven years and fine)",
+      "s.117(3) permanent disability or persistent vegetative state (rigorous imprisonment, minimum ten years, up to life)",
+      "s.117(4) five or more persons, identity ground (up to seven years and fine)"
+    ],
+    "out_of_scope": [
+      "the definition of hurt and the eight kinds of grievous hurt - ss.114, 116, pack in.bns.hurt",
+      "dangerous weapons or means - s.118, which raises the tariff to life, pack in.bns.hurt-dangerous-means",
+      "acid - s.124, pack in.bns.hurt-aggravated",
+      "provocation mitigation - s.122, pack in.bns.hurt-aggravated",
+      "attempt to murder (s.109): injury gravity alone never moves a case there"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), Chapter VI, ss.114-125",
+      "url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. MHA published English text."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, ss.319-338 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of Chapter VI. Two substantive changes: the residual grievous-hurt period fell from 20 days to 15, and ss.117(3)-(4) are new."
+    },
+    {
+      "id": "bnss-2023",
+      "citation": "Bharatiya Nagarik Suraksha Sanhita, 2023, First Schedule",
+      "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Source of the cognizable / bailable / triable-by / compoundable labels."
+    }
+  ],
+  "citations": [
+    "bns-2023#s117",
+    "ipc-1860#s325",
+    "bns-2023#s116"
+  ],
+  "facts": [
+    {
+      "name": "hurt_kind",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "HURT",
+        "GRIEVOUS"
+      ],
+      "label": "Bodily result: no hurt, hurt (s.114) or grievous hurt (s.116)"
+    },
+    {
+      "name": "voluntary",
+      "type": "bool",
+      "label": "The hurt was caused voluntarily: with intention to cause it, or knowledge that it was likely (s.115(1) / s.117(1))"
+    },
+    {
+      "name": "grievous_kind",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "EMASCULATION",
+        "SIGHT",
+        "HEARING",
+        "MEMBER_LOSS",
+        "MEMBER_IMPAIRED",
+        "DISFIGUREMENT",
+        "BONE_TOOTH",
+        "LIFE_ENDANGERED",
+        "FIFTEEN_DAYS"
+      ],
+      "label": "Which s.116 clause the injury falls under (NONE when it is only hurt)"
+    },
+    {
+      "name": "permanent_disability",
+      "type": "bool",
+      "label": "The grievous hurt left the victim in permanent disability or a persistent vegetative state (s.117(3))"
+    },
+    {
+      "name": "group_five_or_more_identity",
+      "type": "bool",
+      "label": "Five or more persons acting together caused the grievous hurt on a ground of race, caste, community, sex, place of birth, language or belief (s.117(4))"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-hurt",
+      "term": "hurt",
+      "definition": "Bodily pain, disease or infirmity caused to any person (s.114). No visible wound is required; mental distress alone is not hurt.",
+      "citations": [
+        "bns-2023#s114"
+      ]
+    },
+    {
+      "id": "T-grievous",
+      "term": "grievous hurt",
+      "definition": "A closed list of eight kinds of hurt (s.116): emasculation; permanent loss of sight of either eye; permanent loss of hearing of either ear; loss of any member or joint; destruction or permanent impairment of any member or joint; permanent disfigurement of the head or face; fracture or dislocation of a bone or tooth; and any hurt that endangers life or keeps the sufferer in severe pain or unable to follow ordinary pursuits for fifteen days. The last limb was twenty days under s.320 IPC.",
+      "citations": [
+        "bns-2023#s116",
+        "ipc-1860#s320"
+      ]
+    },
+    {
+      "id": "T-voluntary",
+      "term": "voluntarily",
+      "definition": "Done with the intention of causing the hurt, or with knowledge that it was likely to be caused (s.115(1)). Intention or knowledge is enough; both are not needed.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "T-mens-rea-ladder",
+      "term": "the intention ladder",
+      "definition": "The gravity of the injury does not by itself fix the offence. Injury caused without the intention or knowledge required to kill stays in this chapter (s.117), however grave; injury caused WITH that intention or knowledge leaves it for attempt to murder (s.109) or culpable homicide (ss.100-105).",
+      "citations": [
+        "bns-2023#s117",
+        "bns-2023#s109"
+      ]
+    }
+  ],
+  "parameters": {
+    "max_years_grievous": 7,
+    "min_years_disability": 10,
+    "min_years_group": 0,
+    "max_years_group": 7
+  },
+  "branches": [
+    {
+      "id": "G-NOT-GRIEVOUS",
+      "provision": "s.117",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "!=": [
+          {
+            "var": "hurt_kind",
+            "type": "str",
+            "default": "NONE"
+          },
+          "GRIEVOUS"
+        ]
+      },
+      "text": "Whoever ... voluntarily causes grievous hurt ...",
+      "notes": "Only grievous hurt is punished here. Simple hurt is s.115 (one year) and no hurt at all is outside this chapter.",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "id": "G-INVOLUNTARY",
+      "provision": "s.117(1)",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "text": "A person is not said voluntarily to cause grievous hurt except when he both causes grievous hurt and intends or knows himself to be likely to cause grievous hurt.",
+      "notes": "s.117(1) requires BOTH grievous hurt and the intention or knowledge that grievous hurt was likely. An unintended grave injury is either s.115 hurt or, where the conduct was rash or negligent, s.125.",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "id": "G-117-3",
+      "provision": "s.117(3)",
+      "verdict": "offence",
+      "offence": "grievous_hurt_permanent_disability",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "permanent_disability",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "!=": [
+              {
+                "var": "grievous_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "Whoever causes grievous hurt and in the course of such commission causes any hurt to a person which causes that person to be in permanent disability or in persistent vegetative state, shall be punished with rigorous imprisonment for a term which shall not be less than ten years but which may extend to imprisonment for life, which shall mean imprisonment for the remainder of that person's natural life.",
+      "notes": "New in the BNS. Cognizable, non-bailable, triable by a Court of Session. The ten years is a floor, not a maximum: the court cannot go below it.",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "id": "G-117-4",
+      "provision": "s.117(4)",
+      "verdict": "offence",
+      "offence": "grievous_hurt_group_identity",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "group_five_or_more_identity",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "permanent_disability",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "!=": [
+              {
+                "var": "grievous_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "Whoever commits an offence under sub-section (1) and thereby causes grievous hurt to any person on the ground of his race, caste, community, sex, place of birth, language, personal belief or any other ground and such offence is committed by five or more persons acting in concert, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.",
+      "notes": "New in the BNS. Each member of the group is liable without proof of the specific blow. Cognizable, non-bailable, triable by a Court of Session.",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "id": "G-117-2",
+      "provision": "s.117(2)",
+      "verdict": "offence",
+      "offence": "voluntarily_causing_grievous_hurt",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "!=": [
+              {
+                "var": "grievous_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "permanent_disability",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "group_five_or_more_identity",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "text": "Whoever, except in the case provided for by sub-section (2) of section 122, voluntarily causes grievous hurt, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.",
+      "notes": "The ordinary case: up to seven years and fine. Cognizable and bailable under the BNSS First Schedule, triable by any Magistrate. The s.122(2) provocation exception is applied as a defeater in the aggravated pack.",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "id": "G-GRIEVOUS-UNSPECIFIED",
+      "provision": "s.116",
+      "verdict": "indeterminate",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "grievous_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "The following kinds of hurt only are designated as \"grievous\" ... [s.116]",
+      "notes": "Grievous hurt is asserted but no s.116 clause is named, so the classification the sentence depends on is missing. Reported as a gap rather than assumed.",
+      "citations": [
+        "bns-2023#s116"
+      ]
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not s.117 (no voluntary grievous hurt)",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.117",
+      "provision": "bns-2023#s117"
+    },
+    "indeterminate": {
+      "label": "No provision applies - encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_permanent_disability"
+        ]
+      },
+      "text": "Rigorous imprisonment not less than ten years, up to imprisonment for life (remainder of natural life) [s.117(3)]",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_group_identity"
+        ]
+      },
+      "text": "Imprisonment up to seven years, and fine [s.117(4)]",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "voluntarily_causing_grievous_hurt"
+        ]
+      },
+      "text": "Imprisonment up to seven years, and fine [s.117(2)]",
+      "citations": [
+        "bns-2023#s117"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-117-GRAVITY-VS-INTENTION",
+      "provision": "s.117",
+      "status": "unresolved",
+      "question": "Can the gravity of the injury alone establish the intention or knowledge required to leave s.117 for s.109?",
+      "why_it_matters": "The same skull-fracturing assault can be charged as s.117 (seven years) or s.109 (ten years to life). If gravity decided it, nearly every serious-injury case would be attempt to murder.",
+      "position_a": "Gravity is evidence of intention but can never substitute for it: the prosecution must prove intention or knowledge separately (current encoding, following Roshan Lal v. State of Haryana, 2026 INSC 524).",
+      "position_b": "The nature of the weapon and the body part struck may be treated as conclusive of the intention to kill without further proof.",
+      "resolution": null,
+      "citations": [
+        "bns-2023#s117",
+        "bns-2023#s109"
+      ],
+      "variants": [
+        {
+          "id": "intention-required",
+          "label": "intention must be proved (current encoding)",
+          "patch": {}
+        }
+      ]
+    },
+    {
+      "id": "AMB-117-3-MINIMUM",
+      "provision": "s.117(3)",
+      "status": "resolved_by_amendment",
+      "question": "Is the ten years in s.117(3) a minimum or a maximum?",
+      "why_it_matters": "Reading it as a maximum would make the new tier lighter than s.117(2)'s seven-year ceiling only for a narrower band, which cannot be what the legislature intended.",
+      "position_a": "A floor of ten years, extendable to life (current encoding).",
+      "position_b": "A ceiling of ten years.",
+      "resolution": "The words are 'shall not be less than ten years but which may extend to imprisonment for life'. It is a floor.",
+      "citations": [
+        "bns-2023#s117"
+      ],
+      "variants": [
+        {
+          "id": "floor",
+          "label": "floor of ten years (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-117-BASIC",
+      "cites": "s.117(2)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "BONE_TOOTH",
+        "permanent_disability": false,
+        "group_five_or_more_identity": false
+      },
+      "expect": {
+        "offence_kind": "voluntarily_causing_grievous_hurt"
+      },
+      "text": "A single blow fractures B's arm. Grievous hurt under s.116(g), voluntarily caused: up to seven years and fine under s.117(2)."
+    },
+    {
+      "id": "ILL-117-3",
+      "cites": "s.117(3)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "MEMBER_IMPAIRED",
+        "permanent_disability": true,
+        "group_five_or_more_identity": false
+      },
+      "expect": {
+        "offence_kind": "grievous_hurt_permanent_disability"
+      },
+      "text": "The injury leaves B permanently unable to use the limb. New tier under s.117(3): rigorous imprisonment of not less than ten years, up to life."
+    },
+    {
+      "id": "ILL-117-4",
+      "cites": "s.117(4)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "BONE_TOOTH",
+        "permanent_disability": false,
+        "group_five_or_more_identity": true
+      },
+      "expect": {
+        "offence_kind": "grievous_hurt_group_identity"
+      },
+      "text": "Five men beat B because of his caste and fracture his ribs. New group provision under s.117(4): up to seven years and fine for each participant."
+    },
+    {
+      "id": "ILL-117-1-KNOWLEDGE",
+      "cites": "s.117(1), illustration",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "grievous_kind": "FIFTEEN_DAYS",
+        "permanent_disability": false,
+        "group_five_or_more_identity": false
+      },
+      "expect": {
+        "offence_kind": "voluntarily_causing_grievous_hurt"
+      },
+      "text": "A strikes a blow intending to disfigure B's face. The face is not disfigured but B is in severe pain for twenty days. s.117(1)'s illustration: this is still voluntarily causing grievous hurt."
+    },
+    {
+      "id": "ILL-117-NO-INTENT",
+      "cites": "s.117(1)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": false,
+        "grievous_kind": "BONE_TOOTH",
+        "permanent_disability": false,
+        "group_five_or_more_identity": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A negligently drops a beam that fractures B's foot. Without the intention or knowledge required by s.117(1) this is not s.117 at all."
+    }
+  ]
+}

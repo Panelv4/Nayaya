@@ -38,6 +38,7 @@ from __future__ import annotations
 import base64
 import datetime as dt
 import hashlib
+import ipaddress
 import hmac
 import json
 import os
@@ -146,6 +147,13 @@ def init_db() -> None:
               token TEXT PRIMARY KEY, user_id TEXT NOT NULL,
               created_at TEXT NOT NULL, expires_at TEXT NOT NULL
             );
+            /* Password reset tokens are stored HASHED: a database read must not
+               hand out a working reset link. Single-use, short-lived. */
+            CREATE TABLE IF NOT EXISTS password_resets(
+              token_hash TEXT PRIMARY KEY, user_id TEXT NOT NULL,
+              created_at TEXT NOT NULL, expires_at TEXT NOT NULL,
+              used_at TEXT
+            );
             CREATE TABLE IF NOT EXISTS reports(
               id TEXT PRIMARY KEY, ref TEXT NOT NULL, user_id TEXT NOT NULL,
               created_at TEXT NOT NULL, narrative TEXT NOT NULL,
@@ -245,14 +253,64 @@ def verify_password(pw: str, salt: str, expected_hex: str) -> bool:
     return hmac.compare_digest(dk.hex(), expected_hex)
 
 
+PASSWORD_MIN_LEN = 8
+RESET_TTL_MINUTES = 30
+
+
+def validate_password_strength(password: str) -> None:
+    """One policy for every place a password is set (register and reset).
+
+    Eight characters was already the register rule; the reset flow reuses it so
+    a reset cannot quietly weaken an account below what registration allowed.
+    """
+    if len(password) < PASSWORD_MIN_LEN:
+        raise ValueError(f"Password must be at least {PASSWORD_MIN_LEN} characters.")
+    if password in _BANNED_PASSWORDS:
+        raise ValueError("That password is too common. Choose something unique.")
+
+
+def _hash_reset_token(token: str) -> str:
+    return hashlib.sha256(token.encode()).hexdigest()
+
+
+def create_password_reset(user_id: str, ttl_minutes: int = RESET_TTL_MINUTES) -> str:
+    """Issue a single-use reset token; only its hash is persisted."""
+    token = secrets.token_urlsafe(32)
+    created = now_dt()
+    with LOCK, db() as c:
+        # One live token per user: issuing a new link invalidates the old one.
+        c.execute("DELETE FROM password_resets WHERE user_id=? AND used_at IS NULL", (user_id,))
+        c.execute("INSERT INTO password_resets(token_hash,user_id,created_at,expires_at) VALUES(?,?,?,?)",
+                  (_hash_reset_token(token), user_id, created.isoformat(),
+                   (created + dt.timedelta(minutes=ttl_minutes)).isoformat()))
+    return token
+
+
+def consume_password_reset(token: str, new_password: str) -> str:
+    """Apply a reset token. Returns the user id. Fails closed on any problem."""
+    validate_password_strength(new_password)
+    th = _hash_reset_token(token or "")
+    with LOCK, db() as c:
+        row = c.execute("SELECT * FROM password_resets WHERE token_hash=?", (th,)).fetchone()
+        if not row or row["used_at"]:
+            raise ValueError("This reset link is invalid or has already been used.")
+        if row["expires_at"] <= now_dt().isoformat():
+            raise ValueError("This reset link has expired. Please request a new one.")
+        salt, phash = hash_password(new_password)
+        c.execute("UPDATE users SET pass_salt=?, pass_hash=? WHERE id=?", (salt, phash, row["user_id"]))
+        c.execute("UPDATE password_resets SET used_at=? WHERE token_hash=?", (now(), th))
+        # A password change must evict every existing session.
+        c.execute("DELETE FROM sessions WHERE user_id=?", (row["user_id"],))
+        return row["user_id"]
+
+
 def create_user(name: str, email: str, password: str, role: str = "USER") -> dict:
     if not 2 <= len(name) <= 80:
         raise ValueError("Please enter a full name (2–80 characters).")
     email = email.strip().lower()
     if not EMAIL_RE.match(email):
         raise ValueError("Please enter a valid email address.")
-    if len(password) < 8:
-        raise ValueError("Password must be at least 8 characters.")
+    validate_password_strength(password)
     salt, phash = hash_password(password)
     uid = uuid.uuid4().hex
     with LOCK, db() as c:
@@ -650,7 +708,9 @@ def process_evidence_items(report_id: str, evidence_in: list, created_at: str) -
         if len(blob) > MAX_EVIDENCE_BYTES:
             raise ValueError(f"Evidence file '{name}' exceeds the {MAX_EVIDENCE_BYTES // (1024*1024)} MB limit.")
         digest = hashlib.sha256(blob).hexdigest()
-        stored = os.path.join(folder, f"{i:02d}_{name}")
+        # Include a random token: a revision's upload batch restarts at i=0, so
+        # a plain index would silently overwrite the previous revision's file.
+        stored = os.path.join(folder, f"{uuid.uuid4().hex[:8]}_{i:02d}_{name}")
         with open(stored, "wb") as f:
             f.write(blob)
         rows.append({"filename": name, "content_type": str(item.get("type", ""))[:100], "size": len(blob),
@@ -821,6 +881,24 @@ def revise_report(user: dict, report_id: str, body: dict, actor: str | None = No
         c.execute("UPDATE reports SET manual_check_status='UNCHECKED', manual_check_note='', "
                   "manual_check_by='', manual_check_at=NULL WHERE id=? AND manual_check_status='VERIFIED'",
                   (report_id,))
+    # ---- new evidence attached with this revision ----
+    # A revision previously had no way to add proof discovered after filing, so
+    # the only option was to file a fresh case and lose the history.
+    new_evidence = body.get("evidence") if isinstance(body.get("evidence"), list) else []
+    if new_evidence:
+        added = process_evidence_items(report_id, new_evidence, created_at)
+        if added:
+            with LOCK, db() as c:
+                _prov2 = partial(legal_kb.record_provenance_conn, c)
+                for e in added:
+                    _prov2("EVIDENCE", e["sha256"][:16], "ATTACHED_IN_REVISION", "REVISION",
+                           f"{row['ref']}#{rev_no}", {"filename": e["filename"], "size": e["size"]})
+                c.execute(
+                    "UPDATE reports SET evidence_count=(SELECT COUNT(*) FROM evidence WHERE report_id=?), "
+                    "no_evidence_ack=CASE WHEN EXISTS(SELECT 1 FROM evidence WHERE report_id=?) "
+                    "THEN 0 ELSE no_evidence_ack END WHERE id=?",
+                    (report_id, report_id, report_id))
+
     mc = body.get("manual_check") if is_admin else None
     if isinstance(mc, dict) and mc.get("status"):
         apply_manual_check(user, report_id, str(mc.get("status")), str(mc.get("note", "")))
@@ -907,6 +985,16 @@ def admin_disclosure(user: dict, report_id: str, action: str, mode: str = "ANONY
 
 # ---------------------------------------------------------------- access control & redaction
 
+# Anonymous visitors may read a case ONLY once it has been disclosed. A sentinel
+# id that can never equal a stored user_id makes case_access fall through to the
+# disclosure check while keeping owner-only actions closed to guests.
+GUEST_USER = {"role": "GUEST", "name": "guest", "id": ""}
+
+
+def guest_or_user(user: dict | None) -> dict:
+    return user or GUEST_USER
+
+
 def case_access(user: dict, row) -> str | None:
     """FULL for owner/admin; FULL/ANONYMIZED for others only after manual
     disclosure approval; None (→ 404) otherwise."""
@@ -915,6 +1003,117 @@ def case_access(user: dict, row) -> str | None:
     if row["disclosure_status"] == "DISCLOSED":
         return "FULL" if row["disclosure_mode"] == "FULL" else "ANONYMIZED"
     return None
+
+
+# The minimum an outside caller needs in order to know that verification ran:
+# whether the artefact exists, and its verdict. Everything identifying — the raw
+# document digest, the issuer reference, the dates — stays with the owner and
+# administrators. Trimming to a list that still contained those fields was the
+# bug this list exists to prevent.
+_DL_VERIFY_FIELDS = ("found", "valid", "artefact_id", "state", "integrity",
+                     "simulated", "message")
+
+
+def digilocker_verify_for_user(user: dict, artefact_id: str) -> dict:
+    """Artefact integrity check, scoped to the logged-in user.
+
+    The full record (including the raw issuer reference) is returned to admins
+    and to the user whose own identity the artefact belongs to; everyone else
+    gets the integrity verdict only. Existence is not a secret — the previous
+    anonymous endpoint already answered that — but the personal fields are.
+    """
+    artefact_id = (artefact_id or "").strip()
+    if not artefact_id:
+        raise ValueError("An artefact id is required.")
+    res = dl_mod.verify_artefact(artefact_id)
+    if user.get("role") == "ADMIN" or res.get("found") and _owns_artefact(user, artefact_id):
+        return res
+    return {k: res[k] for k in _DL_VERIFY_FIELDS if k in res}
+
+
+def _owns_artefact(user: dict, artefact_id: str) -> bool:
+    with db() as c:
+        row = c.execute("SELECT user_id FROM dl_identities WHERE artefact_id=? "
+                        "ORDER BY id DESC LIMIT 1", (artefact_id,)).fetchone()
+    return bool(row) and row["user_id"] == user["id"]
+
+
+_PUBLIC_PROVENANCE_TYPES = frozenset(
+    ("STATUTE_VERSION", "PROVISION", "PRECEDENT", "OFFICER", "AMENDMENT")
+)
+
+
+def _visible_case_ids(user: dict) -> tuple[set, set]:
+    """Return (ids, refs) for the cases this user may see: their own, plus
+    admin-visible ones (admins see everything)."""
+    if user.get("role") == "ADMIN":
+        return set(), set()
+    with db() as c:
+        rows = c.execute("SELECT id, ref FROM reports WHERE user_id=? OR disclosure_status='DISCLOSED'",
+                         (user["id"],)).fetchall()
+    return {r["id"] for r in rows}, {r["ref"] for r in rows}
+
+
+def provenance_for_user(user: dict, subject_type: str, subject_id: str, depth: int = 2) -> dict:
+    """Provenance chains, restricted to what `user` is allowed to see.
+
+    The graph mixes legal-knowledge nodes (statutes, precedents — public) with
+    case nodes (REPORT / EVIDENCE). Previously ANY logged-in user could pass a
+    case reference — or an evidence hash whose meta carries the original
+    filename — and read a stranger's chain, which leaked private case refs and
+    filenames. Case nodes are now dropped unless the user owns or may view the
+    underlying report; a surviving case node carries no filename.
+    """
+    is_admin = user.get("role") == "ADMIN"
+    own_ids, own_refs = _visible_case_ids(user)
+
+    def case_visible(node_type: str, node_id: str) -> bool:
+        if is_admin:
+            return True
+        if node_type == "REPORT":
+            return node_id in own_ids or node_id in own_refs
+        if node_type == "EVIDENCE":
+            with db() as c:
+                row = c.execute(
+                    "SELECT r.id, r.ref FROM evidence e JOIN reports r ON r.id = e.report_id "
+                    "WHERE substr(e.sha256,1,16)=? LIMIT 1", (node_id,)).fetchone()
+            return bool(row) and (row["id"] in own_ids or row["ref"] in own_refs)
+        return True
+
+    def sanitized(edge: dict) -> dict:
+        # EVIDENCE edges carry {"filename": ...} in meta — the exact leak.
+        out = dict(edge)
+        subject, obj = out.get("subject", {}), out.get("object", {})
+        if subject.get("type") == "EVIDENCE" or obj.get("type") == "EVIDENCE":
+            out["meta"] = {k: v for k, v in (out.get("meta") or {}).items()
+                           if k not in ("filename", "stored_path")}
+        return out
+
+    if not is_admin and subject_type not in _PUBLIC_PROVENANCE_TYPES             and not case_visible(subject_type, subject_id):
+        # Same shape as a genuinely empty chain: absence must not itself reveal
+        # that the case exists.
+        return {"root": {"type": subject_type, "id": str(subject_id)},
+                "nodes": [{"type": subject_type, "id": str(subject_id)}], "edges": []}
+
+    chain = legal_kb.provenance_chain(subject_type, subject_id, depth=depth)
+    if is_admin:
+        return chain
+    kept_edges = [
+        sanitized(e) for e in chain.get("edges", [])
+        if case_visible(e["subject"]["type"], e["subject"]["id"])
+        and case_visible(e["object"]["type"], e["object"]["id"])
+    ]
+    kept_nodes, seen = [], set()
+    for n in chain.get("nodes", []):
+        if not case_visible(n["type"], n["id"]):
+            continue
+        key = (n["type"], n["id"])
+        if key not in seen:
+            seen.add(key)
+            kept_nodes.append(n)
+    if not kept_nodes:
+        kept_nodes = [{"type": subject_type, "id": str(subject_id)}]
+    return {"root": chain.get("root"), "nodes": kept_nodes, "edges": kept_edges}
 
 
 def evidence_download(user: dict, evidence_id: int) -> tuple[str, str, bytes]:
@@ -1258,12 +1457,55 @@ def admin_overview(user: dict) -> dict:
             "conflicts": legal_kb.detect_conflicts()}
 
 
-def disclosed_list(user: dict) -> dict:
+PAGE_SIZE_DEFAULT = 25
+PAGE_SIZE_MAX = 100
+
+
+def page_window(qs_extras: dict) -> tuple[int, int, int]:
+    """Parse ?q=, ?page=, ?size= into (search, limit, offset).
+
+    The lists used to stop dead at a hard LIMIT 200 with no way to reach older
+    rows. They are now windowed, and the caller reports the total so the UI can
+    page through everything.
+    """
+    def one(key, default=""):
+        v = qs_extras.get(key) or [default]
+        return (v[0] if isinstance(v, list) else v) or default
+
+    search = str(one("q", "")).strip()[:120]
+    try:
+        size = int(one("size", str(PAGE_SIZE_DEFAULT)))
+    except ValueError:
+        size = PAGE_SIZE_DEFAULT
+    size = max(1, min(PAGE_SIZE_MAX, size))
+    try:
+        page = max(1, int(one("page", "1")))
+    except ValueError:
+        page = 1
+    return search, size, (page - 1) * size
+
+
+def _like(search: str) -> str:
+    """Escape LIKE wildcards so a literal % in a search box is a literal %."""
+    esc = search.replace("\\", "\\\\").replace("%", "\\%").replace("_", "\\_")
+    return f"%{esc}%"
+
+
+def disclosed_list(user: dict, qs_extras: dict | None = None) -> dict:
+    search, size, offset = page_window(qs_extras or {})
+    where = "disclosure_status='DISCLOSED'"
+    params: list = []
+    if search:
+        like = _like(search)
+        where += (" AND (ref LIKE ? ESCAPE '\\' OR domain LIKE ? ESCAPE '\\'"
+                  " OR narrative LIKE ? ESCAPE '\\' OR incident_date LIKE ? ESCAPE '\\')")
+        params = [like] * 4
     with db() as c:
+        total = c.execute(f"SELECT COUNT(*) FROM reports WHERE {where}", params).fetchone()[0]
         rows = [dict(r) for r in c.execute(
             "SELECT id,ref,created_at,incident_date,domain,review_level,urgency,severity_tier,disclosure_mode,"
-            "feedback_up,feedback_down,narrative FROM reports WHERE disclosure_status='DISCLOSED' "
-            "ORDER BY disclosed_at DESC LIMIT 200")]
+            f"feedback_up,feedback_down,narrative FROM reports WHERE {where} "
+            "ORDER BY disclosed_at DESC LIMIT ? OFFSET ?", (*params, size, offset))]
     privileged = user.get("role") == "ADMIN"
     cases = []
     for r in rows:
@@ -1273,7 +1515,8 @@ def disclosed_list(user: dict) -> dict:
             n = r["narrative"] or ""
             item["excerpt"] = (n[:140] + "…") if len(n) > 140 else n
         cases.append(item)
-    return {"cases": cases, "count": len(cases)}
+    return {"cases": cases, "count": len(cases), "total": total,
+            "page": offset // size + 1, "size": size, "q": search}
 
 
 # ---------------------------------------------------------------- engine analysis
@@ -1287,7 +1530,46 @@ def _engine_lib():
     return nyayacode, nc_analyze
 
 
+_ENGINE_CACHE: dict = {"key": None, "value": None, "at": 0.0}
+_ENGINE_CACHE_LOCK = __import__("threading").Lock()
+_ENGINE_CACHE_TTL = float(os.environ.get("NYAYA_ENGINE_CACHE_TTL", "300"))
+
+
+def _engine_cache_key() -> tuple:
+    """Cheap fingerprint of the pack/amendment files, so an edited pack is
+    picked up immediately instead of being served stale for the whole TTL."""
+    root = os.path.join(os.path.dirname(os.path.abspath(__file__)), "nyayacode", "packs")
+    entries = []
+    for base, _dirs, files in os.walk(root):
+        for name in files:
+            if not name.endswith(".json"):
+                continue
+            full = os.path.join(base, name)
+            try:
+                st = os.stat(full)
+            except OSError:
+                continue
+            entries.append((os.path.relpath(full, root), st.st_mtime_ns, st.st_size))
+    return tuple(sorted(entries))
+
+
 def engine_overview() -> dict:
+    """Full-library overview (every pack analysed). Analyzes every pack, which
+    costs ~3s of CPU, so the result is cached and only recomputed when the
+    pack files change or the TTL expires."""
+    key = _engine_cache_key()
+    now_ts = time.time()
+    with _ENGINE_CACHE_LOCK:
+        if (_ENGINE_CACHE["value"] is not None and _ENGINE_CACHE["key"] == key
+                and now_ts - _ENGINE_CACHE["at"] < _ENGINE_CACHE_TTL):
+            return _ENGINE_CACHE["value"]
+    value = _engine_overview_uncached()
+    with _ENGINE_CACHE_LOCK:
+        _ENGINE_CACHE.update({"key": key, "value": value, "at": now_ts})
+    return value
+
+
+def _engine_overview_uncached() -> dict:
     nypack, nc_analyze = None, None
     try:
         nyayacode, nc_analyze = _engine_lib()
@@ -1338,6 +1620,31 @@ def engine_impact(amendment_id: str) -> dict:
 # A local tool still faces a laptop that is left running. Login and register are
 # the two endpoints where a guess costs an attacker nothing, so both are limited
 # per (address, account) with an exponential backoff after repeated failures.
+# Comma-separated peer addresses (or CIDR blocks) whose X-Forwarded-For may be
+# believed. Empty by default: a laptop tool sits behind no proxy, so the header
+# must be ignored entirely rather than trusted from anyone who sends it.
+TRUSTED_PROXIES = tuple(
+    h.strip() for h in os.environ.get("NYAYA_TRUSTED_PROXIES", "").split(",") if h.strip()
+)
+
+
+def _peer_is_trusted_proxy(peer: str) -> bool:
+    if not TRUSTED_PROXIES or not peer:
+        return False
+    try:
+        addr = ipaddress.ip_address(peer)
+    except ValueError:
+        return False
+    for entry in TRUSTED_PROXIES:
+        try:
+            if addr in ipaddress.ip_network(entry, strict=False):
+                return True
+        except ValueError:
+            if peer == entry:
+                return True
+    return False
+
+
 _RATE: dict[str, list[float]] = {}
 _RATE_LOCK = __import__("threading").Lock()
 RATE_WINDOW = 900          # seconds the failure history is remembered
@@ -1535,6 +1842,7 @@ class Handler(BaseHTTPRequestHandler):
 
     PAGES = {"/dashboard": "dashboard.html", "/submit": "submit.html", "/cases": "cases.html",
              "/case": "case.html", "/disclosed": "disclosed.html", "/admin": "admin.html",
+             "/forgot-password": "forgot-password.html", "/reset-password": "reset-password.html",
              "/kb": "kb.html", "/workbench": "workbench.html",
              "/engine": "engine.html"}
 
@@ -1602,11 +1910,13 @@ class Handler(BaseHTTPRequestHandler):
             elif path == "/api/me":
                 self._api_me()
             elif path == "/api/reports":
-                self._api_reports_list()
+                self._api_reports_list(qs)
             elif path == "/api/report":
-                user = self._require_user()
-                if user:
-                    self._json(200, build_case_payload(user, (qs.get("id") or [""])[0]))
+                # Guests are allowed to read DISCLOSED cases: build_case_payload
+                # raises NotFound for anything private, so anonymous callers
+                # learn nothing about cases they may not see.
+                self._json(200, build_case_payload(
+                    guest_or_user(self._user()), (qs.get("id") or [""])[0]))
             elif path == "/api/evidence":
                 user = self._require_user()
                 if user:
@@ -1620,14 +1930,15 @@ class Handler(BaseHTTPRequestHandler):
                         ("Content-Disposition", f'attachment; filename="{safe}"')])
             elif path == "/api/disclosed":
                 # Public registry: approved disclosures only, safe for visitors.
-                self._json(200, disclosed_list(self._user() or {"role": "GUEST", "name": "guest", "id": ""}))
+                self._json(200, disclosed_list(guest_or_user(self._user()), qs))
             elif path == "/api/feedback":
                 self._api_feedback_get((qs.get("report_id") or [""])[0])
             elif path == "/api/provenance":
                 user = self._require_user()
                 if user:
-                    self._json(200, legal_kb.provenance_chain((qs.get("type") or ["REPORT"])[0],
-                                                              (qs.get("id") or [""])[0]))
+                    self._json(200, provenance_for_user(user,
+                                                        (qs.get("type") or ["REPORT"])[0],
+                                                        (qs.get("id") or [""])[0]))
             elif path == "/api/kb":
                 user = self._require_user()
                 if user:
@@ -1653,7 +1964,13 @@ class Handler(BaseHTTPRequestHandler):
             elif path == "/api/digilocker/events":
                 self._api_digilocker_events()
             elif path == "/api/digilocker/verify":
-                self._json(200, dl_mod.verify_artefact((qs.get("artefact") or [""])[0]))
+                # Was reachable with no session at all: an unauthenticated
+                # caller could probe artefact ids and read back issuer,
+                # expiry and document digests. Verification now needs a login.
+                user = self._require_user()
+                if user:
+                    self._json(200, digilocker_verify_for_user(
+                        user, (qs.get("artefact") or [""])[0]))
             elif path == "/schema":
                 self._admin_gate_then(self._api_schema)
             elif path == "/audit":
@@ -1677,6 +1994,10 @@ class Handler(BaseHTTPRequestHandler):
                 self._api_register()
             elif path == "/api/login":
                 self._api_login()
+            elif path == "/api/password-reset/request":
+                self._api_password_reset_request()
+            elif path == "/api/password-reset/confirm":
+                self._api_password_reset_confirm()
             elif path == "/api/logout":
                 self._api_logout()
             elif path == "/api/renew":
@@ -1848,8 +2169,63 @@ class Handler(BaseHTTPRequestHandler):
                    self._session_cookie_headers(token))
 
     def _client(self) -> str:
-        return (self.headers.get("X-Forwarded-For", "").split(",")[0].strip()
-                or self.client_address[0])
+        """Identify the caller for rate limiting.
+
+        X-Forwarded-For is attacker-controlled: trusting its first (or any)
+        element let anyone mint a fresh identity per request and walk straight
+        past the login/registration limits. The header is honoured ONLY when the
+        immediate peer is a configured trusted proxy, and then only its
+        right-most hop (the one the proxy itself appended). Otherwise the real
+        TCP peer address is used, which a client cannot forge.
+        """
+        peer = (self.client_address[0] or "").strip()
+        if not _peer_is_trusted_proxy(peer):
+            return peer
+        hops = [h.strip() for h in (self.headers.get("X-Forwarded-For") or "").split(",") if h.strip()]
+        return hops[-1] if hops else peer
+
+    def _api_password_reset_request(self):
+        """Start a reset. Always answers the same way.
+
+        Whether an address is registered is not something an unauthenticated
+        caller gets to learn, so a miss and a hit are indistinguishable here.
+        The token is only returned directly when the operator has explicitly
+        enabled demo mode (NYAYA_RESET_ECHO=1); this build has no mail transport,
+        so otherwise an admin reads it from the server console.
+        """
+        who = self._client()
+        wait = rate_check("reset", who, RATE_MAX_REGISTER)
+        if wait:
+            self._json(429, {"error": f"Too many reset requests. Try again in {wait} seconds.",
+                             "retry_after": wait})
+            return
+        body = self._read_json()
+        email = str(body.get("email", "")).strip().lower()
+        rate_fail("reset", who)
+
+        token, name = None, None
+        if EMAIL_RE.match(email):
+            with db() as c:
+                row = c.execute("SELECT id, name FROM users WHERE email=?", (email,)).fetchone()
+            if row:
+                token, name = create_password_reset(row["id"]), row["name"]
+
+        out = {"ok": True,
+               "message": "If that address has an account, a reset link has been issued."}
+        if token:
+            if os.environ.get("NYAYA_RESET_ECHO") == "1":
+                out["reset_token"] = token
+                out["reset_url"] = f"/reset-password?token={token}"
+            print(f"[password-reset] {email} ({name}) token={token} "
+                  f"(valid {RESET_TTL_MINUTES} min)", flush=True)
+        self._json(200, out)
+
+    def _api_password_reset_confirm(self):
+        body = self._read_json()
+        user_id = consume_password_reset(str(body.get("token", "")),
+                                         str(body.get("password", "")))
+        rate_reset("login", user_id)
+        self._json(200, {"ok": True, "message": "Password updated. Please sign in again."})
 
     def _api_login(self):
         body = self._read_json()
@@ -1923,22 +2299,32 @@ class Handler(BaseHTTPRequestHandler):
             "digilocker": {**dl_mod.status(user), "short": True},
         })
 
-    def _api_reports_list(self):
+    def _api_reports_list(self, qs_extras: dict | None = None):
         user = self._require_user()
         if not user:
             return
+        search, size, offset = page_window(qs_extras or {})
+        where, params = "user_id=?", [user["id"]]
+        if search:
+            like = _like(search)
+            where += (" AND (ref LIKE ? ESCAPE '\\' OR narrative LIKE ? ESCAPE '\\'"
+                      " OR domain LIKE ? ESCAPE '\\' OR incident_date LIKE ? ESCAPE '\\')")
+            params += [like] * 4
         with db() as c:
+            total = c.execute(f"SELECT COUNT(*) FROM reports WHERE {where}", params).fetchone()[0]
             rows = c.execute(
                 "SELECT id,ref,created_at,incident_date,domain,review_level,urgency,severity_tier,"
                 "evidence_count,digilocker_status,narrative,disclosure_status,manual_check_status,"
                 "current_rev_no,feedback_up,feedback_down,feedback_flagged FROM reports "
-                "WHERE user_id=? ORDER BY created_at DESC LIMIT 200", (user["id"],)).fetchall()
+                f"WHERE {where} ORDER BY created_at DESC LIMIT ? OFFSET ?",
+                (*params, size, offset)).fetchall()
         items = []
         for r in rows:
             n = r["narrative"] or ""
             items.append({**{k: r[k] for k in r.keys() if k != "narrative"},
                           "excerpt": (n[:140] + "…") if len(n) > 140 else n})
-        self._json(200, {"reports": items, "count": len(items)})
+        self._json(200, {"reports": items, "count": len(items), "total": total,
+                         "page": offset // size + 1, "size": size, "q": search})
 
     def _api_feedback_get(self, report_id: str):
         user = self._require_user()
@@ -2103,6 +2489,12 @@ Environment:
   NYAYA_ADMIN_EMAIL / NYAYA_ADMIN_PASSWORD   bootstrap admin (password must be 12+ chars)
   NYAYA_ALLOW_PUBLIC_BIND=1                  required to bind beyond loopback (no TLS!)
   NYAYA_PREVIEW=1                            sandbox/preview mode: bind 0.0.0.0
+  NYAYA_TRUSTED_PROXIES                      comma-separated peer IPs/CIDRs allowed to set
+                                             X-Forwarded-For (default: none — ignore the header)
+  NYAYA_RESET_ECHO=1                         return the reset link in the API response (local
+                                             testing only; otherwise read it from the console)
+  NYAYA_ENGINE_CACHE_TTL                     seconds to cache /api/engine/overview (default 300;
+                                             the cache also invalidates when a pack file changes)
 
 Health: GET /health (no auth). Docs: docs/PORTAL.md, docs/API.md.
 """

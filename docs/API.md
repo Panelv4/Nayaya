@@ -40,8 +40,10 @@ that fail authorization return `403`; unknown or private resources return
 | `POST /api/evidence-map` | owner / admin | Link evidence to a fact (`SUPPORTS\|CONTRADICTS\|CONTEXT`) |
 | `POST /api/feedback` | session | Thumbs up/down per case (one vote per user) |
 | `GET /api/feedback?report_id=…` | session | Feedback summary for a case |
-| `GET /api/provenance?type=…&id=…` | session | Provenance chain around a subject |
+| `GET /api/provenance?type=…&id=…` | session | Provenance chain around a subject; case/evidence nodes are filtered to the caller's own or disclosed cases |
 
+| `POST /api/password-reset/request` | none | Start a reset; always answers identically |
+| `POST /api/password-reset/confirm` | none | Consume a single-use reset token and set a new password |
 ## Admin only (`403` for everyone else)
 
 | Method & path | Purpose |
@@ -59,7 +61,7 @@ that fail authorization return `403`; unknown or private resources return
 
 | Method & path | Auth | Purpose |
 |---|---|---|
-| `GET /api/digilocker/status`, `GET /api/digilocker/events`, `GET /api/digilocker/verify?artefact=…` | session | Status, event log, artefact verification |
+| `GET /api/digilocker/status`, `GET /api/digilocker/events`, `GET /api/digilocker/verify?artefact=…` | session | Status, event log, artefact verification (full record for the owner/admin only) |
 | `POST /api/digilocker/consent`, `/grant`, `/callback`, `/revoke` | session | Consent flow (all responses labelled `SIMULATED`) |
 
 ## Errors

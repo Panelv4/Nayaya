@@ -190,7 +190,7 @@
   </div>
 
   <!-- ================= RESPONSE ================= -->
-  <div id="response-view" class="hidden"></div>
+  <div id="response-view" class="hidden" data-i18n-skip></div>
 </div>
 
 <div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
@@ -203,7 +203,6 @@ const MAX_FILES=5, MAX_BYTES=5*1024*1024;
 let files=[]; // {name,type,size,data_b64,description}
 
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
-function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
 function fmtSize(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':(n/1024).toFixed(0)+' KB';}
 
 // dates: max = today
@@ -329,8 +328,13 @@ function renderResponse(s){
         ${s.evidence.map(e=>`<tr><td><b>${esc(e.filename)}</b></td><td>${fmtSize(e.size)}</td><td class="mono">${esc(e.sha256)}</td></tr>`).join('')}
       </tbody></table></div>`
       : '<p class="small">You confirmed that no evidence is available to attach at this time. The registry has been informed. You may submit supporting proof with a follow-up once available.</p>'}
-      <div class="kv" style="margin-top:10px"><b>DigiLocker verification:</b> <span class="badge b-amber">NOT LINKED — pending implementation</span>
-      <span class="small">Your identity is not yet verified; this report is flagged accordingly.</span></div></div>
+      <div class="kv" style="margin-top:10px"><b>DigiLocker verification:</b> ${
+        s.digilocker && s.digilocker.linked
+          ? `<span class="badge b-green">${esc(s.digilocker.label || 'LINKED')}</span>
+             <span class="small">${esc(s.digilocker.message || 'Identity artefact verified.')}${s.digilocker.artefact_id?` (artefact ${esc(s.digilocker.artefact_id)})`:''}</span>`
+          : `<span class="badge b-amber">${esc((s.digilocker && (s.digilocker.label || s.digilocker.status)) || 'NOT LINKED')}</span>
+             <span class="small">${esc((s.digilocker && s.digilocker.message) || 'Your identity is not verified; this report is flagged accordingly.')}</span>`
+      }</div></div>
 
     <div class="card"><h2>Notes for the registry</h2>
       <ul class="q-list">${s.intake_notes.map(n=>'<li>'+esc(n)+'</li>').join('')}</ul>

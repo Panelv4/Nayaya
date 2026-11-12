@@ -1,0 +1,1762 @@
+{
+  "id": "in.bns.hurt-aggravated",
+  "title": "Aggravated hurt: extortion, public servants, provocation, poison, acid, negligence - BNS 2023 ss.119-125",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the bare text of ss.119-125. These are the purpose-based and means-based aggravations that sit on top of the hurt/grievous-hurt distinction. s.122 is the one mitigating provision in the chapter and is encoded as a defeater, because it reduces a sentence that would otherwise apply rather than creating an offence of its own."
+  },
+  "scope": {
+    "in_scope": [
+      "s.119 hurt or grievous hurt to extort property, or to constrain an illegal act",
+      "s.120 hurt or grievous hurt to extort a confession or compel restoration",
+      "s.121 hurt or grievous hurt to deter a public servant from duty",
+      "s.122 grave and sudden provocation (mitigating)",
+      "s.123 hurt by poison or a stupefying substance",
+      "s.124 grievous hurt by acid (attack and attempt)",
+      "s.125 rash or negligent act endangering life"
+    ],
+    "out_of_scope": [
+      "the hurt/grievous-hurt definitions - ss.114, 116, pack in.bns.hurt",
+      "the ordinary sentences - s.115, s.117, packs in.bns.hurt and in.bns.grievous-hurt",
+      "dangerous weapons under s.118 - pack in.bns.hurt-dangerous-means, except where acid is used, which s.124 governs specifically",
+      "murder and culpable homicide - pack in.bns.homicide"
+    ]
+  },
+  "sources": [
+    {
+      "id": "bns-2023",
+      "citation": "Bharatiya Nyaya Sanhita, 2023 (Act 45 of 2023), Chapter VI, ss.114-125",
+      "url": "https://www.mha.gov.in/sites/default/files/250883_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Assented 25 Dec 2023, in force 1 Jul 2024. MHA published English text."
+    },
+    {
+      "id": "ipc-1860",
+      "citation": "Indian Penal Code, 1860, ss.319-338 (repealed 1 July 2024)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/2263",
+      "kind": "repealed",
+      "note": "Predecessor of Chapter VI. Two substantive changes: the residual grievous-hurt period fell from 20 days to 15, and ss.117(3)-(4) are new."
+    },
+    {
+      "id": "bnss-2023",
+      "citation": "Bharatiya Nagarik Suraksha Sanhita, 2023, First Schedule",
+      "url": "https://www.mha.gov.in/sites/default/files/2024-04/250884_2_english_01042024.pdf",
+      "kind": "primary",
+      "note": "Source of the cognizable / bailable / triable-by / compoundable labels."
+    }
+  ],
+  "citations": [
+    "bns-2023#s119",
+    "bns-2023#s120",
+    "bns-2023#s121",
+    "bns-2023#s122",
+    "bns-2023#s123",
+    "bns-2023#s124",
+    "bns-2023#s125"
+  ],
+  "facts": [
+    {
+      "name": "hurt_kind",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "HURT",
+        "GRIEVOUS"
+      ],
+      "label": "Bodily result: no hurt, hurt (s.114) or grievous hurt (s.116)"
+    },
+    {
+      "name": "voluntary",
+      "type": "bool",
+      "label": "The hurt was caused voluntarily: with intention to cause it, or knowledge that it was likely (s.115(1) / s.117(1))"
+    },
+    {
+      "name": "purpose",
+      "type": "enum",
+      "values": [
+        "NONE",
+        "EXTORT_PROPERTY",
+        "EXTORT_CONFESSION",
+        "DETER_PUBLIC_SERVANT",
+        "ILLEGAL_ACT"
+      ],
+      "label": "Ulterior purpose behind the hurt"
+    },
+    {
+      "name": "poison_or_stupefying",
+      "type": "bool",
+      "label": "Poison, or a stupefying/intoxicating/unwholesome substance, was administered with intent to cause hurt or to commit an offence (s.123)"
+    },
+    {
+      "name": "acid_used",
+      "type": "bool",
+      "label": "Acid (or a like corrosive substance) was thrown or administered"
+    },
+    {
+      "name": "grave_sudden_provocation",
+      "type": "bool",
+      "label": "The hurt was caused on grave and sudden provocation, and the offender neither intended nor knew it likely to hurt anyone other than the provoker (s.122)"
+    },
+    {
+      "name": "rash_negligent_act",
+      "type": "bool",
+      "label": "The act was rash or negligent (not voluntary) and endangered human life or the personal safety of others (s.125)"
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-hurt",
+      "term": "hurt",
+      "definition": "Bodily pain, disease or infirmity caused to any person (s.114). No visible wound is required; mental distress alone is not hurt.",
+      "citations": [
+        "bns-2023#s114"
+      ]
+    },
+    {
+      "id": "T-grievous",
+      "term": "grievous hurt",
+      "definition": "A closed list of eight kinds of hurt (s.116): emasculation; permanent loss of sight of either eye; permanent loss of hearing of either ear; loss of any member or joint; destruction or permanent impairment of any member or joint; permanent disfigurement of the head or face; fracture or dislocation of a bone or tooth; and any hurt that endangers life or keeps the sufferer in severe pain or unable to follow ordinary pursuits for fifteen days. The last limb was twenty days under s.320 IPC.",
+      "citations": [
+        "bns-2023#s116",
+        "ipc-1860#s320"
+      ]
+    },
+    {
+      "id": "T-voluntary",
+      "term": "voluntarily",
+      "definition": "Done with the intention of causing the hurt, or with knowledge that it was likely to be caused (s.115(1)). Intention or knowledge is enough; both are not needed.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "T-mens-rea-ladder",
+      "term": "the intention ladder",
+      "definition": "The gravity of the injury does not by itself fix the offence. Injury caused without the intention or knowledge required to kill stays in this chapter (s.117), however grave; injury caused WITH that intention or knowledge leaves it for attempt to murder (s.109) or culpable homicide (ss.100-105).",
+      "citations": [
+        "bns-2023#s117",
+        "bns-2023#s109"
+      ]
+    }
+  ],
+  "parameters": {
+    "max_years_119_hurt": 10,
+    "max_years_120_hurt": 7,
+    "max_years_120_grievous": 10,
+    "max_years_121_hurt": 5,
+    "min_years_121_grievous": 1,
+    "max_years_121_grievous": 10,
+    "max_years_123": 10,
+    "min_years_acid": 10,
+    "min_years_acid_attempt": 5,
+    "max_years_acid_attempt": 7,
+    "max_months_provocation_hurt": 1,
+    "max_fine_provocation_hurt": 5000,
+    "max_years_provocation_grievous": 5,
+    "max_fine_provocation_grievous": 10000,
+    "max_months_125_danger": 3,
+    "max_months_125_hurt": 6,
+    "max_years_125_grievous": 3
+  },
+  "branches": [
+    {
+      "id": "A-119-2",
+      "provision": "s.119(2)",
+      "verdict": "offence",
+      "offence": "grievous_hurt_to_extort",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              [
+                "EXTORT_PROPERTY",
+                "ILLEGAL_ACT"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever voluntarily causes grievous hurt for any purpose referred to in sub-section (1), shall be punished with imprisonment for life, or imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+      "notes": "Grievous hurt used as an instrument of extortion. Cognizable, non-bailable, triable by a Court of Session.",
+      "citations": [
+        "bns-2023#s119"
+      ]
+    },
+    {
+      "id": "A-119-1",
+      "provision": "s.119(1)",
+      "verdict": "offence",
+      "offence": "hurt_to_extort",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "poison_or_stupefying",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              [
+                "EXTORT_PROPERTY",
+                "ILLEGAL_ACT"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever voluntarily causes hurt, for the purpose of extorting from the sufferer, or from any person interested in the sufferer, any property or valuable security, or of constraining the sufferer or any person interested in such sufferer to do anything which is illegal or which may facilitate the commission of an offence, shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+      "notes": "The purpose, not the injury, drives the tariff: simple hurt here carries ten years, against one year under s.115.",
+      "citations": [
+        "bns-2023#s119"
+      ]
+    },
+    {
+      "id": "A-120-2",
+      "provision": "s.120(2)",
+      "verdict": "offence",
+      "offence": "grievous_hurt_to_extort_confession",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              [
+                "EXTORT_CONFESSION"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever voluntarily causes grievous hurt for any purpose referred to in sub-section (1), shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+      "notes": "Custodial or coercive violence to extract a confession or information.",
+      "citations": [
+        "bns-2023#s120"
+      ]
+    },
+    {
+      "id": "A-120-1",
+      "provision": "s.120(1)",
+      "verdict": "offence",
+      "offence": "hurt_to_extort_confession",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "poison_or_stupefying",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              [
+                "EXTORT_CONFESSION"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever voluntarily causes hurt, for the purpose of extorting from the sufferer, or any person interested in the sufferer, any confession or any information which may lead to the detection of an offence or misconduct, or for the purpose of compelling the sufferer ... to restore, or to cause the restoration of any property or valuable security, shall be punished with imprisonment of either description for a term which may extend to seven years, and shall also be liable to fine.",
+      "notes": "The classic custodial-violence provision (s.330/331 IPC).",
+      "citations": [
+        "bns-2023#s120"
+      ]
+    },
+    {
+      "id": "A-121-2",
+      "provision": "s.121(2)",
+      "verdict": "offence",
+      "offence": "grievous_hurt_to_deter_public_servant",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              [
+                "DETER_PUBLIC_SERVANT"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever voluntarily causes grievous hurt to any person being a public servant in the discharge of his duty as such public servant ... shall be punished with imprisonment of either description for a term which shall not be less than one year but which may extend to ten years, and shall also be liable to fine.",
+      "notes": "A one-year floor was added by the BNS. Cognizable, non-bailable, Court of Session.",
+      "citations": [
+        "bns-2023#s121"
+      ]
+    },
+    {
+      "id": "A-121-1",
+      "provision": "s.121(1)",
+      "verdict": "offence",
+      "offence": "hurt_to_deter_public_servant",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "poison_or_stupefying",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "in": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              [
+                "DETER_PUBLIC_SERVANT"
+              ]
+            ]
+          }
+        ]
+      },
+      "text": "Whoever voluntarily causes hurt to any person being a public servant in the discharge of his duty as such public servant ... shall be punished with imprisonment of either description for a term which may extend to five years, or with fine, or with both.",
+      "notes": "Raised from three years to five by the BNS.",
+      "citations": [
+        "bns-2023#s121"
+      ]
+    },
+    {
+      "id": "A-123",
+      "provision": "s.123",
+      "verdict": "offence",
+      "offence": "hurt_by_poison",
+      "when": {
+        "and": [
+          {
+            "!=": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "poison_or_stupefying",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "Whoever administers to or causes to be taken by any person any poison or any stupefying, intoxicating or unwholesome drug, or other thing with intent to cause hurt to such person, or with intent to commit an offence or to intimidate, insult or annoy any person, shall be punished with imprisonment of either description for a term which may extend to ten years, and shall also be liable to fine.",
+      "notes": "Poisoning carries ten years whatever the resulting injury, because the intent that accompanies administration is what the section punishes. A poisoning used as the means of an extortion is charged under s.119, which is why the purpose here must be none.",
+      "citations": [
+        "bns-2023#s123"
+      ]
+    },
+    {
+      "id": "A-124-1",
+      "provision": "s.124(1)",
+      "verdict": "offence",
+      "offence": "acid_attack",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "!=": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "text": "Whoever throws acid on any person or attempts to throw acid on any person or attempts to administer by any means whatsoever such acid ... and thereby causes permanent or partial damage or deformity to, or burns or maims or disfigures or disables, any part or parts of the body of a person, or causes grievous hurt ... shall be punished with imprisonment of either description for a term which shall not be less than ten years but which may extend to imprisonment for life, and with fine ...",
+      "notes": "Acid is carved out of s.118 and punished specifically: a ten-year floor, up to life, plus a fine that must be just and reasonable to meet the victim's medical expenses and is payable to the victim. Cognizable, non-bailable, non-compoundable, Court of Session.",
+      "citations": [
+        "bns-2023#s124"
+      ]
+    },
+    {
+      "id": "A-FALLTHROUGH",
+      "provision": "ss.119-124",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "!=": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "purpose",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "poison_or_stupefying",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "acid_used",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "grave_sudden_provocation",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "text": "No branch of ss.119-124 is engaged by these facts.",
+      "notes": "The hurt is voluntary but none of the aggravating purposes or means is present, so the ordinary tariff applies: s.115 for hurt, s.117 for grievous hurt. Those are quantified in the sibling packs; this pack routes the case there rather than duplicating the figures.",
+      "citations": [
+        "bns-2023#s115"
+      ]
+    },
+    {
+      "id": "A-NO-OFFENCE",
+      "provision": "ss.119-125",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "not": {
+          "or": [
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "GRIEVOUS"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "in": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    [
+                      "EXTORT_PROPERTY",
+                      "ILLEGAL_ACT"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "HURT"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "poison_or_stupefying",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "in": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    [
+                      "EXTORT_PROPERTY",
+                      "ILLEGAL_ACT"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "GRIEVOUS"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "in": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    [
+                      "EXTORT_CONFESSION"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "HURT"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "poison_or_stupefying",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "in": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    [
+                      "EXTORT_CONFESSION"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "GRIEVOUS"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "in": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    [
+                      "DETER_PUBLIC_SERVANT"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "HURT"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "poison_or_stupefying",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "in": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    [
+                      "DETER_PUBLIC_SERVANT"
+                    ]
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "!=": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "NONE"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "poison_or_stupefying",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "NONE"
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "!=": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "NONE"
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "!=": [
+                    {
+                      "var": "hurt_kind",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "NONE"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "purpose",
+                      "type": "str",
+                      "default": "NONE"
+                    },
+                    "NONE"
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "poison_or_stupefying",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "acid_used",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "grave_sudden_provocation",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                }
+              ]
+            },
+            {
+              "and": [
+                {
+                  "==": [
+                    {
+                      "var": "rash_negligent_act",
+                      "type": "bool",
+                      "default": false
+                    },
+                    true
+                  ]
+                },
+                {
+                  "==": [
+                    {
+                      "var": "voluntary",
+                      "type": "bool",
+                      "default": false
+                    },
+                    false
+                  ]
+                }
+              ]
+            }
+          ]
+        }
+      },
+      "text": "No provision in ss.119-125 applies.",
+      "notes": "Either no hurt was caused, or the hurt was neither voluntary nor the product of a rash or negligent act. That is the boundary of the chapter rather than an encoding defect, so it is decided instead of reported as a gap.",
+      "citations": [
+        "bns-2023#s114"
+      ]
+    }
+  ],
+  "defeaters": [
+    {
+      "id": "A-125-B",
+      "provision": "s.125(b)",
+      "verdict": "offence",
+      "offence": "negligent_act_causing_grievous_hurt",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "rash_negligent_act",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "GRIEVOUS"
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "A-FALLTHROUGH"
+      ],
+      "text": "Whoever does any act so rashly or negligently as to endanger human life or the personal safety of others, shall be punished - ... (b) where grievous hurt is caused, with imprisonment of either description for a term which may extend to three years, or with fine which may extend to ten thousand rupees, or with both.",
+      "notes": "Raised from two years to three by the BNS. Bailable throughout; compoundable with permission. Rash and negligent DRIVING is s.281, not this.",
+      "citations": [
+        "bns-2023#s125"
+      ]
+    },
+    {
+      "id": "A-125-A",
+      "provision": "s.125(a)",
+      "verdict": "offence",
+      "offence": "negligent_act_causing_hurt",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "rash_negligent_act",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "HURT"
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "A-FALLTHROUGH"
+      ],
+      "text": "Whoever does any act so rashly or negligently as to endanger human life or the personal safety of others, shall be punished - (a) where hurt is caused, with imprisonment of either description for a term which may extend to six months, or with fine which may extend to five thousand rupees, or with both.",
+      "notes": "Successor to s.337 IPC.",
+      "citations": [
+        "bns-2023#s125"
+      ]
+    },
+    {
+      "id": "A-125",
+      "provision": "s.125",
+      "verdict": "offence",
+      "offence": "negligent_act_endangering_life",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "rash_negligent_act",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "voluntary",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "hurt_kind",
+                "type": "str",
+                "default": "NONE"
+              },
+              "NONE"
+            ]
+          }
+        ]
+      },
+      "overrides": [
+        "A-FALLTHROUGH"
+      ],
+      "text": "Whoever does any act so rashly or negligently as to endanger human life or the personal safety of others, shall be punished with imprisonment of either description for a term which may extend to three months, or with fine which may extend to two thousand five hundred rupees, or with both.",
+      "notes": "The danger alone is enough; no injury need result. Successor to s.336 IPC.",
+      "citations": [
+        "bns-2023#s125"
+      ]
+    }
+  ],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an aggravated hurt offence (see s.115/s.117 instead)",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under ss.119-125",
+      "provision": "bns-2023#s119"
+    },
+    "indeterminate": {
+      "label": "No provision applies - encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_to_extort"
+        ]
+      },
+      "text": "Imprisonment for life, or up to ten years, and fine [s.119(2)]",
+      "citations": [
+        "bns-2023#s119"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "hurt_to_extort"
+        ]
+      },
+      "text": "Imprisonment up to ten years, and fine [s.119(1)]",
+      "citations": [
+        "bns-2023#s119"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_to_extort_confession"
+        ]
+      },
+      "text": "Imprisonment up to ten years, and fine [s.120(2)]",
+      "citations": [
+        "bns-2023#s120"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "hurt_to_extort_confession"
+        ]
+      },
+      "text": "Imprisonment up to seven years, and fine [s.120(1)]",
+      "citations": [
+        "bns-2023#s120"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "grievous_hurt_to_deter_public_servant"
+        ]
+      },
+      "text": "Imprisonment not less than one year and up to ten years, and fine [s.121(2)]",
+      "citations": [
+        "bns-2023#s121"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "hurt_to_deter_public_servant"
+        ]
+      },
+      "text": "Imprisonment up to five years, or fine, or both [s.121(1)]",
+      "citations": [
+        "bns-2023#s121"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "hurt_by_poison"
+        ]
+      },
+      "text": "Imprisonment up to ten years, and fine [s.123]",
+      "citations": [
+        "bns-2023#s123"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "acid_attack"
+        ]
+      },
+      "text": "Imprisonment not less than ten years, up to life, and fine payable to the victim to meet medical expenses [s.124(1)]; an attempt alone is five to seven years and fine [s.124(2)]",
+      "citations": [
+        "bns-2023#s124"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "hurt_on_grave_sudden_provocation"
+        ]
+      },
+      "text": "Simple hurt: up to one month, or fine up to Rs 5,000, or both [s.122(1)]. Grievous hurt: up to five years, or fine up to Rs 10,000, or both [s.122(2)]",
+      "citations": [
+        "bns-2023#s122"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "negligent_act_causing_grievous_hurt"
+        ]
+      },
+      "text": "Imprisonment up to three years, or fine up to Rs 10,000, or both [s.125(b)]",
+      "citations": [
+        "bns-2023#s125"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "negligent_act_causing_hurt"
+        ]
+      },
+      "text": "Imprisonment up to six months, or fine up to Rs 5,000, or both [s.125(a)]",
+      "citations": [
+        "bns-2023#s125"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "negligent_act_endangering_life"
+        ]
+      },
+      "text": "Imprisonment up to three months, or fine up to Rs 2,500, or both [s.125]",
+      "citations": [
+        "bns-2023#s125"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-122-SCOPE",
+      "provision": "s.122",
+      "status": "resolved_by_amendment",
+      "question": "Does the s.122 provocation exception apply to every hurt offence, or only to ss.115 and 117?",
+      "why_it_matters": "If it applied to s.119 (extortion) it would let an extortionist claim a one-month ceiling because the victim provoked him.",
+      "position_a": "Only where the section itself says so: ss.115(2), 117(2) and 118 cross-refer to s.122, and s.119 does not (current encoding).",
+      "position_b": "It is a general exception to the whole chapter.",
+      "resolution": "The cross-references are express and selective. The mitigating reading is therefore restricted to the plain hurt cases.",
+      "citations": [
+        "bns-2023#s122",
+        "bns-2023#s119"
+      ],
+      "variants": [
+        {
+          "id": "express-cross-refs",
+          "label": "express cross-references only (current encoding)",
+          "patch": {}
+        }
+      ]
+    },
+    {
+      "id": "AMB-124-ATTEMPT",
+      "provision": "s.124(2)",
+      "status": "resolved_by_amendment",
+      "question": "Is an acid attack that misses punished under s.124 or as an attempt?",
+      "why_it_matters": "At common law a missed attempt can be punished more lightly than the completed offence; s.124 fixes its own tariff.",
+      "position_a": "s.124(2) expressly punishes the throw or attempt with five to seven years and fine even if no injury results (current encoding).",
+      "position_b": "s.124 applies only on proof of the resulting injury.",
+      "resolution": "The sub-section is explicit that the attempt is itself punishable. The pack records the s.124(1) tariff for a completed attack and the s.124(2) band for an attempt.",
+      "citations": [
+        "bns-2023#s124"
+      ],
+      "variants": [
+        {
+          "id": "attempt-punishable",
+          "label": "attempt punishable under s.124(2) (current encoding)",
+          "patch": {}
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "ILL-119-EXTORT",
+      "cites": "s.119(1)",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "purpose": "EXTORT_PROPERTY",
+        "poison_or_stupefying": false,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": "hurt_to_extort"
+      },
+      "text": "A twists B's arm until B signs over his shop. Simple hurt, but the purpose is extortion: ten years under s.119(1), not one under s.115."
+    },
+    {
+      "id": "ILL-120-CONFESSION",
+      "cites": "s.120(1)",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "purpose": "EXTORT_CONFESSION",
+        "poison_or_stupefying": false,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": "hurt_to_extort_confession"
+      },
+      "text": "An officer beats a suspect to extract a confession. Seven years under s.120(1)."
+    },
+    {
+      "id": "ILL-121-PUBLIC-SERVANT",
+      "cites": "s.121(2)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "purpose": "DETER_PUBLIC_SERVANT",
+        "poison_or_stupefying": false,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": "grievous_hurt_to_deter_public_servant"
+      },
+      "text": "A mob fractures the arm of an officer serving process. One to ten years under s.121(2), with the new one-year floor."
+    },
+    {
+      "id": "ILL-123-POISON",
+      "cites": "s.123",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "purpose": "NONE",
+        "poison_or_stupefying": true,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": "hurt_by_poison"
+      },
+      "text": "A drugs B's drink to rob him. Ten years under s.123, whatever the injury."
+    },
+    {
+      "id": "ILL-124-ACID",
+      "cites": "s.124(1)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": true,
+        "purpose": "NONE",
+        "poison_or_stupefying": false,
+        "acid_used": true,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": "acid_attack"
+      },
+      "text": "A throws acid on B, disfiguring her face. Ten years minimum, up to life, and a fine payable to B for her treatment: s.124(1)."
+    },
+    {
+      "id": "ILL-125-GRIEVOUS",
+      "cites": "s.125(b)",
+      "facts": {
+        "hurt_kind": "GRIEVOUS",
+        "voluntary": false,
+        "purpose": "NONE",
+        "poison_or_stupefying": false,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": true
+      },
+      "expect": {
+        "offence_kind": "negligent_act_causing_grievous_hurt"
+      },
+      "text": "A negligently secures a scaffold that collapses and fractures B's leg. Three years under s.125(b); there was no intention or knowledge at all."
+    },
+    {
+      "id": "ILL-PLAIN-HURT",
+      "cites": "s.115",
+      "facts": {
+        "hurt_kind": "HURT",
+        "voluntary": true,
+        "purpose": "NONE",
+        "poison_or_stupefying": false,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A plain punch with none of the aggravating features: the pack routes it to s.115 (one year), where that tariff is quantified."
+    },
+    {
+      "id": "ILL-NO-HURT",
+      "cites": "s.114",
+      "facts": {
+        "hurt_kind": "NONE",
+        "voluntary": false,
+        "purpose": "NONE",
+        "poison_or_stupefying": false,
+        "acid_used": false,
+        "grave_sudden_provocation": false,
+        "rash_negligent_act": false
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "No bodily pain, disease or infirmity at all: outside the chapter."
+    }
+  ]
+}

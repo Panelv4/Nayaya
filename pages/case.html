@@ -35,7 +35,7 @@
 </nav>
 
 <div class="container">
-  <div id="case-body"><div class="empty">Loading case record…</div></div>
+  <div id="case-body" data-i18n-skip><div class="empty">Loading case record…</div></div>
 </div>
 
 <div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
@@ -47,7 +47,6 @@ const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
 function fmtSize(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':(n/1024).toFixed(0)+' KB';}
-function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
 const FACT_KEYS=['incident_date','incident_end_date','location','domain','narrative','victim_under18','woman_or_girl','sexual_offence','accused_in_custody','liberty_threat','accused_under18','has_lawyer','provision','disability','mental_illness','sc_st_atrocities','transgender','senior_citizen'];
 const ANSWER_LABELS={
   victim_under18:['Are you under 18?',{yes:'Yes',no:'No',prefer_not:'Prefer not to say'}],
@@ -62,11 +61,18 @@ const CHECK_LABELS={disability:'Disability',mental_illness:'Mental illness',sc_s
 const DISC_BADGE={PRIVATE:'b-gray',PENDING:'b-blue',DISCLOSED:'b-green',REJECTED:'b-red'};
 const MC_BADGE={UNCHECKED:'b-gray',VERIFIED:'b-green',NEEDS_CORRECTION:'b-amber',REJECTED:'b-red'};
 let C=null;
+let isGuest=false;
 
 (async()=>{
   const id=new URLSearchParams(location.search).get('id')||'';
-  let me;
-  try{ me=await requireAuth(); }catch(e){ return; }
+  /* A disclosed case is public: a visitor with no session must be able to read
+   * it. Previously requireAuth() redirected every guest to /login, so clicking
+   * a disclosed case from the public registry just bounced them away. Guests
+   * get a read-only view; the server decides what (if anything) they may see. */
+  let me = null;
+  try{ me = await bootstrapSession(); }catch(e){ me = null; }
+  isGuest = !me;
+  if(isGuest) me = { role:'GUEST', name:'guest', is_admin:false };
   if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
   try{
     const r=await authFetch('/api/report?id='+encodeURIComponent(id));
@@ -75,6 +81,33 @@ let C=null;
   }catch(e){ if(e.message!=='auth') $('case-body').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; return; }
   render(me);
 })();
+
+/* Evidence used to be fetched with a plain <a download href="/api/evidence?...">.
+ * That loses the Authorization header (the token lives in JS, not always a
+ * readable cookie) and, inside a sandboxed cross-origin preview iframe, a
+ * top-level navigation to a download is blocked outright. Fetch the bytes with
+ * the bearer token, then hand them to an object URL — works in an iframe. */
+async function downloadEvidence(id){
+  try{
+    const meta = (C && C.evidence ? C.evidence : []).find(x => String(x.id) === String(id));
+    const filename = meta ? meta.filename : ('evidence-' + id);
+    const r = await authFetch('/api/evidence?id='+encodeURIComponent(id));
+    if(!r.ok){
+      const j = await r.json().catch(()=>({}));
+      throw new Error(j.error || ('Download failed ('+r.status+')'));
+    }
+    const blob = await r.blob();
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename || ('evidence-'+id);
+    a.rel = 'noopener';
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+    setTimeout(()=>URL.revokeObjectURL(url), 30000);
+  }catch(e){ toast(e.message); }
+}
 
 async function post(url,body){
   const r=await authFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
@@ -113,6 +146,34 @@ async function mapEvidence(evidenceId){
     toast('Evidence mapped to fact.'); location.reload(); }
   catch(e){ toast(e.message); }
 }
+function renderRevFiles(){
+  const el=$('rev-files'), out=$('rev-files-out');
+  if(!el||!el.files||!el.files.length){ if(out) out.innerHTML=''; return; }
+  out.innerHTML=Array.from(el.files).map(f=>`<div>${esc(f.name)} · ${fmtSize(f.size)}</div>`).join('');
+}
+
+function readFileB64(file){
+  return new Promise((res,rej)=>{
+    const fr=new FileReader();
+    fr.onload=()=>{ const s=String(fr.result||''); res(s.includes(',')?s.split(',')[1]:s); };
+    fr.onerror=()=>rej(new Error('Could not read '+file.name));
+    fr.readAsDataURL(file);
+  });
+}
+
+const MAX_EV = 5*1024*1024;
+
+async function collectRevEvidence(){
+  const el=$('rev-files');
+  if(!el||!el.files||!el.files.length) return [];
+  const out=[];
+  for(const f of Array.from(el.files)){
+    if(f.size>MAX_EV){ throw new Error(f.name+' exceeds the 5 MB limit.'); }
+    out.push({name:f.name, type:f.type||'application/octet-stream', data_b64:await readFileB64(f)});
+  }
+  return out;
+}
+
 async function submitRevision(){
   const reason=$('rev-reason').value.trim();
   if(reason.length<5){ toast('Please give a reason for the correction (min 5 characters).'); return; }
@@ -123,9 +184,14 @@ async function submitRevision(){
   for(const k of ['victim_under18','woman_or_girl','sexual_offence','accused_in_custody','liberty_threat','accused_under18','has_lawyer']) body[k]=$('rev-'+k).value;
   for(const k of ['disability','mental_illness','sc_st_atrocities','transgender','senior_citizen']) body[k]=$('rev-'+k).checked;
   body.provision=$('rev-provision').value.trim(); body.statute=$('rev-statute').value.trim();
+  let evidence=[];
+  try{ evidence=await collectRevEvidence(); }
+  catch(e){ toast(e.message); return; }
+  if(evidence.length) body.evidence=evidence;
   $('rev-btn').disabled=true; $('rev-btn').textContent='Re-evaluating…';
   try{ const j=await post('/api/revise',body);
-    toast('Revision '+j.rev_no+' recorded and re-evaluated. New level: '+j.summary.level);
+    toast('Revision '+j.rev_no+' recorded and re-evaluated. New level: '+j.summary.level
+      + (evidence.length?(' · '+evidence.length+' file(s) attached'):''));
     setTimeout(()=>location.reload(),900);
   }catch(e){ toast(e.message); $('rev-btn').disabled=false; $('rev-btn').textContent='Save correction & re-evaluate'; }
 }
@@ -162,10 +228,13 @@ function render(me){
     <div class="summary-item"><p class="lbl">Confidence</p><div class="val">${esc(conf.overall)} <span class="small">weakest: ${esc(conf.weakest_element)}</span></div></div>
     <div class="summary-item"><p class="lbl">Verdict feedback</p>
       <div class="val"><svg class="ic sm"><use href="#i-thumb-up"></use></svg> ${fb.up} · <svg class="ic sm"><use href="#i-thumb-down"></use></svg> ${fb.down}</div>
-      <div class="btn-row" style="margin-top:8px">
+      ${isGuest
+        ? `<div class="small" style="margin-top:6px">You are viewing this disclosed case as a guest.
+             <a href="/login">Sign in</a> to record a verdict.</div>`
+        : `<div class="btn-row" style="margin-top:8px">
         <button class="btn small ${fb.my_vote===1?'primary':'secondary'}" onclick="vote(1)"><svg class="ic sm"><use href="#i-thumb-up"></use></svg> Correct / helpful</button>
         <button class="btn small ${fb.my_vote===-1?'primary':'secondary'}" onclick="vote(-1)"><svg class="ic sm"><use href="#i-thumb-down"></use></svg> Wrong / unhelpful</button>
-      </div>
+      </div>`}
       <div class="small" style="margin-top:6px">Your verdict is recorded in an audited log for administrator review.${fb.flagged?' <b>This case is flagged for review.</b>':''}</div>
       ${priv||C.viewer.is_owner?`<input type="text" id="fb-comment" maxlength="1000" placeholder="Optional comment (stored with your vote)" style="margin-top:8px">`:''}
     </div>
@@ -243,7 +312,7 @@ function render(me){
     <span class="badge b-blue">coverage ${Math.round((C.coverage.coverage||0)*100)}%</span></h2>
     ${C.evidence.length?`<div class="table-wrap"><table>
       <thead><tr><th>File</th><th>Type</th><th>Size</th><th>Description</th><th>SHA-256 seal</th>${(priv&&(C.viewer.is_owner||me.is_admin))?'<th>Download</th>':''}</tr></thead>
-      <tbody>${C.evidence.map(e=>`<tr><td><b>${esc(e.filename)}</b></td><td>${esc(e.content_type||'—')}</td><td>${fmtSize(e.size)}</td><td>${esc(e.description||'—')}</td><td class="mono">${esc(e.sha256)}</td>${(priv&&(C.viewer.is_owner||me.is_admin))?`<td><a class="btn secondary small" href="/api/evidence?id=${e.id}" download>Download</a></td>`:''}</tr>`).join('')}</tbody>
+      <tbody>${C.evidence.map(e=>`<tr><td><b>${esc(e.filename)}</b></td><td>${esc(e.content_type||'—')}</td><td>${fmtSize(e.size)}</td><td>${esc(e.description||'—')}</td><td class="mono">${esc(e.sha256)}</td>${(priv&&(C.viewer.is_owner||me.is_admin))?`<td><button class="btn secondary small" onclick="downloadEvidence(${e.id})"><svg class="ic sm"><use href="#i-download"></use></svg> Download</button></td>`:''}</tr>`).join('')}</tbody>
     </table></div>`:`<p class="small">Complainant confirmed: <b>no evidence available to attach at this time</b>.</p>`}
 
     ${(priv)&&(C.viewer.is_owner||me.is_admin)&&C.evidence.length?`
@@ -332,6 +401,13 @@ function render(me){
         <div class="field full"><div class="grid tight" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
           ${Object.entries(CHECK_LABELS).map(([k,l])=>`<label class="check"><input type="checkbox" id="rev-${k}" ${a[k]?'checked':''}><span>${esc(l)}</span></label>`).join('')}
         </div></div>
+      </div>
+      <div class="field full" style="margin-top:6px"><label>Attach new evidence (optional)</label>
+        <input type="file" id="rev-files" multiple
+               onchange="renderRevFiles()" style="padding:8px;border:1px solid var(--line);border-radius:5px;background:#fff">
+        <div class="small" style="margin-top:5px">Proof discovered after filing can be added to this case now —
+          each file is sealed with its own SHA-256 and linked to this revision in the provenance graph.</div>
+        <div id="rev-files-out" class="small" style="margin-top:6px"></div>
       </div>
       <div class="btn-row" style="margin-top:10px">
         <button class="btn primary" id="rev-btn" onclick="submitRevision()">Save correction &amp; re-evaluate</button>

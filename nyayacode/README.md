@@ -159,6 +159,10 @@ witness.
 | `in.bns.organised-crime` | BNS 2023 s.111 (organised crime) | 28 | **unreviewed** |
 | `in.bns.petty-organised-crime` | BNS 2023 s.112 (petty organised crime) | 32 | **unreviewed** |
 | `in.bns.terrorist-act` | BNS 2023 s.113 (terrorist act) | 28 | **unreviewed** |
+| `in.bns.hurt` | BNS 2023 ss.114–116 (hurt, the eight kinds of grievous hurt, voluntarily causing hurt) | 60 | **unreviewed** |
+| `in.bns.grievous-hurt` | BNS 2023 s.117 (incl. the new s.117(3) and s.117(4)) | 240 | **unreviewed** |
+| `in.bns.hurt-dangerous-means` | BNS 2023 s.118 (dangerous weapons or means) | 12 | **unreviewed** |
+| `in.bns.hurt-aggravated` | BNS 2023 ss.119–125 (extortion, public servants, provocation, poison, acid, negligence) | 480 | **unreviewed** |
 | `in.mv.drunken-driving` | MV Act 1988 s.185, pre and post 2019 | 732 | **unreviewed** |
 
 The second pack exists to show the machinery is not specific to a penal code:

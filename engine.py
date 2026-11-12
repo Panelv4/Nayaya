@@ -16,6 +16,7 @@ import json
 import os
 import re
 import sqlite3
+from contextlib import closing
 from typing import Any, Dict, List, Optional
 
 LEVEL_ORDER = {"L0": 0, "L1": 1, "L2": 2, "L3": 3}
@@ -491,8 +492,8 @@ def _parse_punishment_text(value: Any):
     return years, life, death
 
 
-def _tri_state_value(data: Dict[str, Any], key: str) -> str:
-    v = resolve_path(data, key)
+def _tri_state_of(v: Any) -> str:
+    """Convert a single value to a tri-state string."""
     if isinstance(v, bool):
         return "TRUE" if v else "FALSE"
     if isinstance(v, str):
@@ -500,6 +501,38 @@ def _tri_state_value(data: Dict[str, Any], key: str) -> str:
         if u in ("TRUE", "FALSE", "UNKNOWN"):
             return u
     return "UNKNOWN"
+
+
+def _tri_state_value(data: Dict[str, Any], key: str) -> str:
+    return _tri_state_of(resolve_path(data, key))
+
+# Minority status is NOT a tri-state: intake and the rule base use their own
+# vocabulary (CONFIRMED_MINOR / CONFIRMED_ADULT / DISPUTED / UNDETERMINED).
+# Passing it through the tri-state helper collapsed every real value to
+# "UNKNOWN", which silently disabled the minor-protection triggers.
+_MINOR_STATUSES = frozenset(
+    ("CONFIRMED_MINOR", "CONFIRMED_ADULT", "DISPUTED", "UNDETERMINED")
+)
+
+
+def _minor_status_of(v: Any) -> str:
+    """Normalize a minority-status value, preserving the domain vocabulary."""
+    if isinstance(v, bool):
+        return "CONFIRMED_MINOR" if v else "CONFIRMED_ADULT"
+    if isinstance(v, str):
+        u = v.strip().upper().replace(" ", "_").replace("-", "_")
+        if u in _MINOR_STATUSES:
+            return u
+        # Tolerate the tri-state spellings used by some callers.
+        if u in ("TRUE", "YES", "MINOR"):
+            return "CONFIRMED_MINOR"
+        if u in ("FALSE", "NO", "ADULT", "MAJOR"):
+            return "CONFIRMED_ADULT"
+    return "UNDETERMINED"
+
+
+def _minor_status(data: Dict[str, Any], key: str) -> str:
+    return _minor_status_of(resolve_path(data, key))
 
 
 def _evidence_refs(condition: Any) -> str:
@@ -846,7 +879,7 @@ class Engine:
             return None
 
     def _init_db(self) -> None:
-        with sqlite3.connect(self.db_path) as c:
+        with closing(sqlite3.connect(self.db_path)) as c, c:
             c.execute(
                 """CREATE TABLE IF NOT EXISTS audit (
                     id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -863,7 +896,7 @@ class Engine:
 
     def _audit_insert(self, case_id: str, final_level: str, triggers: List[Dict[str, Any]],
                       urgency: str, input_hash: str, output: Dict[str, Any]) -> int:
-        with sqlite3.connect(self.db_path) as c:
+        with closing(sqlite3.connect(self.db_path)) as c, c:
             cur = c.execute(
                 "INSERT INTO audit (at, case_id, rule_base_version, final_level, triggers_fired, urgency, input_hash, output) "
                 "VALUES (?, ?, ?, ?, ?, ?, ?, ?)",
@@ -884,7 +917,7 @@ class Engine:
         return True
 
     def audit_recent(self, limit: int = 100) -> List[Dict[str, Any]]:
-        with sqlite3.connect(self.db_path) as c:
+        with closing(sqlite3.connect(self.db_path)) as c:
             c.row_factory = sqlite3.Row
             rows = c.execute(
                 "SELECT id, at, case_id, rule_base_version, final_level, triggers_fired, urgency, input_hash FROM audit ORDER BY id DESC LIMIT ?",
@@ -1028,7 +1061,7 @@ class Engine:
 
         # ---- output schema assembly ----
         regime = str(data.get("regime", "UNDETERMINED"))
-        offence_date_iso = _yyyymmdd_to_iso(data.get("offence.start_yyyymmdd"))
+        offence_date_iso = _yyyymmdd_to_iso(resolve_path(data, "offence.start_yyyymmdd"))
         cutover = self.config.get("regime_cutover_yyyymmdd", 20240701)
         regime_basis = (
             f"Offence date {offence_date_iso or 'not provided'}; regime cutover "
@@ -1047,7 +1080,7 @@ class Engine:
             if o.get("verified_in_corpus") is not True:
                 unverified_provisions.append(f"{statute} {provision}")
             def tri(v: Any) -> str:
-                return _tri_state_value({}, v) if v is not None else "UNKNOWN"
+                return _tri_state_of(v) if v is not None else "UNKNOWN"
             max_y = pun.get("max_years")
             min_y = pun.get("min_years")
             max_pun = f"{max_y} years" if _is_number(max_y) else "Not specified"
@@ -1067,9 +1100,9 @@ class Engine:
             )
 
         parties: Dict[str, Any] = {
-            "victim_minor_status": _tri_state_value(data, "parties.victim_minor_status"),
-            "victim_age_basis": str(data.get("parties.victim_age_basis", "Age evidence not recorded")),
-            "accused_minor_status": _tri_state_value(data, "parties.accused_minor_status"),
+            "victim_minor_status": _minor_status(data, "parties.victim_minor_status"),
+            "victim_age_basis": str(resolve_path(data, "parties.victim_age_basis") or "Age evidence not recorded"),
+            "accused_minor_status": _minor_status(data, "parties.accused_minor_status"),
             "vulnerability_flags": {flag: _tri_state_value(data, f"flags.{flag}") for flag in NINE_FLAGS},
         }
 
@@ -1101,13 +1134,13 @@ class Engine:
 
         # ---- open questions ----
         open_questions: List[str] = []
-        if not data.get("offence.start_yyyymmdd"):
+        if not resolve_path(data, "offence.start_yyyymmdd"):
             open_questions.append("Offence date not provided; the applicable legal regime cannot be determined (Art. 20(1) risk).")
         if regime in ("MIXED", "UNDETERMINED"):
             open_questions.append(f"Regime is {regime}; apply transitional/savings clauses (SA-08) and verify the rule version in corpus (T-16).")
-        if data.get("parties.victim_minor_status") in ("DISPUTED", "UNDETERMINED"):
+        if _minor_status(data, "parties.victim_minor_status") in ("DISPUTED", "UNDETERMINED"):
             open_questions.append("Victim minority status disputed/undetermined — treat as minor for protective handling pending judicial determination (T-08).")
-        if data.get("parties.accused_minor_status") in ("DISPUTED", "UNDETERMINED"):
+        if _minor_status(data, "parties.accused_minor_status") in ("DISPUTED", "UNDETERMINED"):
             open_questions.append("Accused minority status disputed/undetermined — route to Juvenile Justice Board pending determination (T-09).")
         if derived.get("accused_age_band_16_17_possible") and agg.get("heinous_any"):
             open_questions.append("Accused possibly aged 16–18 with a heinous offence — JJ Act s.15 preliminary assessment may be required (T-02).")
@@ -1137,7 +1170,7 @@ class Engine:
             penalties.append("regime determination")
         if domain == "CRIMINAL":
             for fkey in ("parties.victim_minor_status", "parties.accused_minor_status"):
-                if _tri_state_value(data, fkey) in ("DISPUTED", "UNDETERMINED"):
+                if _minor_status(data, fkey) in ("DISPUTED", "UNDETERMINED"):
                     score -= 0.10
                     penalties.append(fkey)
         if final_index >= 3:

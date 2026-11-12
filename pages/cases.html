@@ -43,7 +43,15 @@
   </div>
 
   <div class="card">
-    <div id="cases-body"><div class="empty">Loading your cases…</div></div>
+    <div class="btn-row" style="margin-bottom:12px;align-items:center;gap:10px">
+      <input type="search" id="case-q" placeholder="Search reference, date, type or text…"
+             aria-label="Search your cases" style="flex:1;min-width:220px"
+             onkeydown="if(event.key==='Enter'){applySearch()}">
+      <button class="btn secondary" onclick="applySearch()"><svg class="ic sm"><use href="#i-search"></use></svg> Search</button>
+      <button class="btn secondary" onclick="clearSearch()">Clear</button>
+    </div>
+    <div id="cases-body" data-i18n-skip><div class="empty">Loading your cases…</div></div>
+    <div id="cases-pager" class="btn-row" style="margin-top:12px;align-items:center;justify-content:space-between"></div>
   </div>
 
   <div class="disclaimer"><b>Reminder:</b> each record shows the advisory response generated from your inputs.
@@ -62,18 +70,44 @@ function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&l
 function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
 const DISC={PRIVATE:'b-gray',PENDING:'b-blue',DISCLOSED:'b-green',REJECTED:'b-red'};
 
-(async()=>{
+let PAGE=1, QUERY='';
+
+function applySearch(){
+  QUERY = ($('case-q').value||'').trim();
+  PAGE = 1;
+  load();
+}
+function clearSearch(){
+  $('case-q').value='';
+  QUERY='';
+  PAGE=1;
+  load();
+}
+function goPage(n){
+  PAGE = Math.max(1, n);
+  load();
+}
+
+/* The list used to be a single LIMIT 200 with no way past it. It is now paged
+ * and searchable server-side, so every case stays reachable. */
+async function load(){
   let j;
   try{
-    const me=await requireAuth();
-    if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
-    const r=await authFetch('/api/reports');
+    const q = new URLSearchParams();
+    if(QUERY) q.set('q', QUERY);
+    q.set('page', String(PAGE));
+    q.set('size', '25');
+    const r=await authFetch('/api/reports?'+q.toString());
     if(!r.ok) throw new Error('Request failed');
     j=await r.json();
   }catch(e){ $('cases-body').innerHTML='<div class="empty">Could not load your cases. Please refresh or log in again.</div>'; return; }
+  $('cases-pager').innerHTML='';
   {
     if(!j.reports.length){
-      $('cases-body').innerHTML=`<div class="empty">No cases filed yet.<br><br>
+      $('cases-body').innerHTML = j.q
+        ? `<div class="empty">No cases match “${esc(j.q)}”.<br><br>
+             <button class="btn secondary" onclick="clearSearch()">Clear search</button></div>`
+        : `<div class="empty">No cases filed yet.<br><br>
         <a class="btn primary" href="/submit">Submit your first report <svg class="ic sm"><use href="#i-arrow-right"></use></svg></a></div>`;
       return;
     }
@@ -101,7 +135,22 @@ const DISC={PRIVATE:'b-gray',PENDING:'b-blue',DISCLOSED:'b-green',REJECTED:'b-re
           </tr>`).join('')}
         </tbody>
       </table></div>`;
+    const pages = Math.max(1, Math.ceil((j.total||0) / (j.size||25)));
+    $('cases-pager').innerHTML = `
+      <span class="small">Showing ${j.count} of ${j.total} case(s)${j.q?` matching “${esc(j.q)}”`:''} · page ${j.page} of ${pages}</span>
+      <span class="btn-row">
+        <button class="btn secondary small" ${j.page<=1?'disabled':''} onclick="goPage(${j.page-1})">← Previous</button>
+        <button class="btn secondary small" ${j.page>=pages?'disabled':''} onclick="goPage(${j.page+1})">Next →</button>
+      </span>`;
   }
+}
+
+(async()=>{
+  try{
+    const me=await requireAuth();
+    if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+  }catch(e){ return; }
+  load();
 })();
 </script>
 </body>

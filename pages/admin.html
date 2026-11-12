@@ -40,7 +40,7 @@
     <p>Strict access control: disclosure approvals, manual checks, re-evaluation, feedback review and amendment impact.</p></div>
     <span class="badge b-red">ADMIN ONLY</span>
   </div>
-  <div id="body"><div class="empty">Loading…</div></div>
+  <div id="body" data-i18n-skip><div class="empty">Loading…</div></div>
 </div>
 
 <div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
@@ -51,7 +51,6 @@
 const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
-function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
 let D=null;
 
 (async()=>{

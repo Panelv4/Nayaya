@@ -47,7 +47,17 @@
     the narrative, answers and identifying evidence details are redacted. <b>FULL</b> mode shows the complete
     record, still without account identities. No case appears here without explicit admin approval.</div></div>
 
-  <div class="card"><div id="list"><div class="empty">Loading disclosed registry…</div></div></div>
+  <div class="card">
+    <div class="btn-row" style="margin-bottom:12px;align-items:center;gap:10px">
+      <input type="search" id="disc-q" placeholder="Search reference, date, type or text…"
+             aria-label="Search disclosed cases" style="flex:1;min-width:220px"
+             onkeydown="if(event.key==='Enter'){applySearch()}">
+      <button class="btn secondary" onclick="applySearch()"><svg class="ic sm"><use href="#i-search"></use></svg> Search</button>
+      <button class="btn secondary" onclick="clearSearch()">Clear</button>
+    </div>
+    <div id="list" data-i18n-skip><div class="empty">Loading disclosed registry…</div></div>
+    <div id="disc-pager" class="btn-row" style="margin-top:12px;align-items:center;justify-content:space-between"></div>
+  </div>
 </div>
 
 <div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
@@ -59,18 +69,29 @@ const $=id=>document.getElementById(id);
 function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
 
-(async()=>{
-  // Public registry: readable with or without a session (approved cases only).
-  // Public page: never redirect anonymous visitors, just show the register.
-  const me = await bootstrapSession();
-  if(me && me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+let PAGE=1, QUERY='';
+
+function applySearch(){ QUERY=($('disc-q').value||'').trim(); PAGE=1; load(); }
+function clearSearch(){ $('disc-q').value=''; QUERY=''; PAGE=1; load(); }
+function goPage(n){ PAGE=Math.max(1,n); load(); }
+
+/* Formerly a hard LIMIT 200 straight out of the database, with no way to reach
+ * older disclosures. Now windowed and searchable server-side. */
+async function load(){
   try{
-    const r=await authFetch('/api/disclosed');
+    const q=new URLSearchParams();
+    if(QUERY) q.set('q', QUERY);
+    q.set('page', String(PAGE));
+    q.set('size', '25');
+    const r=await authFetch('/api/disclosed?'+q.toString());
     if(!r.ok) throw new Error('Could not load the registry.');
     const j=await r.json();
-    $('count-badge').textContent=j.count+' disclosed';
+    $('count-badge').textContent=(j.total||0)+' disclosed';
+    $('disc-pager').innerHTML='';
     if(!j.cases.length){
-      $('list').innerHTML='<div class="empty">No cases have been disclosed yet.<br>Disclosure requires a manual approval by an administrator.</div>';
+      $('list').innerHTML = j.q
+        ? '<div class="empty">No disclosed cases match “'+esc(j.q)+'”.<br><br><button class="btn secondary" onclick="clearSearch()">Clear search</button></div>'
+        : '<div class="empty">No cases have been disclosed yet.<br>Disclosure requires a manual approval by an administrator.</div>';
       return;
     }
     $('list').innerHTML=`<div class="table-wrap"><table>
@@ -87,7 +108,22 @@ function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return 
           <td><span class="badge ${c.disclosure_mode==='FULL'?'b-blue':'b-gray'}">${esc(c.disclosure_mode)}</span></td>
           <td><svg class="ic sm"><use href="#i-thumb-up"></use></svg> ${c.feedback_up} · <svg class="ic sm"><use href="#i-thumb-down"></use></svg> ${c.feedback_down}</td>
         </tr>`).join('')}</tbody></table></div>`;
+    const pages = Math.max(1, Math.ceil((j.total||0)/(j.size||25)));
+    $('disc-pager').innerHTML = `
+      <span class="small">Showing ${j.count} of ${j.total} disclosed case(s)${j.q?` matching “${esc(j.q)}”`:''} · page ${j.page} of ${pages}</span>
+      <span class="btn-row">
+        <button class="btn secondary small" ${j.page<=1?'disabled':''} onclick="goPage(${j.page-1})">← Previous</button>
+        <button class="btn secondary small" ${j.page>=pages?'disabled':''} onclick="goPage(${j.page+1})">Next →</button>
+      </span>`;
   }catch(e){ $('list').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; }
+}
+
+(async()=>{
+  // Public registry: readable with or without a session (approved cases only).
+  // Public page: never redirect anonymous visitors, just show the register.
+  const me = await bootstrapSession().catch(()=>null);
+  if(me && me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+  load();
 })();
 </script>
 </body>

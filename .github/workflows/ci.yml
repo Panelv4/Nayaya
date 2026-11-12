@@ -81,8 +81,12 @@ jobs:
           echo "clean: no database, evidence or credentials tracked"
 
       - name: No secrets in the tree
+        # smoke.py is excluded by path, not by a content allow-list: it holds a
+        # negative assertion that the banned default password is NOT the one
+        # server.py falls back to, so the literal must appear in that file. It
+        # is a guard against the secret, never a use of it.
         run: |
-          if git grep -n -E 'NyayaAdmin@123|password\s*=\s*"[^"]{8,}"' -- '*.py' '*.md' '*.html' '*.js' '*.json' | grep -v '_BANNED_PASSWORDS\|demo-password-1234\|TestAdminPass123\|smokepass123\|example.invalid\|nyaya.test\|nyaya.local'; then
+          if git grep -n -E 'NyayaAdmin@123|password\s*=\s*"[^"]{8,}"' -- '*.py' ':!smoke.py' '*.md' '*.html' '*.js' '*.json' | grep -v '_BANNED_PASSWORDS\|demo-password-1234\|TestAdminPass123\|smokepass123\|example.invalid\|nyaya.test\|nyaya.local'; then
             echo "::error::possible hardcoded secret in tracked files"
             exit 1
           fi
