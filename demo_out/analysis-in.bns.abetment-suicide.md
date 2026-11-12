@@ -1,6 +1,6 @@
 # Analysis — `in.bns.abetment-suicide`
 
-**Abetment of suicide — BNS 2023 s.107**
+**Abetment of suicide — BNS 2023 ss.107-108**
 
 - Review status: **encoded_unreviewed (NOT yet reviewed against the statute text)**
 - Facts: 3 · case space enumerated: **20** points
@@ -21,7 +21,7 @@ Each ambiguity is a question the text does not settle. The pack records both rea
 
 | Ambiguity | Provision | Decisions moved | Sentences moved |
 |---|---|---|---|
-| `AMB-107-MENTAL-ILLNESS` | s.107(2) | n/a (one reading recorded) | n/a |
+| `AMB-107-MENTAL-ILLNESS` | s.107 | n/a (one reading recorded) | n/a |
 
 
 ## 3. Statutory illustrations reproduced
@@ -30,14 +30,14 @@ Each ambiguity is a question the text does not settle. The pack records both rea
 
 | Illustration | Cites | Expected | Encoding | |
 |---|---|---|---|---|
-| `ILL-107-1` | s.107(1), text | abetment_suicide | abetment_suicide | pass |
-| `ILL-107-2-CHILD` | s.107(2), text | abetment_suicide_vulnerable | abetment_suicide_vulnerable | pass |
-| `ILL-107-NO-SUICIDE` | s.107, 'commission of suicide' | not an offence | not an offence | pass |
-| `ILL-107-NO-ABETMENT` | s.107, 'abets the commission' | not an offence | not an offence | pass |
-| `ILL-107-INTOXICATED` | s.107(2), text | abetment_suicide_vulnerable | abetment_suicide_vulnerable | pass |
+| `ILL-108-1` | s.108, text | abetment_suicide | abetment_suicide | pass |
+| `ILL-107-CHILD` | s.107, text | abetment_suicide_vulnerable | abetment_suicide_vulnerable | pass |
+| `ILL-NO-SUICIDE` | ss.107-108, 'commits suicide' | not an offence | not an offence | pass |
+| `ILL-NO-ABETMENT` | ss.107-108, 'abets the commission' | not an offence | not an offence | pass |
+| `ILL-107-INTOXICATED` | s.107, text | abetment_suicide_vulnerable | abetment_suicide_vulnerable | pass |
 
 ## 4. Scope
 
-**Encoded:** s.107(1) abetment of suicide (up to twelve years); s.107(2) abetment of suicide of a child, person with mental illness, delirious or intoxicated person (death, life, or ten years minimum)
+**Encoded:** s.107 abetment of suicide of a child or person with mental illness, delirious or intoxicated (death, life, or up to ten years); s.108 abetment of suicide (up to ten years)
 
-**Deliberately not encoded:** ss.100-106 homicide and negligence (separate packs in.bns.homicide, in.bns.negligence); s.108 attempt to murder (separate pack in.bns.attempt-murder); abetment generally (BNS s.45: instigation, conspiracy, aiding); sentencing discretion within the maxima
+**Deliberately not encoded:** ss.100-106 homicide and negligence (separate packs in.bns.homicide, in.bns.negligence); s.109 attempt to murder (separate pack in.bns.attempt-murder); s.110 attempt to commit culpable homicide (separate pack in.bns.attempt-culpable-homicide); abetment generally (BNS s.45: instigation, conspiracy, aiding); sentencing discretion within the maxima

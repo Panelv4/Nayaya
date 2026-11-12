@@ -41,4 +41,4 @@ Each ambiguity is a question the text does not settle. The pack records both rea
 
 **Encoded:** s.106(1) causing death by a rash or negligent act; s.106(2) causing death by dangerous driving or racing
 
-**Deliberately not encoded:** ss.100-105 culpable homicide and murder (separate pack in.bns.homicide); s.107 abetment of suicide; s.108 attempt to murder; MV Act s.184 dangerous driving (no death); sentencing discretion within the maxima
+**Deliberately not encoded:** ss.100-105 culpable homicide and murder (separate pack in.bns.homicide); ss.107-108 abetment of suicide (separate pack in.bns.abetment-suicide); s.109 attempt to murder (separate pack in.bns.attempt-murder); MV Act s.184 dangerous driving (no death); sentencing discretion within the maxima

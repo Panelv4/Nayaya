@@ -42,14 +42,14 @@ All 256 move `culpable_homicide → murder`. The tool reduces the change to a
 the reader sees the case, not a row of an enumeration. That prediction is written
 in the amendment file *before* the run; the numbers are the check on it.
 
-Three amendments ship, one of each kind, because they are different claims and
-should not be mixed:
+Four amendments ship, because they are different claims and should not be mixed:
 
 | Amendment | Kind | Decisions | Sentences |
 |---|---|---|---|
 | `amend.mv.2019-penalty` — MV Act s.185 fines raised | **real** (2019) | 0 | **273** of 732 |
 | `amend.bns.101b-generic-knowledge` — s.101(b) read down | **interpretive** | **768** of 10,752 | 0 |
 | `amend.bns.exc4-abolished` — Exception 4 repealed | **hypothetical** | **256** of 10,752 | 0 |
+| `amend.bns.106-penalty` — BNS s.106(1) penalty raised from two to five years | **real** (2024) | 0 | **4** of 30 |
 
 The first is why decisions and sentences are counted separately: a verdict-only
 comparison would report a famous amendment as a no-op.
@@ -153,8 +153,12 @@ witness.
 |---|---|---|---|
 | `in.bns.homicide` | BNS 2023 ss.100-105 and Exceptions 1-5 | 10,752 | **unreviewed** |
 | `in.bns.negligence` | BNS 2023 s.106 (negligence and dangerous driving) | 30 | **unreviewed** |
-| `in.bns.abetment-suicide` | BNS 2023 s.107 (abetment of suicide) | 20 | **unreviewed** |
-| `in.bns.attempt-murder` | BNS 2023 s.108 (attempt to murder) | 8 | **unreviewed** |
+| `in.bns.abetment-suicide` | BNS 2023 ss.107-108 (abetment of suicide) | 20 | **unreviewed** |
+| `in.bns.attempt-murder` | BNS 2023 s.109 (attempt to murder) | 16 | **unreviewed** |
+| `in.bns.attempt-culpable-homicide` | BNS 2023 s.110 (attempt to commit culpable homicide) | 8 | **unreviewed** |
+| `in.bns.organised-crime` | BNS 2023 s.111 (organised crime) | 28 | **unreviewed** |
+| `in.bns.petty-organised-crime` | BNS 2023 s.112 (petty organised crime) | 32 | **unreviewed** |
+| `in.bns.terrorist-act` | BNS 2023 s.113 (terrorist act) | 28 | **unreviewed** |
 | `in.mv.drunken-driving` | MV Act 1988 s.185, pre and post 2019 | 732 | **unreviewed** |
 
 The second pack exists to show the machinery is not specific to a penal code:

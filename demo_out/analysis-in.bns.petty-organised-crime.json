@@ -1,0 +1,141 @@
+{
+  "pack": "in.bns.petty-organised-crime",
+  "title": "Petty organised crime — BNS 2023 s.112",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 3,
+  "domain_size": 32,
+  "digest": "ee7784a2ab34b831",
+  "gaps": {
+    "pack": "in.bns.petty-organised-crime",
+    "kind": "gap",
+    "count": 0,
+    "checked": 32,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.petty-organised-crime",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 32,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.petty-organised-crime",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 32,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.petty-organised-crime",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-112-SIMILAR-ACT",
+        "provision": "s.112(1)",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-112-THEFT",
+      "cites": "s.112(1), 'theft'",
+      "text": "A gang member pick-pockets commuters: s.112, one to seven years and fine.",
+      "facts": {
+        "gang_member": true,
+        "act_type": "theft",
+        "commits": true
+      },
+      "expected": "petty_organised_crime",
+      "actual": "petty_organised_crime",
+      "ok": true
+    },
+    {
+      "id": "ILL-112-SNATCHING",
+      "cites": "s.112(1), 'snatching'",
+      "text": "A gang member snatches a phone from a pedestrian: s.112.",
+      "facts": {
+        "gang_member": true,
+        "act_type": "snatching",
+        "commits": true
+      },
+      "expected": "petty_organised_crime",
+      "actual": "petty_organised_crime",
+      "ok": true
+    },
+    {
+      "id": "ILL-112-EXAM",
+      "cites": "s.112(1), 'selling of public examination question papers'",
+      "text": "A gang sells leaked examination papers: s.112.",
+      "facts": {
+        "gang_member": true,
+        "act_type": "exam_papers",
+        "commits": true
+      },
+      "expected": "petty_organised_crime",
+      "actual": "petty_organised_crime",
+      "ok": true
+    },
+    {
+      "id": "ILL-112-NO-GANG",
+      "cites": "s.112(1), 'being a member of a group or gang'",
+      "text": "A lone thief is not petty organised crime, though theft is punishable separately.",
+      "facts": {
+        "gang_member": false,
+        "act_type": "theft",
+        "commits": true
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-112-NO-ACT",
+      "cites": "s.112(1), 'commits any act'",
+      "text": "A gang member who commits no listed act is not s.112.",
+      "facts": {
+        "gang_member": true,
+        "act_type": "none",
+        "commits": true
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-112-NO-COMMIT",
+      "cites": "s.112(1), 'commits'",
+      "text": "A gang member who does not commit the act is not s.112.",
+      "facts": {
+        "gang_member": true,
+        "act_type": "theft",
+        "commits": false
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.112(2) committing petty organised crime (one to seven years and fine)"
+    ],
+    "out_of_scope": [
+      "s.111 organised crime (separate pack in.bns.organised-crime)",
+      "s.113 terrorist act (separate pack in.bns.terrorist-act)",
+      "the underlying acts (theft, cheating, etc.) charged separately",
+      "sentencing discretion within the range"
+    ]
+  }
+}

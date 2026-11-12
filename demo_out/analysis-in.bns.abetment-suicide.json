@@ -1,6 +1,6 @@
 {
   "pack": "in.bns.abetment-suicide",
-  "title": "Abetment of suicide — BNS 2023 s.107",
+  "title": "Abetment of suicide — BNS 2023 ss.107-108",
   "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
   "facts": 3,
   "domain_size": 20,
@@ -37,7 +37,7 @@
     "ambiguities": [
       {
         "ambiguity": "AMB-107-MENTAL-ILLNESS",
-        "provision": "s.107(2)",
+        "provision": "s.107",
         "status": "unresolved",
         "variant_count": 1,
         "variants": [],
@@ -49,9 +49,9 @@
   },
   "illustrations": [
     {
-      "id": "ILL-107-1",
-      "cites": "s.107(1), text",
-      "text": "Abetting an adult's suicide: s.107(1), up to twelve years.",
+      "id": "ILL-108-1",
+      "cites": "s.108, text",
+      "text": "Abetting an adult's suicide: s.108, up to ten years.",
       "facts": {
         "suicide_occurred": true,
         "abetted": true,
@@ -62,9 +62,9 @@
       "ok": true
     },
     {
-      "id": "ILL-107-2-CHILD",
-      "cites": "s.107(2), text",
-      "text": "Abetting a child's suicide: s.107(2), the enhanced tariff.",
+      "id": "ILL-107-CHILD",
+      "cites": "s.107, text",
+      "text": "Abetting a child's suicide: s.107, death, life, or up to ten years.",
       "facts": {
         "suicide_occurred": true,
         "abetted": true,
@@ -75,9 +75,9 @@
       "ok": true
     },
     {
-      "id": "ILL-107-NO-SUICIDE",
-      "cites": "s.107, 'commission of suicide'",
-      "text": "Abetment without a suicide is not s.107.",
+      "id": "ILL-NO-SUICIDE",
+      "cites": "ss.107-108, 'commits suicide'",
+      "text": "Abetment without a suicide is not ss.107-108.",
       "facts": {
         "suicide_occurred": false,
         "abetted": true,
@@ -88,9 +88,9 @@
       "ok": true
     },
     {
-      "id": "ILL-107-NO-ABETMENT",
-      "cites": "s.107, 'abets the commission'",
-      "text": "A suicide without abetment is not s.107.",
+      "id": "ILL-NO-ABETMENT",
+      "cites": "ss.107-108, 'abets the commission'",
+      "text": "A suicide without abetment is not ss.107-108.",
       "facts": {
         "suicide_occurred": true,
         "abetted": false,
@@ -102,8 +102,8 @@
     },
     {
       "id": "ILL-107-INTOXICATED",
-      "cites": "s.107(2), text",
-      "text": "Abetting an intoxicated person's suicide: s.107(2).",
+      "cites": "s.107, text",
+      "text": "Abetting an intoxicated person's suicide: s.107.",
       "facts": {
         "suicide_occurred": true,
         "abetted": true,
@@ -116,12 +116,13 @@
   ],
   "scope": {
     "in_scope": [
-      "s.107(1) abetment of suicide (up to twelve years)",
-      "s.107(2) abetment of suicide of a child, person with mental illness, delirious or intoxicated person (death, life, or ten years minimum)"
+      "s.107 abetment of suicide of a child or person with mental illness, delirious or intoxicated (death, life, or up to ten years)",
+      "s.108 abetment of suicide (up to ten years)"
     ],
     "out_of_scope": [
       "ss.100-106 homicide and negligence (separate packs in.bns.homicide, in.bns.negligence)",
-      "s.108 attempt to murder (separate pack in.bns.attempt-murder)",
+      "s.109 attempt to murder (separate pack in.bns.attempt-murder)",
+      "s.110 attempt to commit culpable homicide (separate pack in.bns.attempt-culpable-homicide)",
       "abetment generally (BNS s.45: instigation, conspiracy, aiding)",
       "sentencing discretion within the maxima"
     ]

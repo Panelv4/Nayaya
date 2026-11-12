@@ -12,29 +12,33 @@ Plus the Motor Vehicles Act, POCSO, IT Act, and hundreds of other statutes.
 No single change can encode all of it — and a tool that claims to would be
 lying. This document says what is encoded, what is next, and in what order.
 
-## Encoded today (5 packs, 11,840 cases)
+## Encoded today (9 packs, 11,646 cases)
 
 | Pack | Provisions | Case space | Status |
 |---|---|---|---|
 | `in.bns.homicide` | BNS ss.100–105 + Exceptions 1–5 | 10,752 | encoded_unreviewed |
 | `in.bns.negligence` | BNS s.106 | 30 | encoded_unreviewed |
-| `in.bns.abetment-suicide` | BNS s.107 | 20 | encoded_unreviewed |
-| `in.bns.attempt-murder` | BNS s.108 | 8 | encoded_unreviewed |
+| `in.bns.abetment-suicide` | BNS ss.107–108 | 20 | encoded_unreviewed |
+| `in.bns.attempt-murder` | BNS s.109 | 16 | encoded_unreviewed |
+| `in.bns.attempt-culpable-homicide` | BNS s.110 | 8 | encoded_unreviewed |
+| `in.bns.organised-crime` | BNS s.111 | 28 | encoded_unreviewed |
+| `in.bns.petty-organised-crime` | BNS s.112 | 32 | encoded_unreviewed |
+| `in.bns.terrorist-act` | BNS s.113 | 28 | encoded_unreviewed |
 | `in.mv.drunken-driving` | MV Act s.185 | 732 | encoded_unreviewed |
 
-Amendments shipped: 5 (2 real penalty hikes, 1 interpretive, 1 hypothetical,
-1 real BNS re-enactment).
+Amendments shipped: 4 (2 real penalty changes, 1 interpretive, 1 hypothetical).
 
 ## Next, in order
 
 Each step is one pack (or one chapter) with illustrations, ambiguities,
 tests, and a generated `demo_out/` report — the same bar as the packs above.
 
-1. **BNS ss.109–110** — attempt to commit culpable homicide (completes the
-   homicide chapter's attempt provisions).
+1. **BNS ss.109–110** — attempt to murder and attempt to commit culpable
+   homicide. ✓ Done (packs `in.bns.attempt-murder`, `in.bns.attempt-culpable-homicide`).
 2. **BNS ss.111–113** — organised crime, petty organised crime, terrorist act.
-   New in the BNS; the organised-crime definition is contested and will yield
-   a measured ambiguity.
+   New in the BNS. ✓ Done (packs `in.bns.organised-crime`,
+   `in.bns.petty-organised-crime`, `in.bns.terrorist-act`); each records a
+   measured ambiguity about its contested definition.
 3. **BNS ss.114–125** — hurt and grievous hurt (definitions + punishments).
    The hurt/grievous line is a list, so this pack is mostly a term table with
    a boundary test.

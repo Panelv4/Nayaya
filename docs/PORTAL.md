@@ -439,7 +439,7 @@ so no test in this repository contains a working login.
 | `assets/icons.svg` | 50-icon stroke sprite (no emoji), injected inline per page |
 | `assets/auth.js`, `assets/style.css` | five-channel session relay + fetch helpers + DigiLocker panel renderer, government-portal design system |
 | `nyayacode/` | **the library**: pack format, evaluator, gap/contention/ambiguity analysis, amendment impact, CLI. See `nyayacode/README.md` |
-| `nyayacode/packs/` | encoded statutes (`in.bns.homicide`, `in.bns.negligence`, `in.bns.abetment-suicide`, `in.bns.attempt-murder`, `in.mv.drunken-driving`) and amendments. Coverage roadmap: `docs/COVERAGE.md` |
+| `nyayacode/packs/` | encoded statutes (`in.bns.homicide`, `in.bns.negligence`, `in.bns.abetment-suicide`, `in.bns.attempt-murder`, `in.bns.attempt-culpable-homicide`, `in.bns.organised-crime`, `in.bns.petty-organised-crime`, `in.bns.terrorist-act`, `in.mv.drunken-driving`) and amendments. Coverage roadmap: `docs/COVERAGE.md` |
 | `pages/engine.html` | reads `/api/engine/overview` and `/api/engine/impact` and renders the analysis |
 | `tests.py` | 125 tests: engine, Phase-1 validation, KB, access control, disclosure, revisions, feedback, evidence mapping, admin, amendment impact, DigiLocker flow |
 | `tests/test_nyayacode.py` | 52 tests: evaluator, analyser, amendments, statute encodings (homicide, negligence, MV), and negative tests that break a pack on purpose |
