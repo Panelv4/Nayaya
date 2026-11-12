@@ -1,0 +1,68 @@
+{
+  "id": "amend.bns.101b-generic-knowledge",
+  "title": "Reading s.101(b) down to generic knowledge — a proposed change to the homicide encoding",
+  "pack": "in.bns.homicide",
+  "kind": "interpretive",
+  "enacted": false,
+  "commencement": null,
+  "source": {
+    "citation": "Recorded as ambiguity AMB-101b-PARTICULARISED in the pack; this amendment is one of its two readings, turned into a first-class artefact.",
+    "url": null
+  },
+  "summary": "s.101(b) requires intention of bodily injury 'as the offender knows to be likely to cause the death of the person to whom the harm is caused'. One reading confines that knowledge to the particular victim; the other lets generic knowledge that the injury inflicted is likely to kill suffice. This amendment applies the generic reading — a bigger change to the law than most amendments, and it is the kind of change courts make silently.",
+  "before_label": "s.101(b) read as particularised (current encoding)",
+  "after_label": "s.101(b) read as satisfied by generic knowledge",
+  "before": {},
+  "after": {
+    "edit_branches": {
+      "B-100-CULPABLE-ONLY": {
+        "when": {
+          "in": [
+            {
+              "var": "mens_rea",
+              "type": "enum",
+              "default": "none"
+            },
+            [
+              "knowledge_likely_death"
+            ]
+          ]
+        }
+      }
+    },
+    "add_branches": [
+      {
+        "id": "M-101b-GENERIC",
+        "provision": "s.101(b) [generic reading]",
+        "verdict": "offence",
+        "offence": "murder",
+        "when": {
+          "and": [
+            {
+              "==": [
+                {
+                  "var": "death_caused",
+                  "type": "bool",
+                  "default": true
+                },
+                true
+              ]
+            },
+            {
+              "==": [
+                {
+                  "var": "mens_rea",
+                  "type": "enum",
+                  "default": "none"
+                },
+                "intention_injury_likely_death"
+              ]
+            }
+          ]
+        },
+        "text": "if the act ... is done with the intention of causing such bodily injury as the offender knows to be likely to cause death [generic reading]"
+      }
+    ]
+  },
+  "expected_reading": "Every case with intention of injury likely to cause death moves from culpable homicide under s.105 to murder under s.103. That is the set the two readings disagree about, and the number measures how much turns on the interpretation."
+}

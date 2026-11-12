@@ -1,0 +1,18 @@
+# Never bake live data or secrets into an image.
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+evidence/
+uploads/
+.nyaya-admin-credentials
+__pycache__/
+*.py[cod]
+.git/
+.github/
+.venv/
+venv/
+.DS_Store
+.idea/
+.vscode/
+*.swp
+*.log

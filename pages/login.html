@@ -1,0 +1,128 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Login — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links"><a class="nav-link" href="/"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Home</a></div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="auth-wrap">
+    <div class="auth-card">
+      <div class="auth-emblem"><svg class="ic"><use href="#i-scales"></use></svg></div>
+      <h1 id="auth-title">Welcome back</h1>
+      <p class="sub" id="auth-sub">Login to file a report or review your earlier cases.</p>
+
+      <div class="auth-tabs">
+        <button class="auth-tab active" id="tab-login" onclick="showTab('login')">Login</button>
+        <button class="auth-tab" id="tab-register" onclick="showTab('register')">Create account</button>
+      </div>
+
+      <!-- login -->
+      <div id="form-login">
+        <div class="field"><label for="li-email">Email</label>
+          <input type="email" id="li-email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="field"><label for="li-pass">Password</label>
+          <input type="password" id="li-pass" autocomplete="current-password" placeholder="Your password"></div>
+        <div class="btn-row" style="margin-top:14px">
+          <button class="btn primary" id="btn-login" style="flex:1" onclick="doLogin()">Login &nbsp;<svg class="ic sm"><use href="#i-arrow-right"></use></svg></button>
+        </div>
+      </div>
+
+      <!-- register -->
+      <div id="form-register" class="hidden">
+        <div class="field"><label for="rg-name">Full name</label>
+          <input type="text" id="rg-name" autocomplete="name" placeholder="As per your documents"></div>
+        <div class="field"><label for="rg-email">Email</label>
+          <input type="email" id="rg-email" autocomplete="email" placeholder="you@example.com"></div>
+        <div class="field"><label for="rg-pass">Password</label>
+          <input type="password" id="rg-pass" autocomplete="new-password" placeholder="At least 8 characters"></div>
+        <div class="field"><label for="rg-pass2">Confirm password</label>
+          <input type="password" id="rg-pass2" autocomplete="new-password" placeholder="Repeat password"></div>
+        <div class="btn-row" style="margin-top:14px">
+          <button class="btn primary" id="btn-register" style="flex:1" onclick="doRegister()">Create account &nbsp;<svg class="ic sm"><use href="#i-arrow-right"></use></svg></button>
+        </div>
+      </div>
+
+      <div class="err" id="auth-err"></div>
+    </div>
+
+    <div class="banner blue" style="margin-top:16px">
+      <span class="tag"><svg class="ic"><use href="#i-idcard"></use></svg> DigiLocker</span>
+      <div><b>DigiLocker-linked registration is coming soon.</b> A placeholder for it already exists on the
+      dashboard and report form. Once implemented, identity will be verified through DigiLocker before a report
+      can be filed, to prevent fake reports. For now, accounts are demo-grade and stored only on this local
+      prototype server.</div>
+    </div>
+  </div>
+</div>
+
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+const params=new URLSearchParams(location.search);
+function nextUrl(){ const n=params.get('next'); return (n && n.startsWith('/')) ? n : '/dashboard'; }
+function showTab(t){
+  $('tab-login').classList.toggle('active',t==='login');
+  $('tab-register').classList.toggle('active',t==='register');
+  $('form-login').classList.toggle('hidden',t!=='login');
+  $('form-register').classList.toggle('hidden',t!=='register');
+  $('auth-title').textContent = t==='login' ? 'Welcome back' : 'Create your account';
+  $('auth-sub').textContent = t==='login'
+    ? 'Login to submit a report or view your previous cases.'
+    : 'Register to submit a report and keep track of your cases.';
+  $('auth-err').style.display='none';
+}
+function fail(msg){ const e=$('auth-err'); e.textContent=msg; e.style.display='block'; }
+async function api(path,body){
+  const r=await fetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error||('Request failed ('+r.status+')'));
+  return j;
+}
+async function doLogin(){
+  $('btn-login').disabled=true;
+  try{ const j=await api('/api/login',{email:$('li-email').value.trim(),password:$('li-pass').value}); proceedWithToken(j.token); }
+  catch(e){ fail(e.message); $('btn-login').disabled=false; }
+}
+async function doRegister(){
+  const p1=$('rg-pass').value, p2=$('rg-pass2').value;
+  if(p1!==p2){ fail('Passwords do not match.'); return; }
+  $('btn-register').disabled=true;
+  try{ const j=await api('/api/register',{name:$('rg-name').value.trim(),email:$('rg-email').value.trim(),password:p1}); proceedWithToken(j.token); }
+  catch(e){ fail(e.message); $('btn-register').disabled=false; }
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Enter'){ $('form-register').classList.contains('hidden') ? doLogin() : doRegister(); }});
+if(params.get('tab')==='register') showTab('register');
+/* Already signed in on this device? Skip the form. */
+bootstrapSession().then(s=>{ if(s) go(nextUrl()); });
+</script>
+<div class="footer"><div class="frow">
+  <span>NYAYA-RAC v0.5.0 &middot; advisory decision-support prototype &middot; &copy; {{YEAR}}</span>
+  <span><a href="/disclosed">Public register</a> &middot; <a href="/">Home</a></span>
+</div></div>
+</body>
+</html>

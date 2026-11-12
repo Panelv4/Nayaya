@@ -1,0 +1,94 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Disclosed Cases — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/submit"><svg class="ic sm"><use href="#i-pen-sign"></use></svg> Submit report</a>
+      <a class="nav-link" href="/cases"><svg class="ic sm"><use href="#i-folder"></use></svg> My cases</a>
+      <a class="nav-link active" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <span id="admin-nav"></span>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-head">
+    <div><h1>Disclosed cases</h1>
+    <p>Cases an administrator has <b>manually approved for disclosure</b>. Everything else stays strictly private
+       between its owner and administrators.</p></div>
+    <span class="badge b-gray" id="count-badge">—</span>
+  </div>
+
+  <div class="banner blue"><span class="tag">Privacy</span>
+    <div>Cases disclosed in <b>ANONYMIZED</b> mode show only the role-based engine response and routing metadata —
+    the narrative, answers and identifying evidence details are redacted. <b>FULL</b> mode shows the complete
+    record, still without account identities. No case appears here without explicit admin approval.</div></div>
+
+  <div class="card"><div id="list"><div class="empty">Loading disclosed registry…</div></div></div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
+
+(async()=>{
+  // Public registry: readable with or without a session (approved cases only).
+  // Public page: never redirect anonymous visitors, just show the register.
+  const me = await bootstrapSession();
+  if(me && me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+  try{
+    const r=await authFetch('/api/disclosed');
+    if(!r.ok) throw new Error('Could not load the registry.');
+    const j=await r.json();
+    $('count-badge').textContent=j.count+' disclosed';
+    if(!j.cases.length){
+      $('list').innerHTML='<div class="empty">No cases have been disclosed yet.<br>Disclosure requires a manual approval by an administrator.</div>';
+      return;
+    }
+    $('list').innerHTML=`<div class="table-wrap"><table>
+      <thead><tr><th>Reference</th><th>Disclosed record</th><th>Incident</th><th>Type</th><th>Level</th><th>Urgency</th><th>Severity</th><th>Mode</th><th>Feedback</th></tr></thead>
+      <tbody>${j.cases.map(c=>`
+        <tr class="clickable" onclick="go('/case?id=${encodeURIComponent(c.id)}')">
+          <td><b class="mono">${esc(c.ref)}</b><div class="small" style="margin-top:3px">${esc(c.excerpt||'')}</div></td>
+          <td>${fmtDate(c.created_at)}</td>
+          <td>${esc(c.incident_date)}</td>
+          <td>${esc(c.domain)}</td>
+          <td><span class="level ${esc(c.review_level.toLowerCase())}">${esc(c.review_level)}</span></td>
+          <td><span class="badge ${c.urgency==='HIGH'?'b-red':'b-green'}">${esc(c.urgency)}</span></td>
+          <td>${esc(c.severity_tier)}</td>
+          <td><span class="badge ${c.disclosure_mode==='FULL'?'b-blue':'b-gray'}">${esc(c.disclosure_mode)}</span></td>
+          <td><svg class="ic sm"><use href="#i-thumb-up"></use></svg> ${c.feedback_up} · <svg class="ic sm"><use href="#i-thumb-down"></use></svg> ${c.feedback_down}</td>
+        </tr>`).join('')}</tbody></table></div>`;
+  }catch(e){ $('list').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; }
+})();
+</script>
+</body>
+</html>

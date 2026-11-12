@@ -1,0 +1,250 @@
+{
+  "pack": "in.bns.homicide",
+  "title": "Culpable homicide, murder and the five exceptions — BNS 2023 ss.100-105",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 10,
+  "domain_size": 10752,
+  "digest": "d02ad1751b088194",
+  "gaps": {
+    "pack": "in.bns.homicide",
+    "kind": "gap",
+    "count": 0,
+    "checked": 10752,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.bns.homicide",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 10752,
+    "points": [],
+    "designed_overrides": 1664,
+    "agreeing_matches": 0,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.bns.homicide",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 10752,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.bns.homicide",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-101b-PARTICULARISED",
+        "provision": "s.101(b)",
+        "status": "unresolved",
+        "question": "Does s.101(b) require knowledge directed at the particular victim, or is it satisfied by knowledge that injury of that kind is likely to cause death in general?",
+        "variants": [
+          {
+            "variant": "particularised",
+            "label": "read s.101(b) as particularised (current encoding)",
+            "moved": 0,
+            "sentence_moved": 0
+          },
+          {
+            "variant": "generic",
+            "label": "read s.101(b) as satisfied by generic knowledge",
+            "moved": 768,
+            "sentence_moved": 0
+          }
+        ],
+        "max_moved": 768,
+        "max_sentence_moved": 0
+      },
+      {
+        "ambiguity": "AMB-103-2-MINIMUM",
+        "provision": "s.103(2)",
+        "status": "unresolved",
+        "question": "Does s.103(2) carry a statutory floor of seven years for members of a group of five or more?",
+        "variants": [
+          {
+            "variant": "no-floor",
+            "label": "text without a floor (current encoding)",
+            "moved": 0,
+            "sentence_moved": 0
+          },
+          {
+            "variant": "seven-year-floor",
+            "label": "text with a seven-year floor",
+            "moved": 0,
+            "sentence_moved": 352
+          }
+        ],
+        "max_moved": 0,
+        "max_sentence_moved": 352
+      },
+      {
+        "ambiguity": "AMB-101d-EXCUSE",
+        "provision": "s.101(d)",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      },
+      {
+        "ambiguity": "AMB-EXC4-MUTUALITY",
+        "provision": "s.101 Exception 4",
+        "status": "unresolved",
+        "variant_count": 1,
+        "variants": [],
+        "max_moved": null,
+        "max_sentence_moved": null,
+        "note": "only one reading is recorded, so no measurement is possible yet"
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "ILL-100-a",
+      "cites": "s.100 illustration (a)",
+      "text": "A lays sticks and turf over a pit with the intention of causing death, or with the knowledge that death is likely to be thereby caused. Z treads on it, falls in and is killed.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "knowledge_likely_death",
+        "exception_state": "none"
+      },
+      "expected": "culpable_homicide",
+      "actual": "culpable_homicide",
+      "ok": true
+    },
+    {
+      "id": "ILL-100-b",
+      "cites": "s.100 illustration (b)",
+      "text": "A knows Z to be behind a bush. B does not. A induces B to fire at the bush. B fires and kills Z. B may be guilty of no offence; A has committed culpable homicide.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "none",
+        "victim_other_than_intended": true
+      },
+      "expected": "murder",
+      "actual": "murder",
+      "ok": true
+    },
+    {
+      "id": "ILL-100-c",
+      "cites": "s.100 illustration (c)",
+      "text": "A, by shooting at a fowl with intent to kill and steal it, kills B who is behind a bush, A not knowing B was there. A is not guilty of culpable homicide.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "none",
+        "exception_state": "none",
+        "victim_other_than_intended": true
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "ILL-101-c",
+      "cites": "s.101 illustration to limb (c)",
+      "text": "A intentionally gives Z a sword-cut or club-wound sufficient to cause the death of a man in the ordinary course of nature. Z dies. Here A is guilty of murder, although he may not have intended to cause Z's death.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_injury_sufficient",
+        "exception_state": "none"
+      },
+      "expected": "murder",
+      "actual": "murder",
+      "ok": true
+    },
+    {
+      "id": "ILL-101-EXC1-WRONG-VICTIM",
+      "cites": "s.101 Exception 1 illustration",
+      "text": "Y gives grave and sudden provocation to A. A fires a pistol at Y, neither intending nor knowing himself likely to kill Z, who is near but out of sight. A kills Z. A has not committed murder, but merely culpable homicide.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "grave_sudden_provocation",
+        "provocation_excluded": false,
+        "undue_advantage_cruel": false,
+        "victim_other_than_intended": true
+      },
+      "expected": "culpable_homicide",
+      "actual": "culpable_homicide",
+      "ok": true
+    },
+    {
+      "id": "ILL-101-EXC1-PROVOKED-AS-EXCUSE",
+      "cites": "s.101 Exception 1 proviso (a) illustration",
+      "text": "A, under the influence of passion excited by a provocation given by Z, intentionally kills Y, Z's child. This is murder, since the provocation was not given by the child.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "grave_sudden_provocation",
+        "provocation_excluded": true,
+        "undue_advantage_cruel": false
+      },
+      "expected": "murder",
+      "actual": "murder",
+      "ok": true
+    },
+    {
+      "id": "ILL-101-EXC2-HORSEWHIP",
+      "cites": "s.101 Exception 2 illustration",
+      "text": "Z attempts to horsewhip A. A draws a pistol. Z persists. A, believing in good faith that he can by no other means prevent himself from being horsewhipped, shoots Z dead. A has not committed murder, but only culpable homicide.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "private_defence_excess"
+      },
+      "expected": "culpable_homicide",
+      "actual": "culpable_homicide",
+      "ok": true
+    },
+    {
+      "id": "ILL-101-EXC4-SUDDEN-FIGHT",
+      "cites": "s.101 Exception 4",
+      "text": "A kills Z in a sudden fight upon a sudden quarrel without premeditation and without taking undue advantage.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "sudden_fight",
+        "undue_advantage_cruel": false
+      },
+      "expected": "culpable_homicide",
+      "actual": "culpable_homicide",
+      "ok": true
+    },
+    {
+      "id": "NEG-DISEASED-VICTIM",
+      "cites": "s.101 limb (b) illustration",
+      "text": "A, knowing Z labours under a disease that makes a blow likely to cause death, strikes him intending bodily injury. Z dies. A is guilty of murder although the blow might not have sufficed for a person in sound health.",
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_injury_known_likely_death",
+        "exception_state": "none"
+      },
+      "expected": "murder",
+      "actual": "murder",
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.100 culpable homicide",
+      "s.101 murder",
+      "s.101 Exceptions 1-5",
+      "s.102 transferred malice",
+      "s.103 punishment for murder",
+      "s.104 murder by life-convict",
+      "s.105 culpable homicide not amounting to murder"
+    ],
+    "out_of_scope": [
+      "s.106 death by negligence",
+      "s.107 abetment of suicide",
+      "s.108 attempt to murder",
+      "s.299-304 IPC (repealed 1 July 2024)",
+      "sentencing discretion (rarest-of-rare doctrine)",
+      "private defence under ss.34-44 beyond the Exception 2 excess case"
+    ]
+  }
+}

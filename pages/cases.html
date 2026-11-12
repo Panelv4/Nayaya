@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>My Cases — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/submit"><svg class="ic sm"><use href="#i-pen-sign"></use></svg> Submit report</a>
+      <a class="nav-link active" href="/cases"><svg class="ic sm"><use href="#i-folder"></use></svg> My cases</a>
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <span id="admin-nav"></span>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-head">
+    <div><h1>My cases</h1>
+    <p>Reports you have filed, newest first. Each case is <b>private to you and administrators</b> until you
+    request disclosure and an administrator manually approves it. Click any row for the full record.</p></div>
+    <div class="btn-row"><a class="btn primary" href="/submit">＋ &nbsp; Submit new report</a></div>
+  </div>
+
+  <div class="card">
+    <div id="cases-body"><div class="empty">Loading your cases…</div></div>
+  </div>
+
+  <div class="disclaimer"><b>Reminder:</b> each record shows the advisory response generated from your inputs.
+  Made a mistake in your answers? Open the case and use <b>Correct &amp; re-evaluate</b> — a new revision is
+  created with a mandatory reason, and every previous evaluation is preserved immutably in the revision history,
+  the provenance graph and the audit log. Nothing is ever silently overwritten.</div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
+const DISC={PRIVATE:'b-gray',PENDING:'b-blue',DISCLOSED:'b-green',REJECTED:'b-red'};
+
+(async()=>{
+  let j;
+  try{
+    const me=await requireAuth();
+    if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+    const r=await authFetch('/api/reports');
+    if(!r.ok) throw new Error('Request failed');
+    j=await r.json();
+  }catch(e){ $('cases-body').innerHTML='<div class="empty">Could not load your cases. Please refresh or log in again.</div>'; return; }
+  {
+    if(!j.reports.length){
+      $('cases-body').innerHTML=`<div class="empty">No cases filed yet.<br><br>
+        <a class="btn primary" href="/submit">Submit your first report <svg class="ic sm"><use href="#i-arrow-right"></use></svg></a></div>`;
+      return;
+    }
+    $('cases-body').innerHTML=`
+      <div class="table-wrap"><table>
+        <thead><tr>
+          <th>Reference</th><th>Filed</th><th>Incident date</th><th>Type</th>
+          <th>Review level</th><th>Urgency</th><th>Severity</th><th>Rev</th>
+          <th>Disclosure</th><th>Manual check</th><th>Feedback</th>
+        </tr></thead>
+        <tbody>
+        ${j.reports.map(r=>`
+          <tr class="clickable" onclick="go('/case?id=${encodeURIComponent(r.id)}')">
+            <td><b class="mono">${esc(r.ref)}</b><div class="small" style="margin-top:3px">${esc(r.excerpt||'')}</div></td>
+            <td>${fmtDate(r.created_at)}</td>
+            <td>${esc(r.incident_date)}</td>
+            <td>${esc(r.domain)}</td>
+            <td><span class="level ${esc(r.review_level.toLowerCase())}">${esc(r.review_level)}</span></td>
+            <td><span class="badge ${r.urgency==='HIGH'?'b-red':'b-green'}">${esc(r.urgency)}</span></td>
+            <td>${esc(r.severity_tier)}</td>
+            <td>${r.current_rev_no||1}</td>
+            <td><span class="badge ${DISC[r.disclosure_status]||'b-gray'}">${esc(r.disclosure_status)}</span>${r.disclosure_status==='DISCLOSED'&&r.disclosure_mode?`<div class="small">${esc(r.disclosure_mode)}</div>`:''}</td>
+            <td><span class="badge ${r.manual_check_status==='VERIFIED'?'b-green':(r.manual_check_status==='REJECTED'?'b-red':'b-gray')}">${esc(String(r.manual_check_status||'UNCHECKED').replaceAll('_',' '))}</span></td>
+            <td><svg class="ic sm"><use href="#i-thumb-up"></use></svg>${r.feedback_up} <svg class="ic sm"><use href="#i-thumb-down"></use></svg>${r.feedback_down}${r.feedback_flagged?' <span class="badge b-red"><svg class="ic"><use href="#i-flag"></use></svg> flagged</span>':''}</td>
+          </tr>`).join('')}
+        </tbody>
+      </table></div>`;
+  }
+})();
+</script>
+</body>
+</html>

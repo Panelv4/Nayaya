@@ -1,0 +1,128 @@
+{
+  "pack": "in.mv.drunken-driving",
+  "title": "Drunken driving and the 2019 penalty amendment — Motor Vehicles Act 1988 s.185",
+  "review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "facts": 4,
+  "domain_size": 732,
+  "digest": "c65b55641b27dbf4",
+  "gaps": {
+    "pack": "in.mv.drunken-driving",
+    "kind": "gap",
+    "count": 0,
+    "checked": 732,
+    "points": [],
+    "reading": "No provision decides these cases. Either the statute is silent (a real gap a legislature could close) or the encoding is incomplete (a defect in this pack). The tool cannot tell which; a human must read the provision."
+  },
+  "overlaps": {
+    "pack": "in.mv.drunken-driving",
+    "kind": "overlap",
+    "count": 0,
+    "checked": 732,
+    "points": [],
+    "designed_overrides": 0,
+    "agreeing_matches": 90,
+    "reading": "Undeclared contentions: two provisions each match and disagree, and nothing in the pack says which wins, so the result depends on evaluation order. Designed overrides (exceptions) are counted separately and are not defects."
+  },
+  "unreachable": {
+    "pack": "in.mv.drunken-driving",
+    "kind": "unreachable",
+    "count": 0,
+    "checked": 732,
+    "points": [],
+    "reading": "These provisions are unreachable given the declared facts. If the facts list is complete, the provision is either redundant or the encoding is wrong."
+  },
+  "ambiguities": {
+    "pack": "in.mv.drunken-driving",
+    "kind": "ambiguity",
+    "ambiguities": [
+      {
+        "ambiguity": "AMB-185-REPEAT-WINDOW",
+        "provision": "s.185",
+        "status": "unresolved",
+        "question": "Does the enhanced penalty for a 'second or subsequent offence' require the earlier conviction to be within three years?",
+        "variants": [
+          {
+            "variant": "no-window",
+            "label": "no window (current encoding, parameter is null)",
+            "moved": 0,
+            "sentence_moved": 0
+          },
+          {
+            "variant": "three-year-window",
+            "label": "three-year window",
+            "moved": 0,
+            "sentence_moved": 182
+          }
+        ],
+        "max_moved": 0,
+        "max_sentence_moved": 182
+      }
+    ]
+  },
+  "illustrations": [
+    {
+      "id": "MV-EXACT-THRESHOLD",
+      "cites": "s.185(1)(a), the word 'exceeding'",
+      "text": "A reading of exactly 30 mg per 100 ml does not exceed 30 mg, so the per se limb is not made out.",
+      "facts": {
+        "was_driving": true,
+        "blood_alcohol_mg": 30
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    },
+    {
+      "id": "MV-ONE-OVER",
+      "cites": "s.185(1)(a)",
+      "text": "A reading of 31 mg exceeds the threshold and completes the offence.",
+      "facts": {
+        "was_driving": true,
+        "blood_alcohol_mg": 31
+      },
+      "expected": "drunken_driving",
+      "actual": "drunken_driving",
+      "ok": true
+    },
+    {
+      "id": "MV-DRUG-INCAPABLE",
+      "cites": "s.185(1)(b)",
+      "text": "The drug limb has no numeric threshold: incapacity is the test.",
+      "facts": {
+        "was_driving": true,
+        "blood_alcohol_mg": 0,
+        "incapable_due_to_drug": true
+      },
+      "expected": "drunken_driving",
+      "actual": "drunken_driving",
+      "ok": true
+    },
+    {
+      "id": "MV-NOT-DRIVING",
+      "cites": "s.185 opening words",
+      "text": "Intoxication alone is not an offence; the section requires driving or attempting to drive.",
+      "facts": {
+        "was_driving": false,
+        "blood_alcohol_mg": 55
+      },
+      "expected": null,
+      "actual": null,
+      "ok": true
+    }
+  ],
+  "scope": {
+    "in_scope": [
+      "s.185 first offence",
+      "s.185 second or subsequent offence",
+      "the alcohol limb (30 mg per 100 ml)",
+      "the drug limb (incapacity to control)"
+    ],
+    "out_of_scope": [
+      "s.184 dangerous driving",
+      "s.203-204 breath and laboratory testing procedure",
+      "s.20 disqualification",
+      "compounding under s.200",
+      "state rules on suspension"
+    ]
+  }
+}

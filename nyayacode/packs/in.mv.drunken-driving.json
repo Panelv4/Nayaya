@@ -1,0 +1,430 @@
+{
+  "id": "in.mv.drunken-driving",
+  "title": "Drunken driving and the 2019 penalty amendment — Motor Vehicles Act 1988 s.185",
+  "jurisdiction": "IN",
+  "version": "1.0.0",
+  "review": {
+    "status": "encoded_unreviewed",
+    "by": null,
+    "on": null,
+    "method": "Encoded from the text of s.185 as amended by the Motor Vehicles (Amendment) Act, 2019. Deliberately small: the point is to show that the same analysis runs on a statute that is not a penal code, and that a purely monetary amendment can be measured."
+  },
+  "scope": {
+    "in_scope": [
+      "s.185 first offence",
+      "s.185 second or subsequent offence",
+      "the alcohol limb (30 mg per 100 ml)",
+      "the drug limb (incapacity to control)"
+    ],
+    "out_of_scope": [
+      "s.184 dangerous driving",
+      "s.203-204 breath and laboratory testing procedure",
+      "s.20 disqualification",
+      "compounding under s.200",
+      "state rules on suspension"
+    ]
+  },
+  "sources": [
+    {
+      "id": "mv-1988",
+      "citation": "Motor Vehicles Act, 1988, s.185 (as amended)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/1798",
+      "kind": "primary"
+    },
+    {
+      "id": "mv-amendment-2019",
+      "citation": "Motor Vehicles (Amendment) Act, 2019 (Act 32 of 2019)",
+      "url": "https://www.indiacode.nic.in/handle/123456789/11691",
+      "kind": "primary",
+      "note": "Raised the first-offence fine from Rs 2,000 to Rs 10,000 and the subsequent-offence fine from Rs 3,000 to Rs 15,000. Custodial ceilings unchanged."
+    },
+    {
+      "id": "commentary-185",
+      "citation": "Secondary notes on s.185 post-2019",
+      "url": "https://www.legalrepublic.in/everyday-law/drunk-driving-new-mv-act/",
+      "kind": "secondary",
+      "note": "This note still describes the enhanced penalty as applying to a second offence 'within three years'. The words of the sub-section as amended in 2019 contain no such window. The disagreement is recorded as an ambiguity rather than resolved."
+    }
+  ],
+  "citations": [
+    "mv-1988#s185",
+    "mv-amendment-2019"
+  ],
+  "facts": [
+    {
+      "name": "was_driving",
+      "type": "bool",
+      "label": "Driving or attempting to drive a motor vehicle on a public place"
+    },
+    {
+      "name": "blood_alcohol_mg",
+      "type": "int",
+      "label": "Blood alcohol, mg per 100 ml (30 is the statutory threshold)",
+      "range": [
+        0,
+        60
+      ]
+    },
+    {
+      "name": "incapable_due_to_drug",
+      "type": "bool",
+      "label": "Under the influence of a drug to the extent of being incapable of exercising proper control"
+    },
+    {
+      "name": "prior_conviction",
+      "type": "enum",
+      "label": "Previous conviction under s.185",
+      "values": [
+        "none",
+        "within_three_years",
+        "more_than_three_years"
+      ],
+      "value_labels": {
+        "none": "none",
+        "within_three_years": "one, within three years",
+        "more_than_three_years": "one, more than three years ago"
+      }
+    }
+  ],
+  "terms": [
+    {
+      "id": "T-per-se",
+      "term": "per se limit",
+      "definition": "Once blood alcohol exceeds 30 mg per 100 ml the offence is complete; there is no separate need to prove bad driving.",
+      "citations": [
+        "mv-1988#s185"
+      ]
+    }
+  ],
+  "parameters": {
+    "first_offence_fine_rupees": 10000,
+    "subsequent_fine_rupees": 15000,
+    "first_offence_max_months": 6,
+    "subsequent_max_months": 24,
+    "repeat_window_years": null,
+    "first_threshold_mg": 30
+  },
+  "branches": [
+    {
+      "id": "MV-NO-DRIVING",
+      "provision": "s.185",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "==": [
+          {
+            "var": "was_driving",
+            "type": "bool",
+            "default": true
+          },
+          false
+        ]
+      },
+      "text": "Whoever, while driving, or attempting to drive, a motor vehicle ...",
+      "notes": "Sleeping in a parked car, or driving on private land outside the Act's public-place requirement, falls outside s.185."
+    },
+    {
+      "id": "MV-ALCOHOL-LIMB",
+      "provision": "s.185(1)(a)",
+      "verdict": "offence",
+      "offence": "drunken_driving",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "was_driving",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            ">": [
+              {
+                "var": "blood_alcohol_mg",
+                "type": "int",
+                "default": 0
+              },
+              {
+                "var": "param.first_threshold_mg",
+                "type": "int",
+                "default": 30
+              }
+            ]
+          }
+        ]
+      },
+      "text": "has, in his blood, alcohol exceeding 30 mg per 100 ml of blood detected in a test by a breath analyser, or in any other test including a laboratory test",
+      "notes": "Strictly 'exceeding': exactly 30 mg is not an offence. The threshold is a parameter so an amendment to it can be measured."
+    },
+    {
+      "id": "MV-DRUG-LIMB",
+      "provision": "s.185(1)(b)",
+      "verdict": "offence",
+      "offence": "drunken_driving",
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "was_driving",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "incapable_due_to_drug",
+                "type": "bool",
+                "default": false
+              },
+              true
+            ]
+          }
+        ]
+      },
+      "text": "is under the influence of a drug to such an extent as to be incapable of exercising proper control over the vehicle"
+    },
+    {
+      "id": "MV-LAWFUL",
+      "provision": "s.185",
+      "verdict": "not_offence",
+      "offence": null,
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "was_driving",
+                "type": "bool",
+                "default": true
+              },
+              true
+            ]
+          },
+          {
+            "<=": [
+              {
+                "var": "blood_alcohol_mg",
+                "type": "int",
+                "default": 0
+              },
+              {
+                "var": "param.first_threshold_mg",
+                "type": "int",
+                "default": 30
+              }
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "incapable_due_to_drug",
+                "type": "bool",
+                "default": false
+              },
+              false
+            ]
+          }
+        ]
+      },
+      "text": "Below the statutory threshold and not incapacitated: the conduct described in s.185 is not made out.",
+      "notes": "Explicit fall-through. Without it the analyser would report lawful driving as a gap in the rules, which it is not."
+    }
+  ],
+  "defeaters": [],
+  "outcomes": {
+    "not_offence": {
+      "label": "Not an offence under s.185",
+      "provision": null
+    },
+    "offence": {
+      "label": "Offence under s.185",
+      "provision": "mv-1988#s185"
+    },
+    "indeterminate": {
+      "label": "No provision applies — encoding gap",
+      "provision": null
+    }
+  },
+  "punishment_rules": [
+    {
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "offence_kind",
+                "type": "str",
+                "default": ""
+              },
+              "drunken_driving"
+            ]
+          },
+          {
+            "!=": [
+              {
+                "var": "prior_conviction",
+                "type": "enum",
+                "default": "none"
+              },
+              "none"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "param.repeat_window_years",
+                "type": "int",
+                "default": 0
+              },
+              0
+            ]
+          }
+        ]
+      },
+      "text": "Second or subsequent offence: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, post-2019]",
+      "citations": [
+        "mv-1988#s185",
+        "mv-amendment-2019"
+      ]
+    },
+    {
+      "when": {
+        "and": [
+          {
+            "==": [
+              {
+                "var": "offence_kind",
+                "type": "str",
+                "default": ""
+              },
+              "drunken_driving"
+            ]
+          },
+          {
+            "==": [
+              {
+                "var": "prior_conviction",
+                "type": "enum",
+                "default": "none"
+              },
+              "within_three_years"
+            ]
+          }
+        ]
+      },
+      "text": "Second or subsequent offence within three years: imprisonment up to 24 months, or fine of Rs 15,000, or both [s.185, three-year window reading]",
+      "citations": [
+        "mv-1988#s185",
+        "commentary-185"
+      ]
+    },
+    {
+      "when": {
+        "==": [
+          {
+            "var": "offence_kind",
+            "type": "str",
+            "default": ""
+          },
+          "drunken_driving"
+        ]
+      },
+      "text": "First offence: imprisonment up to 6 months, or fine of Rs 10,000, or both [s.185, post-2019]",
+      "citations": [
+        "mv-1988#s185",
+        "mv-amendment-2019"
+      ]
+    }
+  ],
+  "ambiguities": [
+    {
+      "id": "AMB-185-REPEAT-WINDOW",
+      "provision": "s.185",
+      "status": "unresolved",
+      "question": "Does the enhanced penalty for a 'second or subsequent offence' require the earlier conviction to be within three years?",
+      "why_it_matters": "If a window applies, an offender convicted four years ago is sentenced under the first-offence tariff (Rs 10,000, up to 6 months). If not, the enhanced tariff (Rs 15,000, up to 24 months) applies for life. Same facts, different sentence and different maximum custody.",
+      "position_a": "No window: the 2019 amendment removed the limiting words; the enhanced penalty applies to any second offence.",
+      "position_b": "Three-year window: the enhanced penalty applies only to an offence committed within three years of the previous similar offence.",
+      "resolution": null,
+      "citations": [
+        "mv-1988#s185",
+        "mv-amendment-2019",
+        "commentary-185"
+      ],
+      "variants": [
+        {
+          "id": "no-window",
+          "label": "no window (current encoding, parameter is null)",
+          "patch": {}
+        },
+        {
+          "id": "three-year-window",
+          "label": "three-year window",
+          "patch": {
+            "parameters": {
+              "repeat_window_years": 3
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "illustrations": [
+    {
+      "id": "MV-EXACT-THRESHOLD",
+      "cites": "s.185(1)(a), the word 'exceeding'",
+      "facts": {
+        "was_driving": true,
+        "blood_alcohol_mg": 30
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "A reading of exactly 30 mg per 100 ml does not exceed 30 mg, so the per se limb is not made out."
+    },
+    {
+      "id": "MV-ONE-OVER",
+      "cites": "s.185(1)(a)",
+      "facts": {
+        "was_driving": true,
+        "blood_alcohol_mg": 31
+      },
+      "expect": {
+        "offence_kind": "drunken_driving"
+      },
+      "text": "A reading of 31 mg exceeds the threshold and completes the offence."
+    },
+    {
+      "id": "MV-DRUG-INCAPABLE",
+      "cites": "s.185(1)(b)",
+      "facts": {
+        "was_driving": true,
+        "blood_alcohol_mg": 0,
+        "incapable_due_to_drug": true
+      },
+      "expect": {
+        "offence_kind": "drunken_driving"
+      },
+      "text": "The drug limb has no numeric threshold: incapacity is the test."
+    },
+    {
+      "id": "MV-NOT-DRIVING",
+      "cites": "s.185 opening words",
+      "facts": {
+        "was_driving": false,
+        "blood_alcohol_mg": 55
+      },
+      "expect": {
+        "offence_kind": null
+      },
+      "text": "Intoxication alone is not an offence; the section requires driving or attempting to drive."
+    }
+  ]
+}

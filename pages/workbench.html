@@ -1,0 +1,342 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg"><title>Technical Workbench — NYAYA-RAC v0.5.0 · engine v0.2.0</title>
+<style>
+:root{--ink:#1f2937;--muted:#6b7280;--green:#15803d;--green-bg:#ecfdf5;--line:#e5e7eb;--bg:#f9fafb;--red:#b91c1c;--red-bg:#fef2f2;--amber:#d97706;--amber-bg:#fef3c7}
+* {box-sizing:border-box} html,body{margin:0;padding:0;background:var(--bg);color:var(--ink);font-family:ui-sans-serif,-apple-system,BlinkMacSystemFont,Segoe UI,system-ui,sans-serif;font-size:14px;line-height:1.5}
+button,input,select,textarea{font:inherit}
+#app{max-width:1200px;margin:0 auto;padding:0 20px 40px}
+.header{border-bottom:1px solid var(--line);background:#fff;padding:16px 0;display:flex;align-items:center;gap:16px;flex-wrap:wrap;justify-content:space-between}
+.header h1{font-size:17px;margin:0;font-weight:700;letter-spacing:-.4px;color:#111827}
+.header .sub{font-size:12px;color:var(--muted);margin-top:3px}
+.banner{background:var(--amber-bg);border:1px solid var(--line);color:#7c3a0e;padding:12px 16px;border-radius:8px;font-size:12px;line-height:1.55;display:flex;gap:12px;align-items:flex-start;margin-bottom:16px}
+.banner b{color:#92400e}
+.banner .tag{font-weight:700;text-transform:uppercase;font-size:10px;letter-spacing:.06em}
+.tabs{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px;border-bottom:1px solid var(--line);padding-bottom:8px}
+.tab{border:1px solid var(--line);background:#fff;color:#374151;padding:8px 14px;border-radius:6px 6px 0 0;font-size:13px;font-weight:600;cursor:pointer}
+.tab.active{border-bottom:2px solid var(--green);color:var(--green);background:#f0fdf4}
+.tab:hover{background:#f3f4f6}
+.card{background:#fff;border:1px solid var(--line);border-radius:8px;padding:16px;margin-bottom:16px;box-shadow:0 1px 2px rgba(0,0,0,.03)}
+.card h2{font-size:14px;margin:0 0 10px;display:flex;align-items:center;gap:8px;font-weight:700;color:#111827}
+.card h2 small{font-weight:400;font-size:11px;color:var(--muted);font-weight:500;text-transform:uppercase;letter-spacing:.06em}
+.row{display:flex;gap:12px;flex-wrap:wrap}
+.col{flex:1 1 260px;min-width:220px}
+.field{margin-bottom:10px}
+.field label{display:block;font-size:12px;font-weight:600;color:#374151;margin-bottom:5px}
+textarea,input,select{width:100%;border:1px solid #d1d5db;background:#fff;border-radius:6px;padding:8px 10px;font-size:13px;color:#111827;min-height:38px}
+textarea{resize:vertical;min-height:140px;font-family:ui-monospace,SFMono-Regular,Menlo,monospace}
+textarea:focus,input:focus,select:focus{border-color:#2563eb;outline:3px solid #dbeafe}
+.btn{background:#111827;color:#fff;border:0;padding:10px 18px;border-radius:6px;font-size:13px;font-weight:600;cursor:pointer}
+.btn:hover{background:#374151}
+.btn.primary{background:var(--green)}
+.btn.primary:hover{background:#166534}
+.btn.small{padding:6px 12px;font-size:12px}
+.btn.secondary{background:#fff;border:1px solid var(--line);color:#374151}
+.btn.secondary:hover{background:#f3f4f6}
+.btn:disabled{opacity:.55;cursor:not-allowed}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:10px}
+.kv{font-size:12px;color:#374151;margin:4px 0}
+.kv b{color:#111827}
+table{width:100%;border-collapse:collapse;font-size:12px;margin-top:8px}
+th,td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}
+th{background:#f3f4f6;font-weight:700;color:#374151;font-size:11px;text-transform:uppercase;letter-spacing:.05em}
+.tr{font-family:ui-monospace,monospace;font-size:11px;color:#166534;background:#f0fdf4;padding:2px 5px;border-radius:4px;display:inline-block}
+.tf{background:#fef2f2;color:#b91c1c}
+.tu{background:#fef3c7;color:#92400e}
+.level{font-family:ui-monospace,monospace;font-size:13px;font-weight:700;padding:4px 10px;border-radius:6px;display:inline-block}
+.l0{background:#f0fdf4;color:#15803d}.l1{background:#eff6ff;color:#1e40af}.l2{background:#fef3c7;color:#92400e}.l3{background:#fee2e2;color:#991b1b}
+.badge{font-size:10px;letter-spacing:.06em;text-transform:uppercase;font-weight:700;padding:2px 8px;border-radius:10px}
+.bmode{background:#e5e7eb;color:#374151}.bpro{background:#dbeafe;color:#1e40af}
+.pre{white-space:pre-wrap;word-break:break-all;background:#f3f4f6;border:1px solid var(--line);border-radius:6px;padding:12px;font-family:ui-monospace,monospace;font-size:12px;overflow:auto}
+.small{font-size:12px;color:var(--muted)}
+.err{color:var(--red);background:var(--red-bg);border:1px solid #fecaca;padding:10px;border-radius:6px;font-size:12px;display:none;margin-top:8px}
+.ok{color:var(--green);background:var(--green-bg);border:1px solid #bbf7d0;padding:10px;border-radius:6px;font-size:12px;display:none;margin-top:8px}
+.hidden{display:none!important}
+.muted{color:var(--mixed)}
+.json-key{color:#7c3aed}
+.json-str{color:#166534}
+.json-num{color:#1d4ed8}
+.json-bool{color:#be185d}
+.json-null{color:#6b7280;font-style:italic}
+.scope{font-size:11px;color:#6b7280;background:#f3f4f6;padding:4px 8px;border-radius:4px;display:inline-block;margin-left:6px}
+.disclaimer{border:1px solid var(--line);background:#fff;border-radius:8px;padding:14px 16px;font-size:12px;color:#374151;margin-top:8px}
+.disclaimer b{color:#111827}
+.audit th:nth-child(2),.audit td:nth-child(2){white-space:nowrap}
+.empty{color:var(--muted);font-size:13px;padding:24px;text-align:center}
+</style>
+<style>{{STYLE}}</style>
+</head><body>
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Technical console</span>
+  <span class="spacer"></span>
+  <a href="/dashboard">Citizen portal</a>
+  <span class="dot">&middot;</span>
+  <span>Restricted &middot; administrators only</span>
+</div></div>
+<div id="app">
+  <header class="header">
+    <div>
+      <h1><svg class="ic"><use href="#i-cog"></use></svg> Technical Workbench <span class="badge b-gray">engine v0.2.0</span></h1>
+      <div class="sub">Rules-as-Code engine tester · Schema &amp; Rules · Audit Log · runtime variables removed from UI (derived server-side)</div>
+    </div>
+    <div id="chip" class="badge bmode hidden">EMBEDDED DEMO</div>
+    <a class="btn secondary small" href="/" style="margin-left:8px"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Citizen portal</a>
+  </header>
+
+  <div class="banner">
+    <span class="tag">decision support only</span>
+    <div><b>Not a judge, adjudicator, or sentencing authority.</b> Every output is advisory and subject to human review at the computed level. No guilt, sentence, compensation, bail recommendation, or credibility assessment is ever produced. Statutory citations must be verified against an official corpus.</div>
+  </div>
+
+  <div class="tabs">
+    <button class="tab active" onclick="openTab('evaluate')">Evaluate</button>
+    <button class="tab" onclick="openTab('schema')">Schema &amp; Rules</button>
+    <button class="tab" onclick="openTab('audit')">Audit Log</button>
+  </div>
+
+  <section id="view-evaluate" class="card hidden">
+    <h2>Case Facts <span class="badge bmode" id="mode-badge"></span></h2>
+    <div class="row">
+      <div class="col">
+        <div class="field">
+          <label>Case ID <span class="scope">optional</span></label>
+          <input id="case-id" placeholder="auto-generated if blank">
+        </div>
+        <div class="field">
+          <label>Task class</label>
+          <select id="task-class">
+            <option value="SUBSTANTIVE">SUBSTANTIVE</option>
+            <option value="CLERICAL_DETERMINISTIC">CLERICAL_DETERMINISTIC</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Domain</label>
+          <select id="domain">
+            <option value="CRIMINAL">CRIMINAL</option>
+            <option value="CIVIL">CIVIL</option>
+            <option value="FAMILY">FAMILY</option>
+            <option value="CONSTITUTIONAL">CONSTITUTIONAL</option>
+            <option value="OTHER">OTHER</option>
+          </select>
+        </div>
+        <div class="field">
+          <label>Offence start date (YYYY-MM-DD)</label>
+          <input id="offence-start" type="date">
+        </div>
+        <div class="field">
+          <label>Offence end date (YYYY-MM-DD) <span class="scope">optional</span></label>
+          <input id="offence-end" type="date">
+        </div>
+        <div class="field">
+          <label>Party facts (JSON)</label>
+          <textarea id="facts-json" placeholder='{
+  "parties": {
+    "victim_minor_status": "CONFIRMED_MINOR",
+    "accused_minor_status": "CONFIRMED_ADULT",
+    "accused_age_min": 24,
+    "accused_age_max": 24
+  },
+  "flags": {
+    "woman_victim_sexual_offence": "TRUE",
+    "in_custody": true
+  },
+  "is_sexual_offence": true,
+  "touches_personal_liberty": true,
+  "offences": [
+    {"provision":"s.3","statute":"BNS","max_punishment":"7 years","verified_in_corpus":true}
+  ]
+}'></textarea>
+        </div>
+        <div class="row" style="margin-top:8px">
+          <button class="btn primary" id="btn-evaluate" onclick="runEvaluate()">Evaluate &rarr;</button>
+          <button class="btn secondary small" onclick="fillExample()">Fill example</button>
+        </div>
+        <div id="evaluate-err" class="err"></div>
+      </div>
+      <div class="col">
+        <div class="banner blue" style="margin:0 0 12px">
+          <span class="tag">Removed</span>
+          <div><b>Runtime variables (JSON) has been removed from this UI.</b> In the citizen intake flow
+          (<a href="/submit">/submit</a>), the few runtime values the engine needs (legal-aid status, custody)
+          are derived server-side from the victim's plain-language answers. This technical form evaluates
+          <code>facts</code> only.</div>
+        </div>
+        <div class="field">
+          <label>Retrieved sources (JSON array) <span class="scope">for citation verification</span></label>
+          <textarea id="sources-json" placeholder='[{"source_id":"BNS-s3","statute":"BNS","section":"s.3","version":"2024-07-01","effective_from":"20240701","text":"..."}]'></textarea>
+        </div>
+        <div class="field">
+          <label>Rule base override (path)</label>
+          <input id="rule-base-path" placeholder="/absolute/path/to/nyaya-rac-rule-base.json">
+          <div class="small">Reloads the rule base from this file. Relative to workspace.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-result" class="card hidden">
+    <h2>Output <button class="btn small secondary" onclick="hideResult()">Back</button></h2>
+    <div id="result-summary" class="row" style="margin-bottom:12px"></div>
+    <div class="grid">
+      <div class="col">
+        <div class="field"><label>Manual review level</label><div id="out-level" class="level l1">L1</div></div>
+        <div class="field"><label>Escalate to</label><div class="kv" id="out-escalate">-</div></div>
+        <div class="field"><label>Urgency</label><div class="kv" id="out-urgency">-</div></div>
+        <div class="field"><label>Confidence</label><div class="kv" id="out-conf">-</div></div>
+        <div class="field"><label>Rule base version</label><div class="kv" id="out-version">-</div></div>
+      </div>
+      <div class="col">
+        <div id="out-label" class="kv hidden" style="background:#fef3c7;border:1px solid #fcd34d;padding:8px;border-radius:6px">NOT FOR RELIANCE WITHOUT JUDICIAL REVIEW</div>
+        <div class="field"><label>Second reviewer required</label><div class="kv" id="out-second">-</div></div>
+        <div class="field"><label>Severity (routing only)</label><div class="kv" id="out-severity">-</div></div>
+        <div class="field"><label>Regime</label><div class="kv" id="out-regime">-</div></div>
+        <div class="field"><label>Case ID</label><div class="kv" id="out-case">-</div></div>
+      </div>
+    </div>
+
+    <div class="row">
+      <div class="col">
+        <div class="field"><label>Triggers fired</label>
+          <div id="out-triggers" class="kv">none</div>
+        </div>
+        <div class="field"><label>Open questions for judicial officer</label>
+          <div id="out-questions" class="kv">none</div>
+        </div>
+        <div class="field"><label>Constitutional flags</label>
+          <div id="out-flags" class="kv">none</div>
+        </div>
+      </div>
+      <div class="col">
+        <div class="field"><label>Validators</label>
+          <div id="out-validators" class="kv">-</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="field"><label>Full output JSON</label><textarea id="out-json" readonly style="min-height:220px"></textarea></div>
+    <div class="disclaimer"><b>Limitations:</b> <span id="out-limitations"></span></div>
+  </section>
+
+  <section id="view-schema" class="card hidden">
+    <h2>Schema &amp; rule base <button class="btn small secondary" onclick="loadSchema()">Refresh</button></h2>
+    <div id="schema-body" class="kv">loading&hellip;</div>
+    <div style="margin-top:12px">
+      <button class="btn secondary small" onclick="collapse('schema-detail')">Toggle detail</button>
+      <div id="schema-detail" class="hidden" style="margin-top:10px">
+        <div class="field"><label>Output schema</label><textarea id="schema-out" readonly style="min-height:260px"></textarea></div>
+      </div>
+    </div>
+  </section>
+
+  <section id="view-audit" class="card hidden">
+    <h2>Audit log <button class="btn small secondary" onclick="loadAudit()">Refresh</button></h2>
+    <div id="audit-body" class="kv">loading&hellip;</div>
+  </section>
+
+  <section class="disclaimer">
+    <b>Scope:</b> NYAYA-RAC performs deterministic routing, tri-state logic, severity computation, and review-level escalation only. It does not interpret ambiguous provisions, predict outcomes, assess credibility, or replace judicial discretion. All provisions marked <code>NOT VERIFIED IN CORPUS</code> require manual verification against an authoritative legal source. Inputs are treated as untrusted data. Review records do not alter underlying law or approved rules.
+  </section>
+</div>
+<script>{{AUTH}}</script>
+<script>
+const el=id=>document.getElementById(id);
+function openTab(name){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el('view-evaluate').classList.add('hidden');
+  el('view-result').classList.add('hidden');
+  el('view-schema').classList.add('hidden');
+  el('view-audit').classList.add('hidden');
+  el('view-'+name).classList.remove('hidden');
+  if(name==='schema') loadSchema();
+  if(name==='audit') loadAudit();
+}
+function hideResult(){ el('view-result').classList.add('hidden'); el('view-evaluate').classList.remove('hidden'); }
+function collapse(id){ el(id).classList.toggle('hidden'); }
+
+async function api(path, body){
+  const r=await authFetch(path,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+  if(!r.ok){ const t=await r.text(); throw new Error(t||r.status); }
+  return r.json();
+}
+async function runEvaluate(){
+  const btn=el('btn-evaluate'); const err=el('evaluate-err'); err.style.display='none';
+  let facts={}, sources=[], ruleBasePath=null;
+  try{ facts=el('facts-json').value.trim()?JSON.parse(el('facts-json').value):{}; }catch(e){ err.textContent='Party facts JSON invalid: '+e.message; err.style.display='block'; return; }
+  try{ sources=el('sources-json').value.trim()?JSON.parse(el('sources-json').value):[]; if(!Array.isArray(sources))throw('not array'); }catch(e){ err.textContent='Retrieved sources JSON invalid: '+e.message; err.style.display='block'; return; }
+  if(el('rule-base-path').value.trim()) ruleBasePath=el('rule-base-path').value.trim();
+  btn.disabled=true; btn.textContent='Evaluating&hellip;';
+  try{
+    const res=await api('/evaluate',{case_id:el('case-id').value.trim()||undefined,facts,runtime_variables:{},retrieved_sources:sources, rule_base_path: ruleBasePath || undefined });
+    if(res.rule_base_mode){
+      const chip=el('chip'); chip.textContent=res.rule_base_mode==='LOADED_RULE_BASE'?'LOADED RULE BASE':'EMBEDDED DEMO';
+      chip.className='badge '+ (res.rule_base_mode==='LOADED_RULE_BASE'?'bpro':'bmode'); chip.classList.remove('hidden');
+      el('mode-badge').textContent=chip.textContent;
+    }
+    showResult(res);
+  }catch(e){ err.textContent='Evaluation failed: '+e.message; err.style.display='block'; }finally{ btn.disabled=false; btn.textContent='Evaluate &rarr;'; }
+}
+function fillExample(){
+  el('facts-json').value=JSON.stringify({
+    task_class:'SUBSTANTIVE', domain:'CRIMINAL',
+    'offence.start_yyyymmdd':20250810, 'offence.end_yyyymmdd':20250810,
+    parties:{ victim_minor_status:'CONFIRMED_MINOR', accused_minor_status:'CONFIRMED_ADULT', accused_age_min:16, accused_age_max:17 },
+    flags:{ woman_victim_sexual_offence:'TRUE', in_custody:true },
+    is_sexual_offence:true, touches_personal_liberty:true,
+    offences:[{provision:'s.3',statute:'BNS',max_punishment:'7 years',verified_in_corpus:true}]
+  },null,2);
+  el('sources-json').value='[{\"source_id\":\"BNS-s3\",\"statute\":\"BNS\",\"section\":\"s.3\",\"version\":\"2024-07-01\",\"effective_from\":\"20240701\",\"text\":\"...\"}]';
+}
+function showResult(res){
+  const o=res.output, m=o.manual_review;
+  el('view-evaluate').classList.add('hidden'); el('view-result').classList.remove('hidden');
+  const lvl=el('out-level'); lvl.textContent=m.required_level; lvl.className='level l'+m.required_level.slice(1);
+  el('out-escalate').textContent=m.escalate_to;
+  el('out-urgency').textContent=m.urgency+(m.urgency_reason?' — '+m.urgency_reason:'');
+  el('out-conf').textContent=o.confidence.overall+' ('+o.confidence.weakest_element+')';
+  el('out-version').textContent=o.rule_base_version;
+  el('out-case').textContent=o.case_id;
+  el('out-severity').textContent=o.severity.final_tier+' (base '+o.severity.base_tier+', modifiers '+o.severity.modifiers_applied.join(', ')||'none'+')';
+  el('out-regime').textContent=o.legal_regime.applicable+' — '+o.legal_regime.basis;
+  el('out-label').classList.toggle('hidden', !m.label);
+  el('out-second').textContent=m.second_reviewer_required?'YES':'NO';
+  el('out-triggers').innerHTML=m.triggers_fired.length?m.triggers_fired.map(t=>'<span class="tr">'+t.id+' '+t.level+'</span> '+esc(t.reason)+' <span class="small">'+esc(t.evidence_ref)+'</span>').join('<br>'):'none';
+  el('out-questions').innerHTML=o.open_questions_for_judicial_officer.map(q=>'&bull; '+esc(q)).join('<br>');
+  el('out-flags').innerHTML=o.constitutional_flags.length?o.constitutional_flags.map(f=>esc(f.article)+': '+esc(f.concern)).join('<br>'):'none';
+  el('out-validators').innerHTML=res.validators.map(v=>'<div style="margin-bottom:6px"><span class="'+(v.status==='passed'?'tr':'tf')+'">'+v.id+' '+v.status.toUpperCase()+'</span> '+esc(v.name)+': '+esc(v.detail)+'</div>').join('');
+  el('out-json').value=JSON.stringify(o,null,2);
+  el('out-limitations').textContent=o.limitations;
+}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+
+async function loadSchema(){
+  try{
+    const r=await authFetch('/schema'); const s=await r.json();
+    el('schema-body').innerHTML='<div class="row"><div class="col"><div class="kv"><b>Mode:</b> <span class="badge '+ (s.mode==='LOADED_RULE_BASE'?'bpro':'bmode')+'">'+s.mode+'</span></div><div class="kv"><b>Version:</b> '+s.rule_base_version+'</div><div class="kv"><b>System:</b> '+esc(s.meta?.title||'')+'</div><div class="kv"><b>Status:</b> '+esc(s.meta?.status||'')+'</div></div><div class="col"><div class="kv"><b>Jurisdiction:</b> '+esc(s.meta?.jurisdiction||'')+'</div><div class="kv"><b>Confidence threshold:</b> '+s.config?.confidence_threshold+'</div><div class="kv"><b>Heinous min (yrs):</b> '+s.config?.heinous_min_punishment_years+'</div><div class="kv"><b>Regime cutover:</b> '+s.config?.regime_cutover_yyyymmdd+'</div></div></div>';
+    const sev=s.severity||{};
+    let html='<h3 style="font-size:13px;margin:14px 0 6px">Tiers</h3><table><tr><th>Tier</th><th>Definition</th></tr>'+(sev.tier_definitions||[]).map(t=>'<tr><td><b>'+esc(t.tier)+'</b></td><td>'+esc(t.definition||'')+'</td></tr>').join('')+'</table>';
+    html+='<h3 style="font-size:13px;margin:14px 0 6px">Triggers</h3><table class="audit"><tr><th>ID</th><th>Level</th><th>Name</th><th>Category</th></tr>'+(s.triggers||[]).map(t=>'<tr><td><b>'+esc(t.id)+'</b></td><td class="tr">'+esc(t.level)+'</td><td>'+esc(t.name)+'</td><td>'+esc(t.category||'')+'</td></tr>').join('')+'</table>';
+    el('schema-body').innerHTML+=html;
+    el('schema-out').value=JSON.stringify(s.output_schema||{},null,2);
+  }catch(e){ el('schema-body').textContent='Failed to load schema: '+e.message; }
+}
+async function loadAudit(){
+  try{
+    const r=await authFetch('/audit'); const d=await r.json();
+    const rows=d.audit||[];
+    if(!rows.length){ el('audit-body').innerHTML='<div class="empty">No audit events yet.</div>'; return; }
+    let html='<table class="audit"><tr><th>At (UTC)</th><th>Case ID</th><th>Level</th><th>Urgency</th><th>Version</th><th>Triggers</th><th>Input hash</th></tr>'+rows.map(a=>{
+      const tf=JSON.parse(a.triggers_fired||'[]');
+      return '<tr><td>'+esc(a.at)+'</td><td>'+esc(a.case_id)+'</td><td class="tr">'+esc(a.final_level)+'</td><td>'+esc(a.urgency)+'</td><td>'+esc(a.rule_base_version)+'</td><td>'+tf.map(t=>esc(t.id)).join(', ')+'</td><td class="small">'+esc(a.input_hash)+'</td></tr>';
+    }).join('')+'</table>';
+    el('audit-body').innerHTML=html;
+  }catch(e){ el('audit-body').textContent='Failed to load audit: '+e.message; }
+}
+(async()=>{ try{ await requireAdmin(); openTab('evaluate'); }catch(e){ /* 403 panel shown */ } })();
+</script>
+<div class="footer"><div class="frow">
+  <span>NYAYA-RAC v0.5.0 &middot; administrator-only technical console &middot; &copy; {{YEAR}}</span>
+  <span><a href="/admin">Admin console</a> &middot; <a href="/dashboard">Dashboard</a></span>
+</div></div>
+</body></html>

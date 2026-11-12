@@ -1,0 +1,31 @@
+# ── never commit these ────────────────────────────────────────────────────────
+# Live personal data. The repository ships a seeded demo database instead
+# (created by `python3 seed.py`), which contains no real person's statement,
+# contact details or evidence.
+*.sqlite3
+*.sqlite3-journal
+*.sqlite3-wal
+evidence/
+uploads/
+workbench.sqlite3
+
+# The generated administrator credential (see "Running it safely" in README)
+.nyaya-admin-credentials
+.nyaya-*
+
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.python-version
+
+# Editors / OS
+.DS_Store
+.idea/
+.vscode/
+*.swp
+
+# Local scratch
+/tmp/
+*.log

@@ -1,0 +1,89 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: ["3.10", "3.12"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+
+      - name: Show that nothing needs installing
+        run: python -c "import sys; print('stdlib only, python', sys.version)"
+
+      - name: Byte-compile everything (catches syntax errors early)
+        run: python -m compileall -q server.py engine.py db.py legal_kb.py digilocker.py seed.py smoke.py tests.py nyayacode
+
+      - name: Pack check (every pack reproduces its statute)
+        run: python -m nyayacode check
+
+      - name: Library tests
+        run: python tests/test_nyayacode.py
+
+      - name: Portal tests
+        run: python tests.py
+
+      - name: Fresh-boot smoke (no seed — catches state-dependent checks)
+        env:
+          NYAYA_DB: /tmp/fresh-nyaya.sqlite3
+          NYAYA_AUDIT_DB: /tmp/fresh-nyaya-audit.sqlite3
+          NYAYA_EVIDENCE_DIR: /tmp/fresh-evidence
+          NYAYA_ADMIN_EMAIL: admin@example.invalid
+          NYAYA_ADMIN_PASSWORD: demo-password-1234
+          NYAYA_PORT: "8001"
+        run: |
+          rm -f /tmp/fresh-nyaya.sqlite3 /tmp/fresh-nyaya-audit.sqlite3
+          rm -rf /tmp/fresh-evidence
+          python server.py &
+          SRV=$!
+          trap "kill $SRV 2>/dev/null || true" EXIT
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:8001/health > /dev/null && break
+            sleep 1
+          done
+          curl -sf http://127.0.0.1:8001/health
+          echo
+          NYAYA_ADMIN_PASSWORD=demo-password-1234 python smoke.py http://127.0.0.1:8001
+          kill $SRV 2>/dev/null || true
+          trap - EXIT
+
+      - name: Seed a demo database
+        run: python seed.py
+
+      - name: Start the portal and smoke it (seeded demo)
+        env:
+          NYAYA_ADMIN_EMAIL: admin@example.invalid
+          NYAYA_ADMIN_PASSWORD: demo-password-1234
+        run: |
+          python server.py &
+          for i in $(seq 1 30); do
+            curl -sf http://127.0.0.1:8000/health > /dev/null && break
+            sleep 1
+          done
+          python smoke.py http://127.0.0.1:8000
+
+      - name: No personal data in the tree
+        run: |
+          if git ls-files | grep -E '\.sqlite3$|^evidence/|^workbench\.sqlite3$|^\.nyaya-admin-credentials$|^\.nyaya-'; then
+            echo "::error::a live database, evidence file or credential is tracked"
+            exit 1
+          fi
+          echo "clean: no database, evidence or credentials tracked"
+
+      - name: No secrets in the tree
+        run: |
+          if git grep -n -E 'NyayaAdmin@123|password\s*=\s*"[^"]{8,}"' -- '*.py' '*.md' '*.html' '*.js' '*.json' | grep -v '_BANNED_PASSWORDS\|demo-password-1234\|TestAdminPass123\|smokepass123\|example.invalid\|nyaya.test\|nyaya.local'; then
+            echo "::error::possible hardcoded secret in tracked files"
+            exit 1
+          fi
+          echo "clean: no hardcoded secrets"

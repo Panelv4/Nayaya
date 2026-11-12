@@ -1,0 +1,4937 @@
+{
+  "amendment": "amend.bns.exc4-abolished",
+  "title": "Repealing Exception 4 (sudden fight) — a hypothetical amendment",
+  "kind": "hypothetical",
+  "enacted": false,
+  "commencement": null,
+  "summary": "Exception 4 removes murder liability where death is caused in a sudden fight, in the heat of passion, without premeditation and without undue advantage. This hypothetical amendment repeals the exception and leaves everything else untouched. It is the cleanest possible demonstration: one statutory sentence disappears, and the tool reports exactly which cases change side.",
+  "source": {
+    "citation": "Hypothetical. Written to demonstrate a before/after comparison on a real provision, not to propose a change.",
+    "url": null
+  },
+  "before_label": "Exception 4 in force",
+  "after_label": "Exception 4 repealed",
+  "expected_reading": "Cases that relied on Exception 4 — sudden fight, no undue advantage, and a mental element that would otherwise be murder — become murder instead of culpable homicide not amounting to murder. Nothing else should move.",
+  "pack": "in.bns.homicide",
+  "pack_review": "encoded_unreviewed (NOT yet reviewed against the statute text)",
+  "outcomes": [
+    "culpable_homicide",
+    "murder",
+    "not_offence"
+  ],
+  "comparison": {
+    "before": "in.bns.homicide",
+    "after": "in.bns.homicide",
+    "checked": 10752,
+    "facts_added": [],
+    "facts_removed": [],
+    "domain_facts": 10,
+    "changed": 256,
+    "decisions_changed": 256,
+    "sentences_changed": 0,
+    "unchanged": 10496,
+    "pct": 2.38,
+    "pct_decisions": 2.38,
+    "matrix": {
+      "not_offence": {
+        "not_offence": 6144
+      },
+      "murder": {
+        "murder": 1408
+      },
+      "culpable_homicide": {
+        "culpable_homicide": 2944,
+        "murder": 256
+      }
+    },
+    "moved": [
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101a"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_known_likely_death",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101b"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "intention_injury_sufficient",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101c"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": true,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": true,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": true,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": true,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": true,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": true
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      },
+      {
+        "facts": {
+          "death_caused": true,
+          "mens_rea": "knowledge_imminently_dangerous_no_excuse",
+          "exception_state": "sudden_fight",
+          "provocation_excluded": false,
+          "undue_advantage_cruel": false,
+          "victim_consent_adult": false,
+          "victim_other_than_intended": false,
+          "group_five_or_more": false,
+          "discriminatory_ground": false,
+          "offender_under_life_sentence": false
+        },
+        "before": "culpable_homicide",
+        "after": "murder",
+        "kind": "decision",
+        "before_branch": "D-EXC4-SUDDEN-FIGHT",
+        "after_branch": "M-101d"
+      }
+    ],
+    "digest_before": "d02ad1751b088194",
+    "digest_after": "da48749cbae78243"
+  },
+  "pack_before": {},
+  "coverage": {
+    "domain": 10752,
+    "facts_added": [],
+    "facts_removed": []
+  },
+  "examples": [
+    {
+      "facts": {
+        "death_caused": true,
+        "mens_rea": "intention_death",
+        "exception_state": "sudden_fight"
+      },
+      "before": "culpable_homicide",
+      "after": "murder",
+      "before_branch": "D-EXC4-SUDDEN-FIGHT",
+      "after_branch": "M-101a",
+      "kind": "decision",
+      "share": 256
+    }
+  ]
+}

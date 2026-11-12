@@ -1,0 +1,366 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Case Record — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/submit"><svg class="ic sm"><use href="#i-pen-sign"></use></svg> Submit report</a>
+      <a class="nav-link" href="/cases"><svg class="ic sm"><use href="#i-folder"></use></svg> My cases</a>
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <span id="admin-nav"></span>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div id="case-body"><div class="empty">Loading case record…</div></div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function fmtDate(iso){try{return new Date(iso).toLocaleString()}catch(e){return esc(iso)}}
+function fmtSize(n){return n>=1048576?(n/1048576).toFixed(1)+' MB':(n/1024).toFixed(0)+' KB';}
+function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
+const FACT_KEYS=['incident_date','incident_end_date','location','domain','narrative','victim_under18','woman_or_girl','sexual_offence','accused_in_custody','liberty_threat','accused_under18','has_lawyer','provision','disability','mental_illness','sc_st_atrocities','transgender','senior_citizen'];
+const ANSWER_LABELS={
+  victim_under18:['Are you under 18?',{yes:'Yes',no:'No',prefer_not:'Prefer not to say'}],
+  woman_or_girl:['Are you a woman or girl?',{yes:'Yes',no:'No',prefer_not:'Prefer not to say'}],
+  sexual_offence:['Involves a sexual offence?',{yes:'Yes',no:'No',unsure:'Not sure'}],
+  liberty_threat:['Threat to life / detention / abduction?',{yes:'Yes',no:'No'}],
+  accused_in_custody:['Accused in police custody?',{yes:'Yes',no:'No',dont_know:'Don’t know'}],
+  accused_under18:['Accused under 18?',{yes:'Yes',no:'No',dont_know:'Not sure','':'No answer'}],
+  has_lawyer:['Has a lawyer / legal aid?',{yes:'Yes',no:'No',not_yet:'Not yet'}],
+};
+const CHECK_LABELS={disability:'Disability',mental_illness:'Mental illness',sc_st_atrocities:'SC/ST atrocities angle',transgender:'Transgender person involved',senior_citizen:'Senior citizen involved'};
+const DISC_BADGE={PRIVATE:'b-gray',PENDING:'b-blue',DISCLOSED:'b-green',REJECTED:'b-red'};
+const MC_BADGE={UNCHECKED:'b-gray',VERIFIED:'b-green',NEEDS_CORRECTION:'b-amber',REJECTED:'b-red'};
+let C=null;
+
+(async()=>{
+  const id=new URLSearchParams(location.search).get('id')||'';
+  let me;
+  try{ me=await requireAuth(); }catch(e){ return; }
+  if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a>';
+  try{
+    const r=await authFetch('/api/report?id='+encodeURIComponent(id));
+    if(!r.ok){const j=await r.json().catch(()=>({}));throw new Error(j.error||'Case not found.');}
+    C=await r.json();
+  }catch(e){ if(e.message!=='auth') $('case-body').innerHTML='<div class="empty">'+esc(e.message)+'</div>'; return; }
+  render(me);
+})();
+
+async function post(url,body){
+  const r=await authFetch(url,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(body||{})});
+  const j=await r.json().catch(()=>({}));
+  if(!r.ok) throw new Error(j.error||('Request failed ('+r.status+')'));
+  return j;
+}
+
+async function vote(v){
+  const cm=$('fb-comment')?$('fb-comment').value:'';
+  try{ const j=await post('/api/feedback',{report_id:C.id,vote:v,comment:cm});
+    toast('Feedback recorded — thank you.'+(j.flagged?' This case has been flagged for admin review.':''));
+    if($('fb-comment'))$('fb-comment').value='';
+    location.reload();
+  }catch(e){ toast(e.message); }
+}
+async function requestDisclosure(){
+  const note=prompt('Optional note for the administrator (why disclose this case)?')||'';
+  try{ await post('/api/disclosure-request',{report_id:C.id,note}); toast('Disclosure requested — an administrator must manually approve it.'); location.reload(); }
+  catch(e){ toast(e.message); }
+}
+async function adminDisclosure(action){
+  const mode=$('disc-mode')?$('disc-mode').value:'ANONYMIZED';
+  const note=$('disc-note')?$('disc-note').value:'';
+  try{ await post('/api/admin/disclosure',{report_id:C.id,action,mode,note}); toast('Disclosure '+action.toLowerCase()+'d.'); location.reload(); }
+  catch(e){ toast(e.message); }
+}
+async function saveManualCheck(){
+  try{ await post('/api/admin/manual-check',{report_id:C.id,status:$('mc-status').value,note:$('mc-note').value});
+    toast('Manual check saved.'); location.reload(); }
+  catch(e){ toast(e.message); }
+}
+async function mapEvidence(evidenceId){
+  const rel=$('rel-'+evidenceId).value, key=$('key-'+evidenceId).value, note=$('note-'+evidenceId).value;
+  try{ await post('/api/evidence-map',{report_id:C.id,evidence_id:evidenceId,fact_key:key,relation:rel,note});
+    toast('Evidence mapped to fact.'); location.reload(); }
+  catch(e){ toast(e.message); }
+}
+async function submitRevision(){
+  const reason=$('rev-reason').value.trim();
+  if(reason.length<5){ toast('Please give a reason for the correction (min 5 characters).'); return; }
+  const body={report_id:C.id,reason,
+    narrative:$('rev-narrative').value.trim(),
+    incident_date:$('rev-incident_date').value, incident_end_date:$('rev-incident_end_date').value||'',
+    location:$('rev-location').value.trim(), domain:$('rev-domain').value};
+  for(const k of ['victim_under18','woman_or_girl','sexual_offence','accused_in_custody','liberty_threat','accused_under18','has_lawyer']) body[k]=$('rev-'+k).value;
+  for(const k of ['disability','mental_illness','sc_st_atrocities','transgender','senior_citizen']) body[k]=$('rev-'+k).checked;
+  body.provision=$('rev-provision').value.trim(); body.statute=$('rev-statute').value.trim();
+  $('rev-btn').disabled=true; $('rev-btn').textContent='Re-evaluating…';
+  try{ const j=await post('/api/revise',body);
+    toast('Revision '+j.rev_no+' recorded and re-evaluated. New level: '+j.summary.level);
+    setTimeout(()=>location.reload(),900);
+  }catch(e){ toast(e.message); $('rev-btn').disabled=false; $('rev-btn').textContent='Save correction & re-evaluate'; }
+}
+
+function render(me){
+  const o=C.engine_output, mr=o.manual_review, sev=o.severity, conf=o.confidence, a=C.answers||{};
+  const priv = C.access==='FULL';
+  const kb=C.kb_context||{};
+  const fb=C.feedback;
+  const opts=(sel,val,map)=>Object.entries(map).map(([v,l])=>`<option value="${v}" ${sel===v?'selected':''}>${esc(l)}</option>`).join('');
+
+  $('case-body').innerHTML=`
+  <div class="page-head">
+    <div>
+      <h1 class="mono" style="font-size:22px">${esc(C.ref)} <span class="badge b-gray">rev ${C.current_rev_no}</span></h1>
+      <p>Filed ${fmtDate(C.created_at)} · incident ${esc(C.incident_date)}${C.incident_end_date?(' <svg class="ic sm"><use href="#i-arrow-right"></use></svg> '+esc(C.incident_end_date)):''}${(priv&&C.location)?(' · '+esc(C.location)):''}</p>
+    </div>
+    <div class="btn-row">
+      <span class="level ${esc(C.review_level.toLowerCase())}">${esc(C.review_level)} · ${esc(C.level_name)}</span>
+      <span class="badge ${C.urgency==='HIGH'?'b-red':'b-green'}">${esc(C.urgency)}</span>
+      <span class="badge ${DISC_BADGE[C.disclosure_status]}">DISCLOSURE: ${esc(C.disclosure_status)}</span>
+      <span class="badge ${MC_BADGE[C.manual_check_status]}">MANUAL CHECK: ${esc(C.manual_check_status.replaceAll('_',' '))}</span>
+      ${fb.flagged?'<span class="badge b-red"><svg class="ic"><use href="#i-flag"></use></svg> FEEDBACK-FLAGGED</span>':''}
+      <a class="btn secondary small" href="/cases"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> My cases</a>
+    </div>
+  </div>
+
+  ${C.access==='ANONYMIZED'?'<div class="banner blue"><span class="tag">Anonymized</span><div>This case was disclosed by an administrator in <b>ANONYMIZED mode</b>: the narrative, answers and identifying evidence details are redacted. The role-based engine response is shown in full.</div></div>':''}
+
+  <div class="summary-grid">
+    <div class="summary-item"><p class="lbl">Escalated to</p><div class="val" style="font-size:12.5px">${esc(mr.escalate_to.replaceAll('_',' '))}</div></div>
+    <div class="summary-item"><p class="lbl">Severity (routing only)</p><div class="val">${esc(sev.final_tier)} <span class="small">base ${esc(sev.base_tier)}${sev.modifiers_applied.length?(' · +'+sev.modifiers_applied.join(', ')):''}</span></div></div>
+    <div class="summary-item"><p class="lbl">Legal regime</p><div class="val" style="font-size:12.5px">${esc(o.legal_regime.applicable)}</div></div>
+    <div class="summary-item"><p class="lbl">Confidence</p><div class="val">${esc(conf.overall)} <span class="small">weakest: ${esc(conf.weakest_element)}</span></div></div>
+    <div class="summary-item"><p class="lbl">Verdict feedback</p>
+      <div class="val"><svg class="ic sm"><use href="#i-thumb-up"></use></svg> ${fb.up} · <svg class="ic sm"><use href="#i-thumb-down"></use></svg> ${fb.down}</div>
+      <div class="btn-row" style="margin-top:8px">
+        <button class="btn small ${fb.my_vote===1?'primary':'secondary'}" onclick="vote(1)"><svg class="ic sm"><use href="#i-thumb-up"></use></svg> Correct / helpful</button>
+        <button class="btn small ${fb.my_vote===-1?'primary':'secondary'}" onclick="vote(-1)"><svg class="ic sm"><use href="#i-thumb-down"></use></svg> Wrong / unhelpful</button>
+      </div>
+      <div class="small" style="margin-top:6px">Your verdict is recorded in an audited log for administrator review.${fb.flagged?' <b>This case is flagged for review.</b>':''}</div>
+      ${priv||C.viewer.is_owner?`<input type="text" id="fb-comment" maxlength="1000" placeholder="Optional comment (stored with your vote)" style="margin-top:8px">`:''}
+    </div>
+  </div>
+
+  ${C.viewer.is_owner && (C.disclosure_status==='PRIVATE'||C.disclosure_status==='REJECTED') ? `
+  <div class="card"><h2><svg class="ic"><use href="#i-megaphone"></use></svg> Disclosure</h2>
+    <p class="desc">This case is private. Only you and administrators can see it. You may request that it be
+    published to the disclosed-cases registry — <b>an administrator must manually approve</b> before anyone else
+    can view it (anonymized or full).</p>
+    <div class="btn-row"><button class="btn secondary" onclick="requestDisclosure()">Request disclosure</button></div>
+  </div>`:''}
+  ${C.disclosure_status==='PENDING'?'<div class="banner blue"><span class="tag">Pending</span><div>Disclosure is awaiting manual approval by an administrator.</div></div>':''}
+
+  ${me.is_admin ? `
+  <div class="card"><h2><svg class="ic"><use href="#i-shield"></use></svg> Admin — disclosure &amp; manual check</h2>
+    <div class="row">
+      <div class="col">
+        <div class="lbl">Disclosure control (current: ${esc(C.disclosure_status)}${C.disclosure_status==='DISCLOSED'?' · '+esc(C.disclosure_mode):''})</div>
+        <div class="field" style="margin-top:6px"><select id="disc-mode">
+          <option value="ANONYMIZED">ANONYMIZED — hide narrative &amp; identifiers</option>
+          <option value="FULL" ${C.disclosure_mode==='FULL'?'selected':''}>FULL — show complete record (no identities)</option>
+        </select></div>
+        <div class="field"><input type="text" id="disc-note" maxlength="1000" placeholder="Disclosure note (reason, conditions…)"></div>
+        <div class="btn-row">
+          ${C.disclosure_status==='PENDING'?'<button class="btn primary small" onclick="adminDisclosure(\'APPROVE\')">Approve request</button><button class="btn secondary small" onclick="adminDisclosure(\'REJECT\')">Reject</button>':''}
+          ${C.disclosure_status!=='DISCLOSED'?'<button class="btn secondary small" onclick="adminDisclosure(\'DISCLOSE\')">Disclose directly</button>':''}
+          ${C.disclosure_status==='DISCLOSED'?'<button class="btn secondary small" onclick="adminDisclosure(\'REVOKE\')">Revoke disclosure</button>':''}
+        </div>
+        ${C.disclosure_request_note?`<p class="small" style="margin-top:8px"><b>Owner's request note:</b> ${esc(C.disclosure_request_note)}</p>`:''}
+      </div>
+      <div class="col">
+        <div class="lbl">Manual check (human verification of this record)</div>
+        <div class="field" style="margin-top:6px"><select id="mc-status">
+          ${['UNCHECKED','VERIFIED','NEEDS_CORRECTION','REJECTED'].map(s=>`<option value="${s}" ${C.manual_check_status===s?'selected':''}>${s.replaceAll('_',' ')}</option>`).join('')}
+        </select></div>
+        <div class="field"><input type="text" id="mc-note" maxlength="3000" value="${esc(C.manual_check_note)}" placeholder="Officer note (what was checked, what was found…)"></div>
+        <div class="btn-row"><button class="btn primary small" onclick="saveManualCheck()">Save manual check</button></div>
+        <p class="small" style="margin-top:8px">Last check: ${C.manual_check_at?fmtDate(C.manual_check_at)+' by '+esc(C.manual_check_by):'never'} · A revision resets VERIFIED <svg class="ic sm"><use href="#i-arrow-right"></use></svg> UNCHECKED automatically.</p>
+      </div>
+    </div>
+  </div>`:''}
+
+  <div class="card"><h2><svg class="ic"><use href="#i-speech"></use></svg> What the complainant described</h2>
+    <div class="disclaimer" style="margin-top:4px;white-space:pre-wrap">${esc(C.narrative)}</div>
+    ${priv&&Object.keys(C.keywords||{}).length?`<p class="small" style="margin-top:8px">Mechanical keyword scan (not AI) detected: <b>${esc(Object.keys(C.keywords).join(', '))}</b>.</p>`:''}
+  </div>
+
+  ${priv&&Object.keys(a).length?`
+  <div class="card"><h2><svg class="ic"><use href="#i-check-circle"></use></svg> Structured answers of record</h2>
+    <div class="grid tight" style="grid-template-columns:repeat(auto-fit,minmax(230px,1fr))">
+      <div class="kv"><b>Type of case:</b> ${esc(C.domain)}</div>
+      ${Object.entries(ANSWER_LABELS).map(([k,[label,map]])=>`<div class="kv"><b>${esc(label)}</b> ${esc(map[a[k]]??a[k]??'—')}</div>`).join('')}
+      ${Object.entries(CHECK_LABELS).map(([k,label])=>a[k]?`<div class="kv"><b>${esc(label)}:</b> yes</div>`:'').join('')}
+      ${a.provision?`<div class="kv"><b>Section cited:</b> ${esc(a.statute||'—')} ${esc(a.provision)}</div>`:''}
+    </div>
+  </div>`:''}
+
+  ${(kb.resolution&&kb.resolution.kind&&kb.resolution.kind!=='NO_CITATION')||((kb.precedents||[]).length)?`
+  <div class="card"><h2><svg class="ic"><use href="#i-book"></use></svg> Legal knowledge base context</h2>
+    ${kb.resolution&&kb.resolution.kind!=='NO_CITATION'?`<div class="kv"><b>Citation resolution:</b>
+      <span class="badge ${kb.resolution.kind==='VERIFIED'?'b-green':(kb.resolution.kind==='UNVERIFIED'?'b-amber':'b-red')}">${esc(kb.resolution.kind.replaceAll('_',' '))}</span>
+      ${esc((kb.citation||{}).statute||'')} ${esc((kb.citation||{}).provision||'')} <svg class="ic sm"><use href="#i-arrow-right"></use></svg>
+      ${esc(kb.resolution.version||'—')} (in force ${esc(kb.resolution.effective_from||'?')}..${esc(kb.resolution.effective_to||'open')})</div>
+      ${kb.punishment?`<div class="kv"><b>Punishment applied (verified):</b> <span class="mono">${esc(JSON.stringify(kb.punishment))}</span></div>`:''}
+      ${kb.resolution.note?`<p class="small">${esc(kb.resolution.note)}</p>`:''}`:''}
+    ${(kb.precedents||[]).length?`<div class="lbl" style="margin-top:10px">Tracked precedents on this provision</div>
+      <div class="table-wrap"><table><thead><tr><th>Citation</th><th>Court</th><th>Status</th><th>Holding</th><th>Headnote</th></tr></thead><tbody>
+      ${kb.precedents.map(p=>`<tr><td><b>${esc(p.citation)}</b></td><td>${esc(p.court||'—')}</td><td><span class="badge ${p.status==='GOOD_LAW'?'b-green':'b-red'}">${esc(p.status.replaceAll('_',' '))}</span></td><td>${esc(p.holding_tag.replaceAll('_',' '))}</td><td class="small">${esc(p.headnote||'')}</td></tr>`).join('')}
+      </tbody></table></div>`:''}
+    ${(kb.conflicts||[]).length?`<div class="banner amber" style="margin-top:10px"><span class="tag">Conflicts</span><div>${kb.conflicts.map(c=>'<b>'+esc(c.kind.replaceAll('_',' '))+'</b>: '+esc(c.detail)).join('<br>')}</div></div>`:''}
+  </div>`:''}
+
+  <div class="card"><h2><svg class="ic"><use href="#i-receipt"></use></svg> Evidence register <span class="badge ${C.evidence.length?'b-green':'b-gray'}">${C.evidence.length} file${C.evidence.length===1?'':'s'}</span>
+    <span class="badge b-blue">coverage ${Math.round((C.coverage.coverage||0)*100)}%</span></h2>
+    ${C.evidence.length?`<div class="table-wrap"><table>
+      <thead><tr><th>File</th><th>Type</th><th>Size</th><th>Description</th><th>SHA-256 seal</th>${(priv&&(C.viewer.is_owner||me.is_admin))?'<th>Download</th>':''}</tr></thead>
+      <tbody>${C.evidence.map(e=>`<tr><td><b>${esc(e.filename)}</b></td><td>${esc(e.content_type||'—')}</td><td>${fmtSize(e.size)}</td><td>${esc(e.description||'—')}</td><td class="mono">${esc(e.sha256)}</td>${(priv&&(C.viewer.is_owner||me.is_admin))?`<td><a class="btn secondary small" href="/api/evidence?id=${e.id}" download>Download</a></td>`:''}</tr>`).join('')}</tbody>
+    </table></div>`:`<p class="small">Complainant confirmed: <b>no evidence available to attach at this time</b>.</p>`}
+
+    ${(priv)&&(C.viewer.is_owner||me.is_admin)&&C.evidence.length?`
+    <div class="lbl" style="margin-top:14px">Evidence <svg class="ic sm"><use href="#i-arrow-right"></use></svg> fact mapping <span class="badge b-gray">Phase 3</span></div>
+    <p class="small">Link each proof file to the fact(s) it supports or contradicts. Coverage:
+      <b>${(C.coverage.supported||[]).length}/${(C.coverage.mappable_facts||[]).length}</b> recorded facts evidence-backed.
+      ${(C.coverage.contradicted||[]).length?'<span class="badge b-red">CONTRADICTED: '+esc(C.coverage.contradicted.join(', '))+'</span>':''}</p>
+    ${(C.evidence_map||[]).length?`<div class="table-wrap"><table><thead><tr><th>Evidence</th><th>Fact</th><th>Relation</th><th>Note</th><th>Mapped by</th></tr></thead><tbody>
+      ${C.evidence_map.map(m=>`<tr><td>#${m.evidence_id}</td><td><b>${esc(m.fact_key)}</b></td><td><span class="badge ${m.relation==='SUPPORTS'?'b-green':(m.relation==='CONTRADICTS'?'b-red':'b-gray')}">${esc(m.relation)}</span></td><td class="small">${esc(m.note||'')}</td><td class="small">${esc(m.mapped_by)} (${esc(m.mapped_role)})</td></tr>`).join('')}
+    </tbody></table></div>`:''}
+    ${C.evidence.map(e=>`
+      <div class="file-item" style="margin-top:8px">
+        <span class="fic"><svg class="ic"><use href="#i-paperclip"></use></svg></span>
+        <div class="fmeta"><div class="fname">${esc(e.filename)}</div>
+          <div class="btn-row" style="margin-top:6px;gap:6px">
+            <select id="key-${e.id}" style="width:auto;min-width:170px">${FACT_KEYS.map(k=>`<option value="${k}">${k}</option>`).join('')}</select>
+            <select id="rel-${e.id}" style="width:auto"><option>SUPPORTS</option><option>CONTRADICTS</option><option>CONTEXT</option></select>
+            <input type="text" id="note-${e.id}" maxlength="500" placeholder="note (optional)" style="width:auto;flex:1;min-width:120px">
+            <button class="btn small secondary" onclick="mapEvidence(${e.id})">Map</button>
+          </div>
+        </div>
+      </div>`).join('')}`:''}
+
+    <div class="kv" style="margin-top:10px"><b>DigiLocker verification:</b>
+      <span class="badge ${C.digilocker_status==='NOT_LINKED'?'b-amber':'b-green'}">${esc(C.digilocker_status.replaceAll('_',' '))}</span>
+      <span class="small">DigiLocker-linked registration is a UI placeholder; backend not implemented yet.</span></div>
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-cog"></use></svg> Generated engine response (revision ${C.current_rev_no})</h2>
+    <p class="desc">Advisory decision-support output, deterministic from the facts of record. Rule base:
+    <b>${esc(o.rule_base_version)}</b> · generated ${fmtDate(o.generated_at)}.</p>
+    ${mr.label?`<div class="banner amber"><span class="tag">Label</span><div><b>${esc(mr.label)}</b></div></div>`:''}
+    <div class="lbl" style="margin-top:10px">Safeguard triggers fired (${mr.triggers_fired.length})</div>
+    ${mr.triggers_fired.length? mr.triggers_fired.map(t=>`<div class="kv"><span class="pill">${esc(t.id)} · ${esc(t.level)}</span> <b>${esc(t.reason)}</b> <span class="small mono">(${esc(t.evidence_ref||'—')})</span></div>`).join('') : '<p class="small">None.</p>'}
+    <div class="lbl" style="margin-top:14px">Open questions for the judicial officer</div>
+    <ul class="q-list">${o.open_questions_for_judicial_officer.map(q=>'<li>'+esc(q)+'</li>').join('')}</ul>
+    ${o.constitutional_flags.length?`<div class="lbl" style="margin-top:14px">Constitutional flags</div>
+    ${o.constitutional_flags.map(f=>`<div class="kv"><span class="pill">Art. ${esc(f.article)}</span> ${esc(f.concern)}</div>`).join('')}`:''}
+    <div class="lbl" style="margin-top:14px">Compliance checklist (custody/liberty safeguards)</div>
+    <div class="table-wrap"><table><thead><tr><th>#</th><th>Item</th><th>Status</th><th>Source</th></tr></thead><tbody>
+      ${o.compliance_checks.map(cc=>`<tr><td>${esc(cc.id)}</td><td>${esc(cc.item)}</td><td><span class="badge ${cc.status==='MET'?'b-green':(cc.status==='NOT_MET'?'b-red':'b-gray')}">${esc(cc.status.replaceAll('_',' '))}</span></td><td class="small">${esc(cc.source)}</td></tr>`).join('')}
+    </tbody></table></div>
+    <div class="lbl" style="margin-top:14px">Validators</div>
+    ${C.validators.map(v=>`<div class="kv"><span class="badge ${v.status==='passed'?'b-green':'b-amber'}">${esc(v.id)} ${esc(v.status)}</span> <b>${esc(v.name)}</b> — <span class="small">${esc(v.detail)}</span></div>`).join('')}
+    <details class="json" style="margin-top:14px"><summary>Full output JSON</summary>
+      <div class="pre" style="margin-top:8px">${esc(JSON.stringify(o,null,2))}</div></details>
+    <div class="kv" style="margin-top:12px"><b>Audit:</b> entry #${esc(C.audit_id)} · case ID <span class="mono">${esc(o.case_id)}</span></div>
+  </div>
+
+  <div class="card"><h2><svg class="ic"><use href="#i-refresh"></use></svg> Revision history <span class="badge b-gray">${C.revisions.length}</span></h2>
+    <p class="desc">Every correction creates a new immutable revision and re-runs the engine — nothing is silently
+    overwritten. A revision resets a VERIFIED manual check back to UNCHECKED.</p>
+    <div class="table-wrap"><table><thead><tr><th>Rev</th><th>When</th><th>Actor</th><th>Reason</th><th>Level</th><th>Urgency</th><th>Severity</th><th>Audit #</th></tr></thead><tbody>
+      ${C.revisions.map(r=>`<tr${r.rev_no===C.current_rev_no?' style="background:#f0fdf4"':''}>
+        <td><b>${r.rev_no}</b>${r.rev_no===C.current_rev_no?' <span class="badge b-green">current</span>':''}</td>
+        <td>${fmtDate(r.created_at)}</td><td>${esc(r.actor)}${priv?' · '+esc(r.actor_name):''}</td>
+        <td class="small">${esc(r.reason||'—')}</td>
+        <td><span class="level ${esc(r.review_level.toLowerCase())}" style="font-size:11px">${esc(r.review_level)}</span></td>
+        <td>${esc(r.urgency)}</td><td>${esc(r.severity_tier)}</td><td>${esc(r.audit_id??'—')}</td></tr>`).join('')}
+    </tbody></table></div>
+
+    ${priv?`
+    <details style="margin-top:14px"><summary><svg class="ic"><use href="#i-pencil"></use></svg> Correct a mistake &amp; re-evaluate ${C.viewer.is_owner?'(your case)':me.is_admin?'(admin — any case)':''}</summary>
+      <div class="banner amber" style="margin-top:10px"><span class="tag">Re-evaluation</span>
+        <div>Use this if the application contains a mistake (wrong date, wrong answer, missing detail). The corrected
+        answers re-run the deterministic engine; both the old and the new evaluation stay on record with the reason.</div></div>
+      <div class="field"><label>Reason for correction <span style="color:#b91c1c">*</span></label>
+        <input type="text" id="rev-reason" maxlength="500" placeholder="e.g. I entered the wrong incident date"></div>
+      <div class="field"><label>Narrative (corrected)</label>
+        <textarea id="rev-narrative" style="min-height:120px">${esc(C.narrative)}</textarea></div>
+      <div class="form-grid">
+        <div class="field"><label>Incident date</label><input type="date" id="rev-incident_date" value="${esc(C.incident_date)}"></div>
+        <div class="field"><label>Incident end date</label><input type="date" id="rev-incident_end_date" value="${esc(C.incident_end_date||'')}"></div>
+        <div class="field"><label>Location</label><input type="text" id="rev-location" value="${esc(priv?C.location:'')}"></div>
+        <div class="field"><label>Domain</label><select id="rev-domain">
+          ${['CRIMINAL','CIVIL','FAMILY','OTHER'].map(d=>`<option ${C.domain===d?'selected':''}>${d}</option>`).join('')}</select></div>
+        <div class="field"><label>Are you under 18?</label><select id="rev-victim_under18">${opts(a.victim_under18,'',{yes:'Yes',no:'No',prefer_not:'Prefer not to say'})}</select></div>
+        <div class="field"><label>Woman or girl?</label><select id="rev-woman_or_girl">${opts(a.woman_or_girl,'',{yes:'Yes',no:'No',prefer_not:'Prefer not to say'})}</select></div>
+        <div class="field"><label>Sexual offence?</label><select id="rev-sexual_offence">${opts(a.sexual_offence,'',{yes:'Yes',no:'No',unsure:'Not sure'})}</select></div>
+        <div class="field"><label>Threat/detention/abduction?</label><select id="rev-liberty_threat">${opts(a.liberty_threat,'',{yes:'Yes',no:'No'})}</select></div>
+        <div class="field"><label>Accused in custody?</label><select id="rev-accused_in_custody">${opts(a.accused_in_custody,'',{yes:'Yes',no:'No',dont_know:'Don’t know'})}</select></div>
+        <div class="field"><label>Accused under 18?</label><select id="rev-accused_under18">${opts(a.accused_under18||'','',{'':'No answer',yes:'Yes',no:'No',dont_know:'Not sure'})}</select></div>
+        <div class="field"><label>Lawyer / legal aid?</label><select id="rev-has_lawyer">${opts(a.has_lawyer,'',{yes:'Yes',no:'No',not_yet:'Not yet'})}</select></div>
+        <div class="field"><label>Section cited</label><input type="text" id="rev-provision" value="${esc(a.provision||'')}"></div>
+        <div class="field"><label>Statute</label><input type="text" id="rev-statute" value="${esc(a.statute||'')}"></div>
+        <div class="field full"><div class="grid tight" style="grid-template-columns:repeat(auto-fit,minmax(200px,1fr))">
+          ${Object.entries(CHECK_LABELS).map(([k,l])=>`<label class="check"><input type="checkbox" id="rev-${k}" ${a[k]?'checked':''}><span>${esc(l)}</span></label>`).join('')}
+        </div></div>
+      </div>
+      <div class="btn-row" style="margin-top:10px">
+        <button class="btn primary" id="rev-btn" onclick="submitRevision()">Save correction &amp; re-evaluate</button>
+      </div>
+    </details>`:'<p class="small" style="margin-top:10px">Corrections are available to the case owner and administrators.</p>'}
+  </div>
+
+  ${priv&&C.intake_notes.length?`<div class="card"><h2><svg class="ic"><use href="#i-pin"></use></svg> Notes for the registry</h2>
+    <ul class="q-list">${C.intake_notes.map(n=>'<li>'+esc(n)+'</li>').join('')}</ul></div>`:''}
+
+  ${priv&&(C.provenance.edges||[]).length?`
+  <div class="card"><details><summary><svg class="ic"><use href="#i-graph"></use></svg> Legal provenance graph (${C.provenance.edges.length} edges)</summary>
+    <div class="table-wrap" style="margin-top:10px"><table><thead><tr><th>When</th><th>Subject</th><th>Predicate</th><th>Object</th><th>Meta</th></tr></thead><tbody>
+    ${C.provenance.edges.map(e=>`<tr><td class="small">${fmtDate(e.at)}</td>
+      <td class="mono small">${esc(e.subject.type)}:${esc(e.subject.id)}</td>
+      <td><span class="pill">${esc(e.predicate)}</span></td>
+      <td class="mono small">${esc(e.object.type)}:${esc(e.object.id)}</td>
+      <td class="small mono">${esc(JSON.stringify(e.meta))}</td></tr>`).join('')}
+    </tbody></table></div></details></div>`:''}
+
+  <div class="disclaimer"><b>Disclaimer:</b> ${esc(o.disclaimer)} ${esc(o.limitations)}</div>
+
+  <div class="btn-row" style="margin-top:16px">
+    <a class="btn secondary" href="/cases"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> My cases</a>
+    <a class="btn secondary" href="/disclosed">Disclosed registry</a>
+    <a class="btn primary" href="/submit">Submit another report</a>
+    <button class="btn secondary" onclick="window.print()">Print record</button>
+  </div>`;
+}
+</script>
+</body>
+</html>

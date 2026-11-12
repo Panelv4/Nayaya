@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="NYAYA-RAC — citizen case reporting and rules-as-code decision support. Private by default; disclosure needs manual approval.">
+<link rel="icon" type="image/svg+xml" href="/favicon.svg">
+<title>Dashboard — NYAYA-RAC</title>
+<style>{{STYLE}}</style>
+</head>
+<body>
+
+<div class="tricolour"><span class="saffron"></span><span class="white"></span><span class="green"></span></div>
+<div class="utility"><div class="utility-in">
+  <span>Government of India &middot; Ministry of Law &amp; Justice <span class="dot">&middot;</span> Research prototype</span>
+  <span class="spacer"></span>
+  <a href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+  <span class="dot">&middot;</span>
+  <a href="#accessibility"><svg class="ic sm"><use href="#i-users"></use></svg> Accessibility</a>
+  <span class="dot">&middot;</span>
+  <span class="lang">हिन्दी / English</span>
+</div></div>
+<nav class="nav">
+  <div class="nav-in">
+    <a class="brand" href="/dashboard"><span class="brandmark"><svg class="ic"><use href="#i-scales"></use></svg></span><span><b>NYAYA-RAC</b><small>Citizen reporting &amp; decision support</small></span></a>
+    <div class="nav-links">
+      <a class="nav-link active" href="/dashboard"><svg class="ic sm"><use href="#i-chart"></use></svg> Dashboard</a>
+      <a class="nav-link" href="/submit"><svg class="ic sm"><use href="#i-pen-sign"></use></svg> Submit report</a>
+      <a class="nav-link" href="/cases"><svg class="ic sm"><use href="#i-folder"></use></svg> My cases</a>
+      <a class="nav-link" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Disclosed cases</a>
+      <span id="admin-nav"></span>
+      <button class="nav-link" onclick="doLogout()"><svg class="ic sm"><use href="#i-arrow-left"></use></svg> Logout</button>
+    </div>
+  </div>
+</nav>
+
+<div class="container">
+  <div class="page-head">
+    <div>
+      <h1 id="greeting">Welcome</h1>
+      <p>Submit a new report or review your cases. Your cases stay strictly private to you and administrators
+      until you request disclosure and an administrator manually approves it.</p>
+    </div>
+    <span class="badge b-gray" id="count-badge">— reports</span>
+  </div>
+
+  <div class="banner amber">
+    <span class="tag">Advisory only</span>
+    <div><b>Decision support, not adjudication.</b> Every response generated here is advisory, deterministic and
+    routed for human review at the computed level. This portal does not lodge an FIR — in an emergency dial
+    <b>112</b>.</div>
+  </div>
+
+  <div class="grid" style="grid-template-columns:repeat(auto-fit,minmax(250px,1fr))">
+    <a class="action-card" href="/submit">
+      <span class="ic"><svg class="ic"><use href="#i-pen-sign"></use></svg></span>
+      <h3>Submit Report</h3>
+      <p>Explain what happened in your own words, answer a few plain-language questions, and attach your proof
+         (if any). The response — review level, urgency and next steps — is generated from your account of the case.</p>
+      <span class="go">Start a new report <svg class="ic sm"><use href="#i-arrow-right"></use></svg></span>
+    </a>
+    <a class="action-card" href="/cases">
+      <span class="ic"><svg class="ic"><use href="#i-folder"></use></svg></span>
+      <h3>My Cases</h3>
+      <p>Every report you have filed, with its response, evidence register, revision history and disclosure
+      status. Mistake in your answers? Correct it and re-evaluate — nothing is ever silently overwritten.</p>
+      <span class="go" id="cases-go">Open your case history <svg class="ic sm"><use href="#i-arrow-right"></use></svg></span>
+    </a>
+    <a class="action-card" href="/disclosed">
+      <span class="ic"><svg class="ic"><use href="#i-megaphone"></use></svg></span>
+      <h3>Disclosed Cases</h3>
+      <p>The public registry of cases an administrator has manually approved for disclosure — anonymized or
+      full, never with account identities.</p>
+      <span class="go">Browse the registry <svg class="ic sm"><use href="#i-arrow-right"></use></svg></span>
+    </a>
+  </div>
+
+  <div class="card">
+    <div class="card-head">
+      <h2><svg class="ic"><use href="#i-idcard"></use></svg> Identity verification</h2>
+      <a class="btn secondary small" href="/disclosed"><svg class="ic sm"><use href="#i-eye"></use></svg> Public register</a>
+    </div>
+    <p class="small" style="margin:-4px 0 12px">A verified identity strengthens the evidential value of every report you
+    file and is recorded with the case. Verification is optional — unverified reports are accepted and marked as such.</p>
+    <div id="dl-panel"></div>
+  </div>
+
+  <div class="card">
+    <h2><svg class="ic"><use href="#i-user"></use></svg> Account</h2>
+    <div class="kv"><b>Name:</b> <span id="acc-name">—</span></div>
+    <div class="kv"><b>Email:</b> <span id="acc-email">—</span></div>
+    <div class="kv"><b>Member since:</b> <span id="acc-since">—</span></div>
+    <div class="kv"><b>Reports filed:</b> <span id="acc-count">—</span></div>
+    <p class="small" style="margin-top:10px">Accounts are demo-grade and stored only on this local prototype
+    server. Do not use real sensitive credentials.</p>
+  </div>
+</div>
+
+<div class="footer">NYAYA-RAC v0.5.0 · advisory decision-support prototype · © {{YEAR}}</div>
+<div id="toast" role="status" aria-live="polite"></div>
+
+<script>{{AUTH}}</script>
+<script>
+const $=id=>document.getElementById(id);
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function toast(msg,ms=3600){const t=$('toast');t.textContent=msg;t.style.display='block';clearTimeout(t._h);t._h=setTimeout(()=>t.style.display='none',ms);}
+
+(async()=>{
+  try{
+    const me=await requireAuth();
+    $('greeting').textContent='Welcome, '+me.name.split(' ')[0];
+    if(me.is_admin) $('admin-nav').innerHTML='<a class="nav-link" href="/admin"><svg class="ic sm"><use href="#i-shield"></use></svg> Admin</a><a class="nav-link" href="/kb"><svg class="ic sm"><use href="#i-book"></use></svg> Legal KB</a><a class="nav-link" href="/workbench"><svg class="ic sm"><use href="#i-cog"></use></svg> Workbench</a>';
+    $('acc-name').innerHTML=esc(me.name)+(me.is_admin?' <span class="badge b-blue">REGISTRY ADMIN</span>':' <span class="badge b-gray">CITIZEN</span>');
+    $('acc-email').textContent=me.email;
+    $('acc-since').textContent=new Date(me.created_at).toLocaleDateString();
+    $('acc-count').textContent=me.report_count;
+    $('count-badge').textContent=me.report_count+' report'+(me.report_count===1?'':'s')+' filed';
+    DLPanel.load('dl-panel',{compact:true});
+  }catch(e){ /* redirected to /login */ }
+})();
+
+</script>
+</body>
+</html>
